@@ -5,6 +5,7 @@ let ScreenHeight = Dimensions.get("window").height;
 import Constants from 'expo-constants';
 const barHeight = Constants.statusBarHeight;
 
+const headerHeight = 60;
 const footerHeight = 68;
 // const barHeight = Constants.statusBarHeight;
 
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
 
   // Heaerder Base
   barHearder:{
-    height: 60+barHeight,
+    height: headerHeight + barHeight,
     justifyContent: 'center', 
     alignItems: 'center',
     position: 'relative',
@@ -564,6 +565,30 @@ const styles = StyleSheet.create({
     bottom: -3,
     left: 20,
   },
+  listCateNews:{
+    position: 'absolute',
+    width: ScreenWidth-40,
+    marginLeft: 20,
+    backgroundColor: "#FFFFFF",
+    top: barHeight + headerHeight,
+    zIndex: 999999999999,
+    borderWidth: 1,
+    borderColor: '#d9d9d9',
+    padding: 20,
+  },
+  itemHeaderCateNews:{
+    borderTopColor: '#f2f2f2',
+    borderTopWidth: 1,
+    borderBottomColor: '#f2f2f2',
+    borderBottomWidth: 1,
+    paddingTop: 10,
+    paddingBottom: 10,  
+  },
+  txtCateHeaderNews:{
+    fontFamily: "RobotoRegular",
+    fontSize: 16,
+  }
+
 
 
 

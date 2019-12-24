@@ -10,7 +10,9 @@ let ScreenWidth = Dimensions.get("window").width;
 export default class HeaderBase extends Component {
     constructor(props) {
         super(props);
-
+        this.state={
+            ListCateNewsHeader: false,
+        }
     } 
 
     componentDidMount() {
@@ -20,6 +22,38 @@ export default class HeaderBase extends Component {
         this.props.navigation.goBack();
     }
 
+
+    setStateListCateNewsHeader(method){
+        this.setState({
+            ListCateNewsHeader: !this.state.ListCateNewsHeader,   
+        });  
+    }
+    showListCateNewsHeader(){
+        if(this.state.ListCateNewsHeader)
+            return (
+                <View style={MainStyle.listCateNews}>
+                    <TouchableOpacity style={MainStyle.itemHeaderCateNews}>
+                        <Text style={MainStyle.txtCateHeaderNews}><Icon type="EvilIcons" name="chevron-right" style={{ color: '#000000', fontSize: 22 }} /> Tin tức Vulcano</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={MainStyle.itemHeaderCateNews}>
+                        <Text style={MainStyle.txtCateHeaderNews}><Icon type="EvilIcons" name="chevron-right" style={{ color: '#000000', fontSize: 22 }} /> Tin tức Vulcano</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={MainStyle.itemHeaderCateNews}>
+                        <Text style={MainStyle.txtCateHeaderNews}><Icon type="EvilIcons" name="chevron-right" style={{ color: '#000000', fontSize: 22 }} /> Tin tức Vulcano</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={MainStyle.itemHeaderCateNews}>
+                        <Text style={MainStyle.txtCateHeaderNews}><Icon type="EvilIcons" name="chevron-right" style={{ color: '#000000', fontSize: 22 }} /> Tin tức Vulcano</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        // else
+        //     return ( 
+        //         <TouchableOpacity style={[MainStyle.tBoderS]}
+        //             onPress={() => this.setStateEdit()}>
+        //             <Text style={[MainStyle.fontAvo,{color: '#ED1E79', marginTop: -2}]}>Sửa thông tin</Text> 
+        //         </TouchableOpacity>  
+        //     )
+    }
     
 
 
@@ -73,9 +107,10 @@ export default class HeaderBase extends Component {
                         <View style={MainStyle.titleCenterHeader}> 
                             <Text style={MainStyle.txtCenterHeader}>{title}</Text>
                         </View>
-                        <TouchableOpacity style={MainStyle.iconSearchHeader} >
+                        <TouchableOpacity style={MainStyle.iconSearchHeader} onPress={()=>this.setStateListCateNewsHeader()}>
                             <Icon type="MaterialCommunityIcons" name="dots-vertical" style={{ color: '#000000', fontSize: 23 }} />
                         </TouchableOpacity>
+                        {this.showListCateNewsHeader()}
                     </View>
                 );
             default: 
