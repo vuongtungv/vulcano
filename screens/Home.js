@@ -1,0 +1,268 @@
+import React from "react";
+import {
+  View,
+  KeyboardAvoidingView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  Image,
+  FlatList
+} from "react-native";
+import { Container, Icon, CheckBox } from "native-base";
+
+import Swiper from "react-native-swiper";
+import MainStyle from "../styles/MainStyle.js";
+import { ScrollView } from "react-native-gesture-handler";
+import FooterBase from './template/FooterBase';
+import HeaderBase from './template/HeaderBase';
+import {getSlidesHome, getOneBanner, getCateIdHome, cateBigHome} from './../src/api/apiHome';
+
+
+export default class Home extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    header: null
+  });
+ 
+  constructor(props) { 
+    super(props);
+    this.state = {
+      listSlide: '',
+      oneBanner: '', 
+      listCate: '',
+      listCateBig: '',
+  };  
+
+  }
+
+  gotoNews(){
+    this.props.navigation.navigate('NewsScreen');
+  }
+  componentDidMount(){
+    this.getSlides();
+    this.getOneBanner();
+    this.getCateIdHome(); // áo sơ mi dày tay, áo khoác, vecton
+    this.cateBigHome(); // áo, quần, bộ quần áo
+  }
+
+  getSlides = () => {
+    this.setState({ loading: true });
+    getSlidesHome()
+    .then(resJSON => {
+        const { list, error } = resJSON;
+        console.log(list); 
+        if (error == false) {
+            this.setState({
+              listSlide: list,  
+                loading: false,
+                refreshing: false,
+                error: false || null,  
+            });  
+            // console.log(list);
+        } else {
+            this.setState({ loading: false, refreshing: false });
+        }
+
+    }).catch(err => {
+        this.setState({ loading: false }); 
+    });
+  }
+  getOneBanner = () => {
+    this.setState({ loading: true });
+    getOneBanner()
+    .then(resJSON => {
+        const { list, error } = resJSON;
+        console.log(list); 
+        if (error == false) {
+            this.setState({
+              oneBanner: list,  
+                loading: false,
+                refreshing: false,
+                error: false || null,  
+            });  
+            // console.log(list);
+        } else {
+            this.setState({ loading: false, refreshing: false });
+        }
+
+    }).catch(err => {
+        this.setState({ loading: false }); 
+    });
+  }
+  getCateIdHome= () => {
+    this.setState({ loading: true });
+    getCateIdHome()
+    .then(resJSON => {
+        const { list, error } = resJSON;
+        console.log(list); 
+        if (error == false) {
+            this.setState({
+              listCate: list,  
+                loading: false,
+                refreshing: false,
+                error: false || null,  
+            });  
+            // console.log(list);
+        } else {
+            this.setState({ loading: false, refreshing: false });
+        }
+
+    }).catch(err => {
+        this.setState({ loading: false }); 
+    });
+  }
+  cateBigHome= () => {
+    this.setState({ loading: true });
+    cateBigHome()
+    .then(resJSON => {
+        const { list, error } = resJSON;
+        console.log(list); 
+        if (error == false) {
+            this.setState({
+              listCateBig: list,  
+                loading: false,
+                refreshing: false,
+                error: false || null,  
+            });  
+            // console.log(list);
+        } else {
+            this.setState({ loading: false, refreshing: false });
+        }
+ 
+    }).catch(err => {
+        this.setState({ loading: false }); 
+    });
+  }
+
+
+
+
+
+  render() {
+    const { navigation, page, title, heading } = this.props;
+    return (
+      <Container>
+        <HeaderBase navigation={navigation} />
+        <ScrollView>
+          <View style={MainStyle.slideHome}>
+              <Swiper autoplay={true}>
+                <FlatList  
+                  data={this.state.listSlide}   
+                  renderItem={({ item }) => (
+                    <Image key={item.id} style={[MainStyle.itemsSlideHome]} source={{uri: item.image}} />
+                  )}
+                  keyExtractor={item => item.id}
+                />
+                {/* <Image style={MainStyle.itemsSlideHome} source={require("../assets/image_slide.png")} /> */}
+              </Swiper> 
+          </View> 
+        
+          <View style={MainStyle.cateHome} >
+              <TouchableOpacity style={MainStyle.itemCateHome}>
+                <View style={MainStyle.iconCenter}>
+                  <Image style={MainStyle.iconCateHome} source={require("../assets/icon_products.png")} />
+                </View>
+                <Text style={MainStyle.textCateHome}>Sản phẩm</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={MainStyle.itemCateHome}>
+                <View style={MainStyle.iconCenter}>
+                  <Image style={MainStyle.iconCateHome} source={require("../assets/icon_sale.png")} />
+                </View>
+                <Text style={MainStyle.textCateHome}>Giảm giá</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={MainStyle.itemCateHome}> 
+                <View style={MainStyle.iconCenter}>
+                  <Image style={MainStyle.iconCateHome} source={require("../assets/icon_showrooms.png")} />
+                </View>
+                <Text style={MainStyle.textCateHome}>Cửa hàng</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={MainStyle.itemCateHome}>
+                <View style={MainStyle.iconCenter}>
+                  <Image style={MainStyle.iconCateHome} source={require("../assets/icon_youtube.png")} />
+                </View>
+                <Text style={MainStyle.textCateHome}>Video</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={MainStyle.itemCateHome} onPress={()=>this.gotoNews()}>
+                <View style={MainStyle.iconCenter}>
+                  <Image style={MainStyle.iconCateHome} source={require("../assets/icon_news.png")} />
+                </View>
+                <Text style={MainStyle.textCateHome}>Tin tức</Text>
+              </TouchableOpacity>
+          </View>
+
+          <View style={[MainStyle.bannerHome]}>
+            {/* <Image style={MainStyle.itemsBannerHome} source={require("../assets/banner_home.png")} /> */}
+            <Image style={MainStyle.itemsBannerHome} source={{uri: this.state.oneBanner.image}} />
+          </View>
+
+          <View style={[MainStyle.cateSmallHome]}>
+              <FlatList  
+                  data={this.state.listCate}   
+                  renderItem={({ item }) => (
+                    <TouchableOpacity style={MainStyle.itemsCateSmallHome}>
+                      <View style={MainStyle.viewSmallHome}>
+                        {/* <Image style={MainStyle.imgSmallHome} source={require("../assets/image_cate_small.png")} /> */}
+                        <Image style={MainStyle.imgSmallHome} source={{uri: item.image}} />
+                      </View>
+                      <View style={MainStyle.bodySmallHome}>
+                        <Text style={MainStyle.titleSmall}>{item.name}</Text>
+                        <Text style={MainStyle.viewAll}>Xem tất cả sản phẩm ></Text>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                  keyExtractor={item => item.id}
+                />
+            
+            <TouchableOpacity style={MainStyle.itemsCateSmallHome}>
+              <View style={MainStyle.viewSmallHome}>
+                <Image style={MainStyle.imgSmallHome} source={require("../assets/image_cate_small.png")} />
+              </View>
+              <View style={MainStyle.bodySmallHome}>
+                <Text style={MainStyle.titleSmall}>Top bán chạy</Text>
+                <Text style={MainStyle.viewAll}>Xem tất cả sản phẩm ></Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View style={MainStyle.lineBlack}>
+            <View style={MainStyle.itemsLine}></View>
+            <View style={MainStyle.itemsLine}></View>
+          </View>
+
+          <View style={[MainStyle.cateBigHome,{marginBottom: 65}]}>
+            
+            <FlatList  
+                    data={this.state.listCateBig}   
+                    renderItem={({ item }) => (
+                      <View style={MainStyle.itemBigHome}>
+                        <View style={MainStyle.imgBigHome}>
+                          {/* <Image style={MainStyle.imgBigHome} source={require("../assets/image_cate_big.png")} /> */}
+                          <Image style={MainStyle.imgBigHome} source={{ uri: item.image}} />
+                        </View>
+                        <View style={MainStyle.bodyBigHome}>
+                          <Text style={MainStyle.titleBig}>{item.name} Vulcano</Text>
+                          <TouchableOpacity><Text style={MainStyle.viewNow}>Xem thêm</Text></TouchableOpacity>
+                        </View>
+                      </View>
+                    )}
+                    keyExtractor={item => item.id}
+                  />
+            
+              {/* <View style={MainStyle.itemBigHome}>
+                <View style={MainStyle.imgBigHome}>
+                  <Image style={MainStyle.imgBigHome} source={require("../assets/image_cate_big.png")} />
+                </View>
+                <View style={MainStyle.bodyBigHome}>
+                  <Text style={MainStyle.titleBig}>Top bán chạy</Text>
+                  <Text style={MainStyle.viewNow}>Xem thêm</Text>
+                </View>
+              </View> */}
+          </View>
+        </ScrollView>
+        <FooterBase page="home" navigation={navigation}/>
+      </Container>
+
+
+    );
+  }
+}
