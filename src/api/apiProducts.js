@@ -15,3 +15,11 @@ export function getDetailProducts(id){
     return fetch(url)
     .then(res => res.json());
 };
+
+export function getCateLv1(){
+    let url;
+    url = global.BASE_URL+`/get_cate_lv1.api`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};

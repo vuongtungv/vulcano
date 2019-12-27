@@ -15,8 +15,8 @@ export default class HeaderBase extends Component {
         super(props);
         this.state={
             ListCateNewsHeader: false,
-
         }
+        global.onRefresh = this.onRefresh.bind(this);
     } 
 
     componentDidMount() {
@@ -58,7 +58,9 @@ export default class HeaderBase extends Component {
         if(this.state.ListCateNewsHeader)
             return (
                 <View style={MainStyle.listCateNews}>
-                    <View style={MainStyle.trianleTop}><Image source={require("../../assets/iconTop.png")}/></View>
+                    <View style={MainStyle.trianleTop}>
+                        <Image source={require("../../assets/iconTop.png")}/>
+                    </View>
                     <FlatList  
                         data={this.state.listCateNews}   
                         renderItem={({ item }) => (
@@ -73,10 +75,17 @@ export default class HeaderBase extends Component {
             )
     }
     gotoListNewsCate(id){
+        this.props.navigation.goBack();
+        global.onRefresh();
         this.props.navigation.navigate('CateNewsScreen',{ id: id });
     }
     
-
+    onRefresh() {
+        this.arr = [];
+        this.setState({
+            listRest: []
+        });
+    }
 
 
     render() {
@@ -121,18 +130,21 @@ export default class HeaderBase extends Component {
             // tin tức
             case 'news':
                 return(
-                    <View style={MainStyle.barHearder}>
-                        <TouchableOpacity style={MainStyle.backHeader} onPress={() => this.gotoBack()}>
-                            <Icon type="FontAwesome" name="angle-left" style={[MainStyle.tHeaderIconMenu,{fontSize:35}]} />
-                        </TouchableOpacity>
-                        <View style={MainStyle.titleCenterHeader}> 
-                            <Text style={MainStyle.txtCenterHeader}>{title}</Text>
+                    <View style={{position: 'relative'}}>
+                        <View style={MainStyle.barHearder}>
+                            <TouchableOpacity style={MainStyle.backHeader} onPress={() => this.gotoBack()}>
+                                <Icon type="FontAwesome" name="angle-left" style={[MainStyle.tHeaderIconMenu,{fontSize:35}]} />
+                            </TouchableOpacity>
+                            <View style={MainStyle.titleCenterHeader}> 
+                                <Text style={MainStyle.txtCenterHeader}>{title}</Text>
+                            </View>
+                            <TouchableOpacity style={MainStyle.iconSearchHeader} onPress={()=>this.setStateListCateNewsHeader()}>
+                                <Icon type="MaterialCommunityIcons" name="dots-vertical" style={{ color: '#000000', fontSize: 23 }} />
+                            </TouchableOpacity>
                         </View>
-                        <TouchableOpacity style={MainStyle.iconSearchHeader} onPress={()=>this.setStateListCateNewsHeader()}>
-                            <Icon type="MaterialCommunityIcons" name="dots-vertical" style={{ color: '#000000', fontSize: 23 }} />
-                        </TouchableOpacity>
                         {this.showListCateNewsHeader()}
                     </View>
+                    
                 );
             case 'detail_news':
                 return(

@@ -8,12 +8,13 @@ import { Container, Content, CheckBox, Icon } from "native-base";
 import {getDetailProducts} from './../../src/api/apiProducts';
 
 const { width } = Dimensions.get('window');
+const { heigth } = Dimensions.get('window');
 
 
 import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
-
+import global from './../api/global';
 
 export default class DetailProduct extends Component{
     static navigationOptions = ({ navigation }) => ({
@@ -31,16 +32,18 @@ export default class DetailProduct extends Component{
             arr_kieu_dang: [],
             arr_size: [],
             arr_image: [],
+            otherProducts: [],
         }
 
         this.arr = [];
+        global.onRefresh = this.onRefresh.bind(this);
     }
 
     componentDidMount() {
         const { id } = this.props.navigation.state.params;
         getDetailProducts(id)
             .then(resJSON => {
-                const { detail,kieu_dang,chat_lieu,arr_kieu_dang,arr_size,arr_image, error} = resJSON;
+                const { detail,kieu_dang,chat_lieu,arr_kieu_dang,arr_size,arr_image,otherProducts, error} = resJSON;
                 
                 if (error == false) {
                     this.setState({
@@ -51,6 +54,7 @@ export default class DetailProduct extends Component{
                         arr_size: arr_size,
                         arr_image: arr_image,
                         loaded: true,
+                        otherProducts: otherProducts,
                     }); 
                 
                 }
@@ -61,7 +65,12 @@ export default class DetailProduct extends Component{
     gotoBack(){
         this.props.navigation.goBack();
     }
-
+    onRefresh() {
+        this.arr = [];
+        this.setState({
+            listRest: []
+        });
+    }
 
     showImages(index){
         const image = this.state.arr_image[index].image.replace('/original/', '/original/');
@@ -97,6 +106,18 @@ export default class DetailProduct extends Component{
     }
 
 
+    detailProduct(id){
+        this.props.navigation.goBack();
+        global.onRefresh();
+        this.props.navigation.navigate('DetailProductScreeen',{ id: id });
+    }
+    onRefresh() {
+        this.arr = [];
+        this.setState({
+            listRest: []
+        });
+    }
+
 	 
     render() {
         const {navigation} = this.props;
@@ -106,14 +127,20 @@ export default class DetailProduct extends Component{
                 {/* <HeaderBase page="list_products" title={'Sản phẩm'} navigation={navigation} /> */}
                 <ScrollView>
                     <View style={MainStyle.slideImageProduct}>
-                        <View style={MainStyle.taskDetailP}>
                             <TouchableOpacity style={[MainStyle.btnRa50,MainStyle.backDetailP]} onPress={() => this.gotoBack()}>
                                 <Icon type="FontAwesome" name="angle-left" style={[MainStyle.tHeaderIconMenu,{color: '#FFFFFF',fontSize:35}]} />
                             </TouchableOpacity> 
                             <TouchableOpacity style={[MainStyle.btnRa50,MainStyle.addDetailP]}>
                                 <Icon type="SimpleLineIcons" name="handbag" style={{ color: '#FFFFFF', fontSize: 27 }} />
                             </TouchableOpacity>
-                        </View>
+                        {/* <View style={MainStyle.taskDetailP}>
+                            <TouchableOpacity style={[MainStyle.btnRa50,MainStyle.backDetailP]} onPress={() => this.gotoBack()}>
+                                <Icon type="FontAwesome" name="angle-left" style={[MainStyle.tHeaderIconMenu,{color: '#FFFFFF',fontSize:35}]} />
+                            </TouchableOpacity> 
+                            <TouchableOpacity style={[MainStyle.btnRa50,MainStyle.addDetailP]}>
+                                <Icon type="SimpleLineIcons" name="handbag" style={{ color: '#FFFFFF', fontSize: 27 }} />
+                            </TouchableOpacity>
+                        </View> */}
                         <Swiper>
                             {this.state.arr_image.map((item, index) => {return (
                                 <TouchableOpacity key={item.id} onPress={() => this.showImages(index)}>
@@ -172,24 +199,17 @@ export default class DetailProduct extends Component{
                         <View style={[MainStyle.brBottomOther,{width: 150}]}></View>
                     </View>
                     <View style={[MainStyle.otherDProducts,{marginTop: 20}]}>
-                        <TouchableOpacity style={MainStyle.itemProducts} onPress={()=>this.detailProduct()}> 
-                            <View style={MainStyle.vImgItemPro}>
-                                <Image style={{width: '100%', height:500}} source={require('../../assets/img_products.png')}/>
-                            </View>
-                            <View style={MainStyle.bodyItemPro}>
-                                <Text style={MainStyle.nameItemProducts}>Áo sơ mi dài tay trắng 9499</Text>
-                                <Text style={MainStyle.priceItemProducts}>586.000 đ</Text>
-                            </View>
-                        </TouchableOpacity> 
-                        <View style={MainStyle.itemProducts}> 
-                            <View style={MainStyle.vImgItemPro}>
-                                <Image style={{width: '100%', height:500}} source={require('../../assets/img_products.png')}/>
-                            </View>
-                            <View style={MainStyle.bodyItemPro}>
-                                <Text style={MainStyle.nameItemProducts}>Áo sơ mi dài tay trắng 9499</Text>
-                                <Text style={MainStyle.priceItemProducts}>586.000 đ</Text>
-                            </View>
-                        </View>
+                        {this.state.otherProducts.map((item, index) => {return (
+                            <TouchableOpacity key={item.id} style={MainStyle.itemProducts} onPress={()=>this.detailProduct(item.id)}> 
+                                <View style={MainStyle.vImgItemPro}>
+                                    <Image style={{width: width-40, height: (width-40)*1.5}} source={{ uri: item.image}}/>
+                                </View>
+                                <View style={MainStyle.bodyItemPro}>
+                                    <Text style={MainStyle.nameItemProducts}>{item.name}</Text>
+                                    <Text style={MainStyle.priceItemProducts}>{item.price} đ</Text>
+                                </View>
+                            </TouchableOpacity> 
+                        )})} 
                     </View>
                     <View style={MainStyle.quickTaskBottom}>
                         <TouchableOpacity style={MainStyle.quickTouch}>
@@ -201,30 +221,30 @@ export default class DetailProduct extends Component{
                     </View>
                 </ScrollView>
                 <Modal 
-                            presentationStyle="overFullScreen"
-                            animationType="slide"
-                            transparent={true}
-                            visible={this.state.modalVisible}
-                            onRequestClose={() => {}}>
-                            <View style={MainStyle.tContainerImgModal}>
-                                <View style={[MainStyle.tModalBody, { width: width - 40,marginLeft: 20,marginBottom: 25,alignItems: 'center'}]}> 
-                                    <ScrollView>
-                                        <Image style={{width: this.state.imageWidth, height: this.state.imageHeight, alignItems: 'center',}} source={{ uri: this.state.image }} />
-                                    </ScrollView>
-                                </View>
-                                <View style={{ justifyContent: 'space-between', flexDirection: "row", width: width-40, marginLeft: 20,}}>
-                                    <TouchableOpacity style={MainStyle.tBtnModalSave}
-                                        onPress={()=>this.imgModalSave()}>
-                                        <Text style={[MainStyle.txtModal,MainStyle.txtModalB]}>Lưu</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={MainStyle.tBtnModal}
-                                        onPress={()=>this.setState({modalVisible:false})}>
-                                        <Text style={[MainStyle.txtModal,MainStyle.txtModalW]}>Đóng</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                
-                            </View>
-                        </Modal>
+                    presentationStyle="overFullScreen"
+                    animationType="slide"
+                    transparent={true}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {}}>
+                    <View style={MainStyle.tContainerImgModal}>
+                        <View style={[MainStyle.tModalBody, { width: width - 40,marginLeft: 20,marginBottom: 25,alignItems: 'center'}]}> 
+                            <ScrollView>
+                                <Image style={{width: this.state.imageWidth, height: this.state.imageHeight, alignItems: 'center',}} source={{ uri: this.state.image }} />
+                            </ScrollView>
+                        </View>
+                        <View style={{ justifyContent: 'space-between', flexDirection: "row", width: width-40, marginLeft: 20,}}>
+                            <TouchableOpacity style={MainStyle.tBtnModalSave}
+                                onPress={()=>this.imgModalSave()}>
+                                <Text style={[MainStyle.txtModal,MainStyle.txtModalB]}>Lưu</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={MainStyle.tBtnModal}
+                                onPress={()=>this.setState({modalVisible:false})}>
+                                <Text style={[MainStyle.txtModal,MainStyle.txtModalW]}>Đóng</Text>
+                            </TouchableOpacity>
+                        </View>
+                        
+                    </View>
+                </Modal>
             </Container>
         );
     }

@@ -20,18 +20,20 @@ export default class CateNews extends Component{
         }
 
         this.arr = [];
+        
     }
 
     componentDidMount() {
         const { id } = this.props.navigation.state.params;
         getListNewsCate(id)
             .then(resJSON => {
-                const { list, error } = resJSON;
+                const { list, category_name, error } = resJSON;
                 // console.log(list); 
                 if (error == false) {
                     this.setState({
                         listNews: list,  
                         loading: false,
+                        category_name: category_name,
                         refreshing: false,
                         error: false || null,   
                     });  
@@ -59,7 +61,7 @@ export default class CateNews extends Component{
 
         return(
             <Container>
-                <HeaderBase page="news" title={'Tin tức và sự kiện'} navigation={navigation} />
+                <HeaderBase page="news" title={this.state.category_name} navigation={navigation} />
                 <ScrollView style={MainStyle.pageNews}>
                     <FlatList  
                         data={this.state.listNews}   

@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'RobotoBold',
     marginTop: 5,
+    color: '#777777',
   },
   tContainerDefault:{
     zIndex: 10,
@@ -275,6 +276,9 @@ const styles = StyleSheet.create({
     width: 80,
     height: 85,
     marginRight: 15,
+    backgroundColor: '#eeecea',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   wImgCate:{
     width: 80,
@@ -341,16 +345,11 @@ const styles = StyleSheet.create({
     height: ScreenWidth*1.5,
     marginTop: barHeight,
     position: 'relative',
+    zIndex: -1,
   },
   itemsSlideDetailProduct:{
     width: ScreenWidth,
     height: ScreenWidth*1.5,
-  },
-  taskDetailP:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    position: 'absolute',
-    zIndex: 9, 
   },
   backDetailP:{
     position: 'absolute',
@@ -363,16 +362,16 @@ const styles = StyleSheet.create({
   addDetailP:{  
     position: 'absolute',
     zIndex: 99,
-    left: ScreenWidth-44-20,
-    top: 10, 
-    justifyContent: 'center',
-    alignItems: 'center',
+    left: ScreenWidth-40-20,
+    top: 5,
   },
   btnRa50:{
     width: 44,
     height: 44,
     borderRadius: 22,
     backgroundColor: '#000000',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   tDetailProduct:{
     width: ScreenWidth-40,
@@ -635,9 +634,12 @@ const styles = StyleSheet.create({
   // style tam giác
   trianleTop:{
     position: 'absolute',
-    top: -9,
+    top: -10,
     right: 20,
-    zIndex: 99,
+    zIndex: 9999,
+    borderBottomWidth: 2,
+    borderBottomColor: "#FFFFFF",
+    overflow: 'hidden',
   },
 
 

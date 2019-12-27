@@ -4,6 +4,7 @@ import MainStyle from './../../styles/MainStyle';
 import FooterBase from './../template/FooterBase';
 import HeaderBase from './../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
+import {getCateLv1} from './../../src/api/apiProducts';
 
 export default class Home extends Component{
     static navigationOptions = ({ navigation }) => ({
@@ -14,21 +15,38 @@ export default class Home extends Component{
         super(props);
         
         this.state = {
-            class_id: 50,
-            teacher_id: 55,
-            allow_more: true,
             loading: true,
-            list: [],
+            listCateLv1: [],
         }
 
         this.arr = [];
     }
 
     componentDidMount() {
-        
+        this.getCateLv1();
     }
-    listProduct(){
-        this.props.navigation.navigate('ListProductsInCateScreeen');
+
+    getCateLv1 = () => {
+        this.setState({ loading: true });
+        getCateLv1()
+        .then(resJSON => {
+            const { list, error } = resJSON;
+            if (error == false) {
+                this.setState({
+                    listCateLv1: list,  
+                    error: false || null,  
+                });  
+            } else {
+                this.setState({ loading: false, refreshing: false });
+            }
+    
+        }).catch(err => {
+            // this.setState({ loading: false }); 
+        });
+    }
+
+    listProductsInCate(id){
+        this.props.navigation.navigate('ListProductsInCateScreeen',{ id: id });
     }
 
 	
@@ -40,10 +58,10 @@ export default class Home extends Component{
                 <HeaderBase page="categories" title={'Danh mục sản phẩm'} navigation={navigation} />
                 <View style={MainStyle.pageCategories}>
                     <View style={MainStyle.tabListCategories}>
-                        <View style={[MainStyle.itemsTabCategories]}>
+                        <View style={[MainStyle.itemsTabCategories,MainStyle.activeItemsTabCategories]}>
                             <Text style={MainStyle.textTabCategories}>Sản phẩm</Text>
                         </View>
-                        <View style={[MainStyle.itemsTabCategories,MainStyle.activeItemsTabCategories]}>
+                        <View style={[MainStyle.itemsTabCategories]}>
                             <Text style={MainStyle.textTabCategories}>Hot sales</Text>
                         </View>
                         <View style={[MainStyle.itemsTabCategories]}>
@@ -51,70 +69,21 @@ export default class Home extends Component{
                         </View>
                     </View>
                     <ScrollView style={MainStyle.listCategories}>
-                        <TouchableOpacity style={MainStyle.itemsCate} onPress={()=>this.listProduct()} >
-                            <View style={MainStyle.imgCate}>
-                                <Image style={MainStyle.wImgCate} source={require('../../assets/img_cate.png')}/>
-                            </View>
-                            <View style={MainStyle.vNameCate}>
-                                <Text style={MainStyle.nameCate}>Áo sơ mi dài tay</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <View style={MainStyle.itemsCate}>
-                            <View style={MainStyle.imgCate}>
-                                <Image style={MainStyle.wImgCate} source={require('../../assets/img_cate.png')}/>
-                            </View>
-                            <View style={MainStyle.vNameCate}>
-                                <Text style={MainStyle.nameCate}>Áo khoác - Jacket</Text>
-                            </View>
-                        </View>
-                        <View style={MainStyle.itemsCate}>
-                            <View style={MainStyle.imgCate}>
-                                <Image style={MainStyle.wImgCate} source={require('../../assets/img_cate.png')}/>
-                            </View>
-                            <View style={MainStyle.vNameCate}>
-                                <Text style={MainStyle.nameCate}>Veston</Text>
-                            </View>
-                        </View>
-                        <View style={MainStyle.itemsCate}>
-                            <View style={MainStyle.imgCate}>
-                                <Image style={MainStyle.wImgCate} source={require('../../assets/img_cate.png')}/>
-                            </View>
-                            <View style={MainStyle.vNameCate}>
-                                <Text style={MainStyle.nameCate}>Áo giữ nhiệt</Text>
-                            </View>
-                        </View>
-                        <View style={MainStyle.itemsCate}>
-                            <View style={MainStyle.imgCate}>
-                                <Image style={MainStyle.wImgCate} source={require('../../assets/img_cate.png')}/>
-                            </View>
-                            <View style={MainStyle.vNameCate}>
-                                <Text style={MainStyle.nameCate}>Áo sơ mi dài tay</Text>
-                            </View>
-                        </View>
-                        <View style={MainStyle.itemsCate}>
-                            <View style={MainStyle.imgCate}>
-                                <Image style={MainStyle.wImgCate} source={require('../../assets/img_cate.png')}/>
-                            </View>
-                            <View style={MainStyle.vNameCate}>
-                                <Text style={MainStyle.nameCate}>Áo khoác - Jacket</Text>
-                            </View>
-                        </View>
-                        <View style={MainStyle.itemsCate}>
-                            <View style={MainStyle.imgCate}>
-                                <Image style={MainStyle.wImgCate} source={require('../../assets/img_cate.png')}/>
-                            </View>
-                            <View style={MainStyle.vNameCate}>
-                                <Text style={MainStyle.nameCate}>Veston</Text>
-                            </View>
-                        </View>
-                        <View style={MainStyle.itemsCate}>
-                            <View style={MainStyle.imgCate}>
-                                <Image style={MainStyle.wImgCate} source={require('../../assets/img_cate.png')}/>
-                            </View>
-                            <View style={MainStyle.vNameCate}>
-                                <Text style={MainStyle.nameCate}>Áo giữ nhiệt</Text>
-                            </View>
-                        </View>
+                        {this.state.listCateLv1.map((item, index) => {return (
+                            <TouchableOpacity key={item.id} style={MainStyle.itemsCate} onPress={()=>this.listProductsInCate(item.id)} >
+                                <View style={MainStyle.imgCate}>
+                                {
+                                    item.image !='' ?  
+                                    <Image style={MainStyle.wImgCate} source={{uri: item.image}} />
+                                    :
+                                    <Image style={{width: '100%', height: 45}}  source={require("../../assets/logo.png")} />     
+                                }
+                                </View>
+                                <View style={MainStyle.vNameCate}>
+                                    <Text style={MainStyle.nameCate}>{item.name}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        )})}  
                     </ScrollView> 
                 </View>
                 <FooterBase navigation={navigation} page="muster"  />
