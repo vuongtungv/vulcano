@@ -65,11 +65,11 @@ export default class App extends React.Component {
       return (
         <AppContainer ref={nav => { this.navigator = nav; }} />
       )
-    else
+    else 
       return (
         <View style={{ flex: 1 }}>
-          <Image style={[MainStyle.tSplashs]} source={require('./assets/splash.png')} />
+          <Image style={[MainStyle.tSplashs,{width: '100%', height: '100%'}]} source={require('./assets/splash.png')} />
         </View>
-      ) 
+      )   
   } 
 }

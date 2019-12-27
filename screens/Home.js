@@ -17,6 +17,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import FooterBase from './template/FooterBase';
 import HeaderBase from './template/HeaderBase';
 import {getSlidesHome, getOneBanner, getCateIdHome, cateBigHome} from './../src/api/apiHome';
+import { ProductsInCate } from './../src/api/apiProducts';
 
 
 export default class Home extends React.Component {
@@ -27,9 +28,9 @@ export default class Home extends React.Component {
   constructor(props) { 
     super(props);
     this.state = {
-      listSlide: '',
+      listSlide: [],
       oneBanner: '', 
-      listCate: '',
+      listCate: [],
       listCateBig: '',
   };  
 
@@ -50,13 +51,11 @@ export default class Home extends React.Component {
     getSlidesHome()
     .then(resJSON => {
         const { list, error } = resJSON;
-        console.log(list); 
+        // console.log(list); 
         if (error == false) {
             this.setState({
               listSlide: list,  
-                loading: false,
-                refreshing: false,
-                error: false || null,  
+              error: false || null,  
             });  
             // console.log(list);
         } else {
@@ -64,7 +63,7 @@ export default class Home extends React.Component {
         }
 
     }).catch(err => {
-        this.setState({ loading: false }); 
+        // this.setState({ loading: false }); 
     });
   }
   getOneBanner = () => {
@@ -72,7 +71,7 @@ export default class Home extends React.Component {
     getOneBanner()
     .then(resJSON => {
         const { list, error } = resJSON;
-        console.log(list); 
+        // console.log(list); 
         if (error == false) {
             this.setState({
               oneBanner: list,  
@@ -86,7 +85,7 @@ export default class Home extends React.Component {
         }
 
     }).catch(err => {
-        this.setState({ loading: false }); 
+        // this.setState({ loading: false }); 
     });
   }
   getCateIdHome= () => {
@@ -94,12 +93,12 @@ export default class Home extends React.Component {
     getCateIdHome()
     .then(resJSON => {
         const { list, error } = resJSON;
-        console.log(list); 
+        // console.log(list); 
         if (error == false) {
             this.setState({
               listCate: list,  
-                loading: false,
-                refreshing: false,
+                // loading: false,
+                // refreshing: false,
                 error: false || null,  
             });  
             // console.log(list);
@@ -108,7 +107,7 @@ export default class Home extends React.Component {
         }
 
     }).catch(err => {
-        this.setState({ loading: false }); 
+        // this.setState({ loading: false }); 
     });
   }
   cateBigHome= () => {
@@ -116,12 +115,12 @@ export default class Home extends React.Component {
     cateBigHome()
     .then(resJSON => {
         const { list, error } = resJSON;
-        console.log(list); 
+        // console.log(list); 
         if (error == false) {
             this.setState({
               listCateBig: list,  
-                loading: false,
-                refreshing: false,
+                // loading: false,
+                // refreshing: false,
                 error: false || null,  
             });  
             // console.log(list);
@@ -130,10 +129,13 @@ export default class Home extends React.Component {
         }
  
     }).catch(err => {
-        this.setState({ loading: false }); 
+        // this.setState({ loading: false }); 
     });
   }
 
+  listProductsInCate(id){
+    this.props.navigation.navigate('ListProductsInCateScreeen',{ id: id });
+  }
 
 
 
@@ -145,14 +147,10 @@ export default class Home extends React.Component {
         <HeaderBase navigation={navigation} />
         <ScrollView>
           <View style={MainStyle.slideHome}>
-              <Swiper autoplay={true}>
-                <FlatList  
-                  data={this.state.listSlide}   
-                  renderItem={({ item }) => (
+              <Swiper autoplay={true} autoplayTimeout={4}>
+                  {this.state.listSlide.map((item, index) => {return (
                     <Image key={item.id} style={[MainStyle.itemsSlideHome]} source={{uri: item.image}} />
-                  )}
-                  keyExtractor={item => item.id}
-                />
+                  )})}
                 {/* <Image style={MainStyle.itemsSlideHome} source={require("../assets/image_slide.png")} /> */}
               </Swiper> 
           </View> 
@@ -196,10 +194,8 @@ export default class Home extends React.Component {
           </View>
 
           <View style={[MainStyle.cateSmallHome]}>
-              <FlatList  
-                  data={this.state.listCate}   
-                  renderItem={({ item }) => (
-                    <TouchableOpacity style={MainStyle.itemsCateSmallHome}>
+                {this.state.listCate.map((item, index) => {return (
+                    <TouchableOpacity key={index} style={MainStyle.itemsCateSmallHome} onPress={()=>this.listProductsInCate(item.id)}>
                       <View style={MainStyle.viewSmallHome}>
                         {/* <Image style={MainStyle.imgSmallHome} source={require("../assets/image_cate_small.png")} /> */}
                         <Image style={MainStyle.imgSmallHome} source={{uri: item.image}} />
@@ -209,9 +205,7 @@ export default class Home extends React.Component {
                         <Text style={MainStyle.viewAll}>Xem tất cả sản phẩm ></Text>
                       </View>
                     </TouchableOpacity>
-                  )}
-                  keyExtractor={item => item.id}
-                />
+                  )})}
             
             <TouchableOpacity style={MainStyle.itemsCateSmallHome}>
               <View style={MainStyle.viewSmallHome}>
@@ -234,14 +228,14 @@ export default class Home extends React.Component {
             <FlatList  
                     data={this.state.listCateBig}   
                     renderItem={({ item }) => (
-                      <View style={MainStyle.itemBigHome}>
+                      <View style={MainStyle.itemBigHome} >
                         <View style={MainStyle.imgBigHome}>
                           {/* <Image style={MainStyle.imgBigHome} source={require("../assets/image_cate_big.png")} /> */}
                           <Image style={MainStyle.imgBigHome} source={{ uri: item.image}} />
                         </View>
                         <View style={MainStyle.bodyBigHome}>
                           <Text style={MainStyle.titleBig}>{item.name} Vulcano</Text>
-                          <TouchableOpacity><Text style={MainStyle.viewNow}>Xem thêm</Text></TouchableOpacity>
+                          <TouchableOpacity onPress={()=>this.listProductsInCate(item.id)}><Text style={MainStyle.viewNow}>Xem thêm</Text></TouchableOpacity>
                         </View>
                       </View>
                     )}

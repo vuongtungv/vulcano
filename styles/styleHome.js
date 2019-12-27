@@ -13,7 +13,7 @@ const footerHeight = 68;
 const styles = StyleSheet.create({
   tSplash:{
     width: ScreenWidth,
-    height: ScreenHeight 
+    height: ScreenHeight,  
   },
 
   // style footer
@@ -71,10 +71,11 @@ const styles = StyleSheet.create({
     height: headerHeight + barHeight,
     justifyContent: 'center', 
     alignItems: 'center',
-    position: 'relative',
     paddingTop: barHeight,
     borderBottomColor: '#b2b2b2',
     borderBottomWidth: 1,
+    position: 'relative',
+    zIndex: 1005,
   },
   logoHeader:{
     width: 99,
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
   iconSearchHeader:{
     position:'absolute',
     bottom: 20,
-    right: 20,
+    right: 40,
   },
   txtCenterHeader:{
     fontFamily: "RobotoBold",
@@ -455,7 +456,46 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 17,
   },
-  
+  tContainerImgModal:{
+    backgroundColor: '#000000',
+    width: ScreenWidth,
+    height: ScreenHeight,
+    height: '100%',
+    paddingTop: barHeight + 30,
+    paddingBottom: 25,
+  },
+  tModalBody:{
+    height: ScreenHeight - barHeight - 30 - 125,
+  },
+  tBtnModalSave:{
+    width: 100,
+    height: 50,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#000000',
+  },
+  tBtnModal:{
+    width: 100,
+    height: 50,
+    backgroundColor: '#808080',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#FFFFFF',
+  },
+  tModalContent:{
+    paddingLeft: 20,
+  },
+  txtModal:{
+    fontFamily: 'RobotoRegular',
+    fontSize: 17,
+  },
+  txtModalB:{
+    color: '#000000',
+  },
+  txtModalW:{
+    color: '#FFFFFF',
+  },
 
 
 
@@ -463,12 +503,12 @@ const styles = StyleSheet.create({
 
 
 
-  
+
   // tin tức
   pageNews:{
     paddingLeft: 20,
     paddingRight: 20,
-    marginBottom:footerHeight+20
+    marginBottom:footerHeight+20,
   },
   itemNews:{
     marginTop: 20,
@@ -569,9 +609,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: ScreenWidth-40,
     marginLeft: 20,
-    backgroundColor: "#FFFFFF",
-    top: barHeight + headerHeight,
-    zIndex: 999999999999,
+    backgroundColor: "#FFFFFF", 
+    top: barHeight + headerHeight -1,
+    zIndex: 1000,
     borderWidth: 1,
     borderColor: '#d9d9d9',
     padding: 20,
@@ -579,15 +619,28 @@ const styles = StyleSheet.create({
   itemHeaderCateNews:{
     borderTopColor: '#f2f2f2',
     borderTopWidth: 1,
-    borderBottomColor: '#f2f2f2',
-    borderBottomWidth: 1,
     paddingTop: 10,
-    paddingBottom: 10,  
+    paddingBottom: 10,
+    position: 'relative',
+    zIndex: 9999999,
   },
   txtCateHeaderNews:{
     fontFamily: "RobotoRegular",
     fontSize: 16,
-  }
+  },
+  borderCateNews:{  
+    borderBottomColor: '#f2f2f2',
+    borderBottomWidth: 1,
+  },
+  // style tam giác
+  trianleTop:{
+    position: 'absolute',
+    top: -9,
+    right: 20,
+    zIndex: 99,
+  },
+
+
 
 
 

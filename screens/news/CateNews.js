@@ -4,10 +4,10 @@ import MainStyle from './../../styles/MainStyle';
 import FooterBase from './../template/FooterBase';
 import HeaderBase from './../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
-import {getListNews} from './../../src/api/apiNews';
+import {getListNewsCate} from './../../src/api/apiNews';
 
 
-export default class Home extends Component{
+export default class CateNews extends Component{
     static navigationOptions = ({ navigation }) => ({
 		header: null,
     });
@@ -21,33 +21,31 @@ export default class Home extends Component{
 
         this.arr = [];
     }
- 
+
     componentDidMount() {
-        this.getListNews();
+        const { id } = this.props.navigation.state.params;
+        getListNewsCate(id)
+            .then(resJSON => {
+                const { list, error } = resJSON;
+                // console.log(list); 
+                if (error == false) {
+                    this.setState({
+                        listNews: list,  
+                        loading: false,
+                        refreshing: false,
+                        error: false || null,   
+                    });  
+                    // console.log(list);
+                } else {
+                    this.setState({ loading: false, refreshing: false });
+                }
+         
+            }).catch(err => {
+                this.setState({ loading: false }); 
+            });
     }
 
-    getListNews= () => {
-        this.setState({ loading: true });
-        getListNews()
-        .then(resJSON => {
-            const { list, error } = resJSON;
-            // console.log(list); 
-            if (error == false) {
-                this.setState({
-                    listNews: list,  
-                    loading: false,
-                    refreshing: false,
-                    error: false || null,   
-                });  
-                // console.log(list);
-            } else {
-                this.setState({ loading: false, refreshing: false });
-            }
-     
-        }).catch(err => {
-            this.setState({ loading: false }); 
-        });
-      }
+    
 
 
 
@@ -62,7 +60,7 @@ export default class Home extends Component{
         return(
             <Container>
                 <HeaderBase page="news" title={'Tin tức và sự kiện'} navigation={navigation} />
-                <View style={MainStyle.pageNews}>
+                <ScrollView style={MainStyle.pageNews}>
                     <FlatList  
                         data={this.state.listNews}   
                         renderItem={({ item }) => (
@@ -91,7 +89,7 @@ export default class Home extends Component{
                         )}
                         keyExtractor={item => item.id}
                     />   
-                </View>
+                </ScrollView>
                 <FooterBase navigation={navigation} page="muster"  />
             </Container>
         );

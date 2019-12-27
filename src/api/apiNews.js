@@ -16,3 +16,17 @@ export function getDetailNews(id){
     return fetch(url)
     .then(res => res.json());
 };
+export function getCateNews(){
+    let url;
+    url = global.BASE_URL+`/get_cate_news.api`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+export function getListNewsCate(id){
+    let url;
+    url = global.BASE_URL+`/get_list_news_cate.api?id=${id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};

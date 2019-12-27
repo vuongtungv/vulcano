@@ -28,7 +28,7 @@ export default class Home extends Component{
         
     }
     listProduct(){
-        this.props.navigation.navigate('ListProductScreeen');
+        this.props.navigation.navigate('ListProductsInCateScreeen');
     }
 
 	

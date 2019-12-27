@@ -8,7 +8,7 @@ import HTML from 'react-native-render-html';
 import {getDetailNews} from '../../src/api/apiNews';
 import { FlatList } from 'react-native-gesture-handler';
 let ScreenWidth = Dimensions.get("window").width;
-
+import global from './../api/global';
 
 export default class DetailNews extends Component{
     static navigationOptions = ({ navigation }) => ({
@@ -24,6 +24,8 @@ export default class DetailNews extends Component{
         }
 
         this.arr = [];
+
+        global.onRefresh = this.onRefresh.bind(this);
     }
 
     componentDidMount() {
@@ -47,14 +49,23 @@ export default class DetailNews extends Component{
         
     }
     detailNews(id){
+        this.props.navigation.goBack();
+        global.onRefresh();
         this.props.navigation.navigate('DetailNewsScreen',{ id: id });
+
+    }
+    onRefresh() {
+        this.arr = [];
+        this.setState({
+            listRest: []
+        });
     }
 
     
     render() {
         const {navigation} = this.props;
 
-        return(
+        return(   
             <Container>
                 <HeaderBase page="detail_news" title={this.state.detail.category_name} navigation={navigation} />
                 <ScrollView style={MainStyle.pageDetailNews}>
