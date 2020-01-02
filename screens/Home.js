@@ -47,17 +47,15 @@ export default class Home extends React.Component {
   }
 
   getSlides = () => {
-    this.setState({ loading: true });
+    // this.setState({ loading: true });
     getSlidesHome()
     .then(resJSON => {
         const { list, error } = resJSON;
-        // console.log(list); 
         if (error == false) {
             this.setState({
               listSlide: list,  
               error: false || null,  
             });  
-            // console.log(list);
         } else {
             this.setState({ loading: false, refreshing: false });
         }
@@ -67,19 +65,14 @@ export default class Home extends React.Component {
     });
   }
   getOneBanner = () => {
-    this.setState({ loading: true });
     getOneBanner()
     .then(resJSON => {
         const { list, error } = resJSON;
-        // console.log(list); 
         if (error == false) {
             this.setState({
               oneBanner: list,  
-                loading: false,
-                refreshing: false,
-                error: false || null,  
+              error: false || null,  
             });  
-            // console.log(list);
         } else {
             this.setState({ loading: false, refreshing: false });
         }
@@ -89,19 +82,14 @@ export default class Home extends React.Component {
     });
   }
   getCateIdHome= () => {
-    this.setState({ loading: true });
     getCateIdHome()
     .then(resJSON => {
         const { list, error } = resJSON;
-        // console.log(list); 
         if (error == false) {
             this.setState({
               listCate: list,  
-                // loading: false,
-                // refreshing: false,
-                error: false || null,  
+              error: false || null,  
             });  
-            // console.log(list);
         } else {
             this.setState({ loading: false, refreshing: false });
         }
@@ -111,30 +99,32 @@ export default class Home extends React.Component {
     });
   }
   cateBigHome= () => {
-    this.setState({ loading: true });
     cateBigHome()
     .then(resJSON => {
         const { list, error } = resJSON;
-        // console.log(list); 
         if (error == false) {
             this.setState({
               listCateBig: list,  
-                // loading: false,
-                // refreshing: false,
-                error: false || null,  
+              error: false || null,  
             });  
-            // console.log(list);
         } else {
             this.setState({ loading: false, refreshing: false });
         }
  
     }).catch(err => {
-        // this.setState({ loading: false }); 
+
     });
   }
 
   listProductsInCate(id){
-    this.props.navigation.navigate('ListProductsInCateScreeen',{ id: id });
+    var type = 'all';
+    this.props.navigation.navigate('ListProductsInCateScreeen',{ id: id, type: type });
+  }
+  gotoProducts(){
+    this.props.navigation.navigate('AllProductsScreen');
+  }
+  gotoVideos(){
+    this.props.navigation.navigate('ListVideosAll');
   }
 
 
@@ -156,25 +146,25 @@ export default class Home extends React.Component {
           </View> 
         
           <View style={MainStyle.cateHome} >
-              <TouchableOpacity style={MainStyle.itemCateHome}>
+              <TouchableOpacity style={MainStyle.itemCateHome} onPress={()=> this.gotoProducts()}>
                 <View style={MainStyle.iconCenter}>
                   <Image style={MainStyle.iconCateHome} source={require("../assets/icon_products.png")} />
                 </View>
                 <Text style={MainStyle.textCateHome}>Sản phẩm</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={MainStyle.itemCateHome}>
+              <View style={MainStyle.itemCateHome}>
                 <View style={MainStyle.iconCenter}>
                   <Image style={MainStyle.iconCateHome} source={require("../assets/icon_sale.png")} />
                 </View>
                 <Text style={MainStyle.textCateHome}>Giảm giá</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={MainStyle.itemCateHome}> 
+              </View>
+              <View style={MainStyle.itemCateHome}> 
                 <View style={MainStyle.iconCenter}>
                   <Image style={MainStyle.iconCateHome} source={require("../assets/icon_showrooms.png")} />
                 </View>
                 <Text style={MainStyle.textCateHome}>Cửa hàng</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={MainStyle.itemCateHome}>
+              </View>
+              <TouchableOpacity style={MainStyle.itemCateHome} onPress={()=>this.gotoVideos()}>
                 <View style={MainStyle.iconCenter}>
                   <Image style={MainStyle.iconCateHome} source={require("../assets/icon_youtube.png")} />
                 </View>

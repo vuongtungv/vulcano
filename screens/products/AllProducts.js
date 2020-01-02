@@ -4,9 +4,9 @@ import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
-import { getProductsInCate } from '../../src/api/apiProducts';
+import { getAllProducts } from '../../src/api/apiProducts';
 
-export default class ProductsInCate extends Component{
+export default class AllProducts extends Component{
     static navigationOptions = ({ navigation }) => ({
 		header: null,
     });
@@ -24,15 +24,13 @@ export default class ProductsInCate extends Component{
     }
 
     componentDidMount() {
-        const { id, type } = this.props.navigation.state.params;
-        getProductsInCate(id, type)
+        getAllProducts()
             .then(resJSON => {
                 const { list, category_name, error} = resJSON;
                 
                 if (error == false) {
                     this.setState({
                         list: list,
-                        category_name : category_name,
                         loaded: true,
                     });
                 
@@ -51,7 +49,7 @@ export default class ProductsInCate extends Component{
 
         return(
             <Container>
-                <HeaderBase page="list_products" title={this.state.category_name} navigation={navigation} />
+                <HeaderBase page="list_products" title={'Sản phẩm'} navigation={navigation} />
                 <View style={MainStyle.filterProducts}>
                     <View style={MainStyle.filterLeft}>
                         <TouchableOpacity>

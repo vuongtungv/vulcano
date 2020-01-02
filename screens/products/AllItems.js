@@ -7,7 +7,7 @@ import TabProductsBase from './../template/TabProductsBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
 import {getCateLv1} from './../../src/api/apiProducts';
 
-export default class Home extends Component{
+export default class AllItems extends Component{
     static navigationOptions = ({ navigation }) => ({
 		header: null,
     });
@@ -69,7 +69,7 @@ export default class Home extends Component{
                         <TouchableOpacity style={[MainStyle.itemsTabCategories]}>
                             <Text style={MainStyle.textTabCategories}>All items</Text>
                         </TouchableOpacity> */}
-                        <TabProductsBase navigation={navigation} page="tab_home_products" title='all_sp' />
+                        <TabProductsBase navigation={navigation} page="tab_all_items"/>
                     </View>
                     <ScrollView style={MainStyle.listCategories}>
                         {this.state.listCateLv1.map((item, index) => {return (

@@ -9,7 +9,9 @@ import { createStackNavigator } from 'react-navigation-stack';
 import Home from "./screens/Home";  
 
 // sản phẩm
-import Categories from "./screens/products/Home";
+import HomeProducts from "./screens/products/Home";
+import SalesProducts from "./screens/products/SalesProducts";
+import AllProducts from "./screens/products/AllProducts";
 import ListProductsInCate from "./screens/products/ProductsInCate";  
 import DetailProduct from "./screens/products/DetailProduct";  
 
@@ -21,6 +23,9 @@ import CateNews from "./screens/news/CateNews";
 import DetailNews from "./screens/news/DetailNews";  
 
 
+// videos
+import HomeVideos from "./screens/videos/Home";
+
 
 export const VulcanoStack = createStackNavigator({
   HomeScreen: {
@@ -29,13 +34,19 @@ export const VulcanoStack = createStackNavigator({
 
   // sản phẩm
   CategoriesScreen: {
-    screen: Categories
+    screen: HomeProducts
   },
   ListProductsInCateScreeen:{
     screen: ListProductsInCate
   },
   DetailProductScreeen:{
     screen: DetailProduct
+  },
+  AllProductsScreen:{
+    screen: AllProducts
+  },
+  SalesProductsScreen:{
+    screen: SalesProducts
   },
 
 
@@ -51,6 +62,14 @@ export const VulcanoStack = createStackNavigator({
     screen: DetailNews
   },
   
+
+  // video
+  ListVideosAll:{
+    screen: HomeVideos
+  }
+
+
+
 
 });
 

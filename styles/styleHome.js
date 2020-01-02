@@ -643,6 +643,23 @@ const styles = StyleSheet.create({
   },
 
 
+  // Videos 
+  itemVideos:{
+    marginBottom: 30,
+    borderBottomColor: '#f2f2f2',
+    borderBottomWidth: 1,
+    alignItems: 'center',
+  },
+  styleVideos:{
+    width: ScreenWidth-40,
+    height: (ScreenWidth-40)*2/3,
+  },
+  txtTitleVideos:{
+    marginBottom: 15,
+    marginTop: 15,
+    fontFamily: "RobotoBold",
+    fontSize: 16,
+  }
 
 
 

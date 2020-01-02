@@ -5,9 +5,9 @@ import FooterBase from './../template/FooterBase';
 import HeaderBase from './../template/HeaderBase';
 import TabProductsBase from './../template/TabProductsBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
-import {getCateLv1} from './../../src/api/apiProducts';
+import {listCateSalesLv1} from './../../src/api/apiProducts';
 
-export default class Home extends Component{
+export default class SalesProducts extends Component{
     static navigationOptions = ({ navigation }) => ({
 		header: null,
     });
@@ -17,24 +17,24 @@ export default class Home extends Component{
         
         this.state = {
             loading: true,
-            listCateLv1: [],
+            listCateSalesLv1: [],
         }
 
         this.arr = [];
     }
 
     componentDidMount() {
-        this.getCateLv1();
+        this.listCateSalesLv1();
     }
 
-    getCateLv1 = () => {
+    listCateSalesLv1 = () => {
         this.setState({ loading: true });
-        getCateLv1()
+        listCateSalesLv1()
         .then(resJSON => {
             const { list, error } = resJSON;
             if (error == false) {
                 this.setState({
-                    listCateLv1: list,  
+                    listCateSalesLv1: list,  
                     error: false || null,  
                 });  
             } else {
@@ -47,7 +47,8 @@ export default class Home extends Component{
     }
 
     listProductsInCate(id){
-        this.props.navigation.navigate('ListProductsInCateScreeen',{ id: id });
+        var type ='sales';
+        this.props.navigation.navigate('ListProductsInCateScreeen',{ id: id, type: type });
     }
 
 
@@ -57,7 +58,7 @@ export default class Home extends Component{
 
         return(
             <Container>
-                <HeaderBase page="categories" title={'Danh mục sản phẩm'} navigation={navigation} />
+                <HeaderBase page="categories" title={'Sản phẩm sales'} navigation={navigation} />
                 <View style={MainStyle.pageCategories}>
                     <View style={MainStyle.tabListCategories}>
                         {/* <TouchableOpacity style={[MainStyle.itemsTabCategories,MainStyle.activeItemsTabCategories]}>
@@ -69,10 +70,10 @@ export default class Home extends Component{
                         <TouchableOpacity style={[MainStyle.itemsTabCategories]}>
                             <Text style={MainStyle.textTabCategories}>All items</Text>
                         </TouchableOpacity> */}
-                        <TabProductsBase navigation={navigation} page="tab_home_products" title='all_sp' />
+                        <TabProductsBase navigation={navigation} page="tab_sales_products"/>
                     </View>
                     <ScrollView style={MainStyle.listCategories}>
-                        {this.state.listCateLv1.map((item, index) => {return (
+                        {this.state.listCateSalesLv1.map((item, index) => {return (
                             <TouchableOpacity key={item.id} style={MainStyle.itemsCate} onPress={()=>this.listProductsInCate(item.id)} >
                                 <View style={MainStyle.imgCate}>
                                 {
