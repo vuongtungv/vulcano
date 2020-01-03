@@ -26,6 +26,9 @@ import DetailNews from "./screens/news/DetailNews";
 // videos
 import HomeVideos from "./screens/videos/Home";
 
+// showrooms
+import HomeShowrooms from "./screens/showrooms/Home";
+
 
 export const VulcanoStack = createStackNavigator({
   HomeScreen: {
@@ -66,8 +69,13 @@ export const VulcanoStack = createStackNavigator({
   // video
   ListVideosAll:{
     screen: HomeVideos
-  }
+  },
 
+
+  // Showrooms
+  ListShowroomsScreen:{
+    screen: HomeShowrooms
+  },
 
 
 

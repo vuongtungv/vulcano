@@ -5,7 +5,7 @@ import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
 import {getAllVideos} from '../../src/api/apiVideos';
-
+import { Video } from 'expo-av';
 export default class Home extends Component{
     static navigationOptions = ({ navigation }) => ({
 		header: null,

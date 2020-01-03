@@ -21,6 +21,10 @@ export default class FooterBase extends Component {
         this.props.navigation.navigate('CategoriesScreen');
     }
 
+    gotoShowrooms(){
+        this.props.navigation.navigate('ListShowroomsScreen');
+    }
+
 
     render() {
 
@@ -52,7 +56,7 @@ export default class FooterBase extends Component {
                     <Text style={[MainStyle.tFItemText]}>Giỏ hàng</Text>
                 </TouchableOpacity>
                 
-                <TouchableOpacity style={MainStyle.tFItem} >
+                <TouchableOpacity style={MainStyle.tFItem} onPress={()=>this.gotoShowrooms()}>
                     <View style={MainStyle.tFItemBoundIcon}>
                         {/* <Image style={{width: 30,height:25}} source={require("../../assets/bar_showrooms.png")} /> */}
                         <Icon type="EvilIcons" name="location" style={{ color: '#777777', fontSize: 33 }} />

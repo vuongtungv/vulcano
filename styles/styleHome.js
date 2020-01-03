@@ -659,12 +659,58 @@ const styles = StyleSheet.create({
     marginTop: 15,
     fontFamily: "RobotoBold",
     fontSize: 16,
-  }
+  },
 
 
 
-
-
+  // showrooms
+  pageShowrooms:{
+    marginBottom: footerHeight,
+  },
+  vMap:{
+    width: ScreenWidth,
+    height: ScreenWidth*1.5/3,
+    backgroundColor: 'green',
+  },
+  bSelectShowrooms:{
+    padding: 20,
+    paddingBottom: 0,
+    borderBottomColor: '#eeeeee',
+    borderBottomWidth: 1,
+  },
+  txtShowrooms:{
+    fontFamily: "RobotoBold",
+    fontSize: 15,
+    marginBottom: 10,
+  },
+  borSelectSR:{
+    borderWidth: 1,
+    borderColor: '#c2bcb2',
+    borderRadius: 5,
+    width: ScreenWidth-40,
+    marginBottom: 20,
+  },
+  sSelectBox:{
+    width: ScreenWidth-40,
+    height: 40,
+  },
+  itemShowrooms:{
+    borderBottomWidth: 1,
+    borderBottomColor: '#eeeeee',
+    padding: 20,
+  },
+  txtNameShowrooms:{
+    fontSize: 16,
+    fontFamily: "RobotoBold",
+    color: '#007bff',
+    textTransform: 'uppercase',
+    marginBottom: 10,
+  },
+  txtAddShowrooms:{
+    fontSize: 14,
+    fontFamily: "RobotoRegular",
+    color: '#555555',
+  },
 
 
 
