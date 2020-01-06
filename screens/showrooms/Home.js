@@ -149,7 +149,7 @@ export default class Home extends Component{
                         
                     </View>  
                 </ScrollView>
-                <FooterBase navigation={navigation} page="muster" />
+                <FooterBase navigation={navigation} page="showrooms" />
             </Container>
         );
     }

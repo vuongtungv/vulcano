@@ -137,7 +137,7 @@ export default class Home extends React.Component {
     const { navigation, page, title, heading } = this.props;
     return (
       <Container>
-        <HeaderBase navigation={navigation} />
+        <HeaderBase page="home" title={'Trang chủ'} navigation={navigation} />
         <ScrollView>
           <View style={MainStyle.slideHome}>
               <Swiper autoplay={true} autoplayTimeout={4}>

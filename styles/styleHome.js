@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'RobotoBold',
     marginTop: 5,
-    color: '#777777',
   },
   tContainerDefault:{
     zIndex: 10,
@@ -86,6 +85,7 @@ const styles = StyleSheet.create({
     position:'absolute',
     bottom: 20,
     right: 40,
+    zIndex: 999,
   },
   txtCenterHeader:{
     fontFamily: "RobotoBold",
@@ -670,7 +670,7 @@ const styles = StyleSheet.create({
   vMap:{
     width: ScreenWidth,
     height: ScreenWidth*1.5/3,
-    backgroundColor: 'green',
+    // backgroundColor: 'green',
   },
   bSelectShowrooms:{
     padding: 20,
@@ -712,6 +712,30 @@ const styles = StyleSheet.create({
     color: '#555555',
   },
 
+
+
+  // search
+  boxSearch:{
+    backgroundColor: '#c9c8ce',
+    padding: 20,
+  },
+  vInpSearch:{
+    backgroundColor: "#FFFFFF",
+    borderRadius: 5,
+    width: ScreenWidth-40,
+    position: 'relative',
+    paddingLeft: 40,
+
+  },
+  iconTouchSearch:{
+    position: 'absolute',
+    top: 5,
+    left: 10,
+  },
+  inputSearch:{
+    height: 40,
+
+  },
 
 
 

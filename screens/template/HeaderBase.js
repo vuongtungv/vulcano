@@ -79,6 +79,10 @@ export default class HeaderBase extends Component {
         global.onRefresh();
         this.props.navigation.navigate('CateNewsScreen',{ id: id });
     }
+    searchHome(){
+        this.props.navigation.navigate('SearchHomeScreen');
+    }
+
     
     onRefresh() {
         this.arr = [];
@@ -86,6 +90,8 @@ export default class HeaderBase extends Component {
             listRest: []
         });
     }
+
+
 
 
     render() {
@@ -97,8 +103,19 @@ export default class HeaderBase extends Component {
                         <View style={MainStyle.logoHeader}> 
                             <Image style={{width: 99, height: 40}} source={require("../../assets/logo.png")} />
                         </View>
-                        <View style={MainStyle.iconSearchHeader}>
+                        <TouchableOpacity style={MainStyle.iconSearchHeader} onPress={()=>this.searchHome()}>
                             <Icon type="FontAwesome" name="search" style={{ color: '#000000', fontSize: 22 }} />
+                        </TouchableOpacity>
+                    </View>
+                );
+            case 'search':
+                return(
+                    <View style={MainStyle.barHearder}>
+                        <TouchableOpacity style={MainStyle.backHeader} onPress={() => this.gotoBack()}>
+                            <Icon type="FontAwesome" name="angle-left" style={[MainStyle.tHeaderIconMenu,{fontSize:35}]} />
+                        </TouchableOpacity>
+                        <View style={MainStyle.titleCenterHeader}> 
+                            <Text style={MainStyle.txtCenterHeader}>{title}</Text>
                         </View>
                     </View>
                 );

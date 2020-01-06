@@ -7,6 +7,10 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 
 import Home from "./screens/Home";  
+import SearchHome from "./screens/search/Home";  
+
+
+
 
 // sản phẩm
 import HomeProducts from "./screens/products/Home";
@@ -33,6 +37,9 @@ import HomeShowrooms from "./screens/showrooms/Home";
 export const VulcanoStack = createStackNavigator({
   HomeScreen: {
     screen: Home
+  }, 
+  SearchHomeScreen: {
+    screen: SearchHome
   }, 
 
   // sản phẩm
