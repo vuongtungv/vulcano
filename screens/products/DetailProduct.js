@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView ,TextInput,Dimensions,Modal, Alert} from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView ,TextInput,Dimensions,Modal, Alert, Linking} from 'react-native';
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
@@ -26,6 +26,7 @@ export default class DetailProduct extends Component{
         
         this.state = {
             detail: '',
+            amount: '1',
             modalVisible: false,
             imageWidth: width - 30,
             imageHeight: 0,
@@ -111,6 +112,45 @@ export default class DetailProduct extends Component{
         global.onRefresh();
         this.props.navigation.navigate('DetailProductScreeen',{ id: id });
     }
+
+    minus(){
+        if(parseInt(this.state.amount)<=1){
+            var a = 1;
+        }else{
+            a = parseInt(this.state.amount)-1;
+        }
+        var min = a.toString();
+        
+        this.setState({
+            'amount' : min
+        });
+        console.log(a);
+    }
+    plus(){ 
+        a = parseInt(this.state.amount)+1;
+        var add = a.toString();
+        this.setState({
+            'amount' : add
+        });
+        console.log(a);
+    }
+    setAmount=(value, index)=>{
+        var min = value.toString();
+        this.setState(
+          {
+            "amount": min
+          },
+          () => {
+            // here is our callback that will be fired after state change.
+            // Alert.alert(this.state.city);
+            // this.getDistricts();
+            // this.getAllShowrooms();
+          }
+        );
+      }
+
+
+
     onRefresh() {
         this.arr = [];
         this.setState({
@@ -180,19 +220,21 @@ export default class DetailProduct extends Component{
                                 <Text style={[MainStyle.headerSlo,{height: 30, lineHeight: 30,}]}>Số lượng cần mua: </Text>
                             </View>
                             <View style={MainStyle.touchNumbers}>
-                                <TouchableOpacity style={MainStyle.minusNumbers}><Text>-</Text></TouchableOpacity>
+                                <TouchableOpacity onPress={()=> this.minus()} style={MainStyle.minusNumbers}><Text>-</Text></TouchableOpacity>
                                 <TextInput
                                     style={{height: 30, textAlign: 'center', width: 30, borderWidth: 1, borderColor: '#ff0700', borderRadius: 3}}
-                                    placeholder="1"
-                                    onChangeText={(text) => this.setState({text})}
+                                    placeholder='1'
+                                    value={this.state.amount}
+                                    onChangeText={text => this.setAmount(text)}
+                                    keyboardType={'numeric'}
                                     />  
-                                <TouchableOpacity style={MainStyle.minusNumbers}><Text>+</Text></TouchableOpacity>
-                            </View>
+                                <TouchableOpacity onPress={()=> this.plus()} style={MainStyle.minusNumbers}><Text>+</Text></TouchableOpacity>
+                            </View> 
 
                         </View>
                         <View style={{flexDirection: 'row'}}>
-                            <Image style={{marginRight: 15}} source={require('../../assets/icon_car.png')}/>
-                            <Text style={[MainStyle.headerSlo,{lineHeight: 45,}]}>
+                            <Image style={{marginRight: 15,}} source={require('../../assets/icon_car.png')}/>
+                            <Text style={[MainStyle.headerSlo,{lineHeight: 30}]}>
                                 Miễn phí vận chuyển cho đơn hàng từ <Text style={MainStyle.colorPriceProducts}>400.000 đ</Text>
                             </Text>
                         </View>

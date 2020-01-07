@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
 
   },
   minusNumbers:{
-    width: 20,  
+    width: 30,  
     height: 30,
     lineHeight: 30,
     borderColor: '#dddddd',
