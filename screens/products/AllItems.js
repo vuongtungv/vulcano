@@ -89,7 +89,7 @@ export default class AllItems extends Component{
                         )})}  
                     </ScrollView> 
                 </View>
-                <FooterBase navigation={navigation} page="muster"  />
+                <FooterBase navigation={navigation} page="categories"  />
             </Container>
         );
     }

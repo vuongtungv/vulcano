@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList ,Picker} from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList ,Picker, Alert} from 'react-native';
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
@@ -18,6 +18,8 @@ export default class Home extends Component{
         super(props);
         
         this.state = {
+            city:'0',
+            district: '0',
             listCities:[],
             listDistricts: [],
             listAllShowrooms: [],
@@ -28,8 +30,8 @@ export default class Home extends Component{
  
     componentDidMount() {
         this.getCity();
-        this.getDistricts();
-        this.getAllShowrooms();
+        // this.getDistricts();
+        // this.getAllShowrooms();
     }
 
     getCity= () => {
@@ -52,10 +54,37 @@ export default class Home extends Component{
         
         });
     }
+
     
+    setCityChange=(value, index)=>{
+        this.setState(
+          {
+            "city": value
+          },
+          () => {
+            // here is our callback that will be fired after state change.
+            // Alert.alert(this.state.city);
+            this.getDistricts();
+            this.getAllShowrooms();
+          }
+        );
+      }
+      setDistrictChange=(value, index)=>{
+        this.setState(
+          {
+            "district": value
+          },
+          () => {
+            // here is our callback that will be fired after state change.
+            // Alert.alert(this.state.city);
+            // this.getDistricts();
+            this.getAllShowrooms();
+          }
+        );
+      }
     getDistricts= () => {
         this.setState({ loading: true });
-        getDistricts()
+        getDistricts(this.state.city)
         .then(resJSON => {
             const { list, error } = resJSON;
             if (error == false) {
@@ -76,7 +105,7 @@ export default class Home extends Component{
 
     getAllShowrooms= () => {
         this.setState({ loading: true });
-        getAllShowrooms()
+        getAllShowrooms(this.state.city,this.state.district)
         .then(resJSON => {
             const { list, error } = resJSON;
             if (error == false) {
@@ -113,9 +142,13 @@ export default class Home extends Component{
                             <Picker
                                 selectedValue={this.state.city}
                                 style={MainStyle.sSelectBox}
-                                onValueChange={(itemValue, itemIndex) =>
-                                    this.setState({city: itemValue})
-                                }>
+                                // onValueChange={(itemValue, itemIndex) =>
+                                //     // this.setState({city: itemValue})
+                                //     this.setCityChange()
+                                // }
+                                onValueChange={(value)=>this.setCityChange(value)}
+                                
+                            >
                                 <Picker.Item label="-- Chọn Tỉnh/TP --" value="0" />
                                 {this.state.listCities.map((item, index) => {return (
                                     <Picker.Item key={item.id} label={item.name} value={item.id} />
@@ -126,9 +159,12 @@ export default class Home extends Component{
                             <Picker
                                 selectedValue={this.state.district}
                                 style={MainStyle.sSelectBox}
-                                onValueChange={(itemValue, itemIndex) =>
-                                    this.setState({district: itemValue})
-                                }>
+                                
+                                // onValueChange={(itemValue, itemIndex) =>
+                                //     this.setState({district: itemValue})
+                                // }
+                                onValueChange={(value)=>this.setDistrictChange(value)}
+                            >
                                 <Picker.Item label="-- Chọn Quận/Huyện --" value="0" />
                                 {this.state.listDistricts.map((item, index) => {return (
                                     <Picker.Item key={item.id} label={item.name} value={item.id} />

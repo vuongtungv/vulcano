@@ -72,15 +72,22 @@ export default class DetailNews extends Component{
                     <View style={[MainStyle.bodyDetailNews,{marginTop: 30}]}>
                         <Text style={MainStyle.titleNews}>{this.state.detail.title}</Text>
                         <View style={MainStyle.vDateNews}>
-                            <Text style={MainStyle.nDateNameNews}>
-                                <Icon type="FontAwesome" name="clock-o" style={{ color: '#777777', fontSize: 13, marginRight: 10}} />
-                                {this.state.detail.created_time} | {this.state.detail.time_post} +0700
-                            </Text>
-                            <Text style={MainStyle.nDateNameNews}>
-                                <Icon type="FontAwesome" name="newspaper-o" style={{ color: '#777777', fontSize: 13, marginRight: 10}} />
-                                Chuyên mục: {this.state.detail.category_name}
-                            </Text>
-                        </View>
+                            <View style={{flexDirection: 'row'}}>
+                                <Text style={[MainStyle.nDateNameNews,{paddingTop: 2}]}> 
+                                    <Icon type="FontAwesome" name="clock-o" style={{ color: '#777777', fontSize: 13}} />
+                                </Text>
+                                <Text style={MainStyle.nDateNameNews}>
+                                    {this.state.detail.created_time} | {this.state.detail.time_post}
+                                </Text>
+                            </View>
+                            <View style={{flexDirection: 'row'}}>
+                                <Text style={[MainStyle.nDateNameNews,{paddingTop: 2}]}>
+                                    <Icon type="FontAwesome" name="newspaper-o" style={{ color: '#777777', fontSize: 13}} />
+                                </Text >
+                                <Text style={MainStyle.nDateNameNews}>Chuyên mục: {this.state.detail.category_name}</Text>
+                            </View>
+                        </View>  
+
                         <View style={MainStyle.briefDetailNews}>
                             <Text style={MainStyle.txtBriefDetailNews}>{this.state.detail.summary}</Text>
                         </View>
@@ -133,14 +140,22 @@ export default class DetailNews extends Component{
                                         <View style={MainStyle.bodyNews}>
                                             <Text style={MainStyle.titleNews}>{item.title}</Text>
                                             <View style={MainStyle.vDateNews}>
-                                                <Text style={MainStyle.nDateNameNews}>
-                                                    <Icon type="FontAwesome" name="clock-o" style={{ color: '#777777', fontSize: 13, marginRight: 10}} />
-                                                    {item.created_time} | {item.time_post}
-                                                </Text>
-                                                <Text style={MainStyle.nDateNameNews}>
-                                                    <Icon type="FontAwesome" name="newspaper-o" style={{ color: '#777777', fontSize: 13, marginRight: 10}} />
-                                                    Chuyên mục: {item.category_name}
-                                                </Text> 
+                                                <View style={{flexDirection: 'row'}}>
+                                                    <Text style={[MainStyle.nDateNameNews,{paddingTop: 2}]}> 
+                                                        <Icon type="FontAwesome" name="clock-o" style={{ color: '#777777', fontSize: 13}} />
+                                                    </Text>
+                                                    <Text style={MainStyle.nDateNameNews}>
+                                                        {item.created_time} | {item.time_post}
+                                                    </Text>
+                                                </View>
+                                                <View style={{flexDirection: 'row'}}>
+                                                    <Text style={[MainStyle.nDateNameNews,{paddingTop: 2}]}>
+                                                        <Icon type="FontAwesome" name="newspaper-o" style={{ color: '#777777', fontSize: 13}} />
+                                                        
+                                                    </Text >
+                                                    <Text style={MainStyle.nDateNameNews}>Chuyên mục: {item.category_name}</Text>
+                                                </View>
+                                                
                                             </View>  
                                             <View style={MainStyle.briefNews}>
                                                 <Text style={MainStyle.txtBriefNews}>{item.summary}</Text>

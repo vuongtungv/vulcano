@@ -129,7 +129,9 @@ export default class Home extends React.Component {
   gotoShowrooms(){
     this.props.navigation.navigate('ListShowroomsScreen');
   }
-
+  SalesProducts(){
+    this.props.navigation.navigate('SalesProductsScreen');
+  }
 
 
 
@@ -155,12 +157,12 @@ export default class Home extends React.Component {
                 </View>
                 <Text style={MainStyle.textCateHome}>Sản phẩm</Text>
               </TouchableOpacity>
-              <View style={MainStyle.itemCateHome}>
+              <TouchableOpacity style={MainStyle.itemCateHome} onPress ={()=> this.SalesProducts()}>
                 <View style={MainStyle.iconCenter}>
                   <Image style={MainStyle.iconCateHome} source={require("../assets/icon_sale.png")} />
                 </View>
                 <Text style={MainStyle.textCateHome}>Giảm giá</Text>
-              </View>
+              </TouchableOpacity>
               <TouchableOpacity style={MainStyle.itemCateHome} onPress={()=>this.gotoShowrooms()}> 
                 <View style={MainStyle.iconCenter}>
                   <Image style={MainStyle.iconCateHome} source={require("../assets/icon_showrooms.png")} />

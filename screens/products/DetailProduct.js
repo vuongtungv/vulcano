@@ -151,7 +151,7 @@ export default class DetailProduct extends Component{
                     </View>
                     <View style={MainStyle.tDetailProduct}>
                         <Text style={MainStyle.titleProduct}>{this.state.detail.name}</Text>
-                        <Text style={MainStyle.titleHDetailProduct}>Giá: <Text style={[MainStyle.txtBlack, MainStyle.colorPriceProducts]}>{this.state.detail.price}</Text></Text>
+                        <Text style={MainStyle.titleHDetailProduct}>Giá: <Text style={[MainStyle.txtBlack, MainStyle.colorPriceProducts]}>{this.state.detail.price} đ</Text></Text>
                         <Text style={MainStyle.titleHDetailProduct}>Mã sản phẩm: <Text style={[MainStyle.txtBlack]}>{this.state.detail.code}</Text></Text>
                         <Text style={MainStyle.titleHDetailProduct}>Kiểu dáng: <Text style={MainStyle.txtBlack}>{this.state.kieu_dang}</Text></Text>
                         <Text style={MainStyle.titleHDetailProduct}>Chất liệu: <Text style={MainStyle.txtBlack}>{this.state.chat_lieu}</Text></Text>
@@ -159,8 +159,9 @@ export default class DetailProduct extends Component{
                     <View style={MainStyle.tDetailProduct}>
                         <Text style={MainStyle.headerSlo}>Chọn kiểu dáng: <Text style={MainStyle.colorPriceProducts}>Slim-fit</Text></Text>
                         <View style={MainStyle.vStyleProduct}>
+                            <Text style={[MainStyle.btnStylePro,MainStyle.btnBorderActive]}>12345</Text>
                             {this.state.arr_kieu_dang.map((item, index) => {return (
-                            <Text key={index} style={MainStyle.btnStylePro}>{item.name}</Text>
+                                <Text key={index} style={MainStyle.btnStylePro}>{item.name}</Text>
                             )})}
                         </View>
                     </View>
@@ -189,10 +190,12 @@ export default class DetailProduct extends Component{
                             </View>
 
                         </View>
-                        <Text style={[MainStyle.headerSlo,{lineHeight: 45,}]}>
+                        <View style={{flexDirection: 'row'}}>
                             <Image style={{marginRight: 15}} source={require('../../assets/icon_car.png')}/>
+                            <Text style={[MainStyle.headerSlo,{lineHeight: 45,}]}>
                                 Miễn phí vận chuyển cho đơn hàng từ <Text style={MainStyle.colorPriceProducts}>400.000 đ</Text>
                             </Text>
+                        </View>
                     </View>
                     <View style={MainStyle.vHeaderOtherNews}>
                         <Text style={MainStyle.txtOtherNews}>Sản phẩm cùng loại</Text>

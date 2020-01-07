@@ -90,7 +90,7 @@ export default class SalesProducts extends Component{
                         )})}  
                     </ScrollView> 
                 </View>
-                <FooterBase navigation={navigation} page="muster"  />
+                <FooterBase navigation={navigation} page="categories"  />
             </Container>
         );
     }

@@ -165,16 +165,18 @@ export default class HeaderBase extends Component {
                 );
             case 'detail_news':
                 return(
-                    <View style={MainStyle.barHearder}>
-                        <TouchableOpacity style={MainStyle.backHeader} onPress={() => this.gotoBack()}>
-                            <Icon type="FontAwesome" name="angle-left" style={[MainStyle.tHeaderIconMenu,{fontSize:35}]} />
-                        </TouchableOpacity>
-                        <View style={MainStyle.titleCenterHeader}> 
-                            <Text style={MainStyle.txtCenterHeader}>{title}</Text>
+                    <View style={{position: 'relative'}}>
+                        <View style={MainStyle.barHearder}>
+                            <TouchableOpacity style={MainStyle.backHeader} onPress={() => this.gotoBack()}>
+                                <Icon type="FontAwesome" name="angle-left" style={[MainStyle.tHeaderIconMenu,{fontSize:35}]} />
+                            </TouchableOpacity>
+                            <View style={MainStyle.titleCenterHeader}> 
+                                <Text style={MainStyle.txtCenterHeader}>{title}</Text>
+                            </View>
+                            <TouchableOpacity style={MainStyle.iconSearchHeader} onPress={()=>this.setStateListCateNewsHeader()}>
+                                <Icon type="MaterialCommunityIcons" name="dots-vertical" style={{ color: '#000000', fontSize: 23 }} />
+                            </TouchableOpacity>
                         </View>
-                        <TouchableOpacity style={MainStyle.iconSearchHeader} onPress={()=>this.setStateListCateNewsHeader()}>
-                            <Icon type="MaterialCommunityIcons" name="dots-vertical" style={{ color: '#000000', fontSize: 23 }} />
-                        </TouchableOpacity>
                         {this.showListCateNewsHeader()}
                     </View>
                 );

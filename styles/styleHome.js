@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#b2b2b2',
     borderBottomWidth: 1,
     position: 'relative',
-    zIndex: 1005,
+    zIndex: 0,
   },
   logoHeader:{
     width: 99,
@@ -257,6 +257,7 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     paddingTop: 30,
     paddingBottom: 30,
+    marginBottom: 1,
   },
   textTabCategories:{
     fontFamily:"RobotoRegular",
@@ -363,7 +364,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 99,
     left: ScreenWidth-40-20,
-    top: 5,
+    top: 10,
   },
   btnRa50:{
     width: 44,
@@ -413,6 +414,10 @@ const styles = StyleSheet.create({
     height: (ScreenWidth-100)/8, 
     marginLeft: 20, 
     marginBottom: 20,
+  },
+  btnBorderActive:{
+    borderWidth: 1,
+    borderColor: '#ff0700',
   },
   headerSlo:{
     marginBottom: 10,
@@ -634,12 +639,12 @@ const styles = StyleSheet.create({
   // style tam giác
   trianleTop:{
     position: 'absolute',
-    top: -10,
-    right: 20,
-    zIndex: 9999,
-    borderBottomWidth: 2,
-    borderBottomColor: "#FFFFFF",
+    top: -9,
+    right: 23,
+    zIndex: 999,
+    paddingBottom: 2,
     overflow: 'hidden',
+    backgroundColor: '#FFFFFF',
   },
 
 

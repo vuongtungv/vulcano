@@ -73,14 +73,22 @@ export default class CateNews extends Component{
                                 <View style={MainStyle.bodyNews}>
                                     <Text style={MainStyle.titleNews}>{item.title}</Text>
                                     <View style={MainStyle.vDateNews}>
-                                        <Text style={MainStyle.nDateNameNews}>
-                                            <Icon type="FontAwesome" name="clock-o" style={{ color: '#777777', fontSize: 13, marginRight: 10}} />
-                                            {item.created_time} | {item.time_post}
-                                        </Text>
-                                        <Text style={MainStyle.nDateNameNews}>
-                                            <Icon type="FontAwesome" name="newspaper-o" style={{ color: '#777777', fontSize: 13, marginRight: 10}} />
-                                            Chuyên mục: {item.category_name}
-                                        </Text>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={[MainStyle.nDateNameNews,{paddingTop: 2}]}> 
+                                                <Icon type="FontAwesome" name="clock-o" style={{ color: '#777777', fontSize: 13}} />
+                                            </Text>
+                                            <Text style={MainStyle.nDateNameNews}>
+                                                {item.created_time} | {item.time_post}
+                                            </Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={[MainStyle.nDateNameNews,{paddingTop: 2}]}>
+                                                <Icon type="FontAwesome" name="newspaper-o" style={{ color: '#777777', fontSize: 13}} />
+                                                
+                                            </Text >
+                                            <Text style={MainStyle.nDateNameNews}>Chuyên mục: {item.category_name}</Text>
+                                        </View>
+                                        
                                     </View>  
                                     <View style={MainStyle.briefNews}>
                                         <Text style={MainStyle.txtBriefNews}>{item.summary}</Text>
