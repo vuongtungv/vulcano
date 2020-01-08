@@ -6,7 +6,7 @@ import HeaderBase from '../template/HeaderBase';
 import Swiper from "react-native-swiper";
 import { Container, Content, CheckBox, Icon } from "native-base";
 import {getDetailProducts} from './../../src/api/apiProducts';
-
+import HTML from 'react-native-render-html';
 const { width } = Dimensions.get('window');
 const { heigth } = Dimensions.get('window');
 
@@ -28,12 +28,20 @@ export default class DetailProduct extends Component{
             detail: '',
             amount: '1',
             modalVisible: false,
+            modalVisibleSize: false,
             imageWidth: width - 30,
             imageHeight: 0,
             arr_kieu_dang: [],
             arr_size: [],
             arr_image: [],
             otherProducts: [],
+            size_guide: '',
+            default_style: 0,
+            default_size: 0,
+            default_name_style: 0,
+            default_name_size: 0,
+            id_style: 0,
+            id_size: 0,
         }
 
         this.arr = [];
@@ -44,8 +52,7 @@ export default class DetailProduct extends Component{
         const { id } = this.props.navigation.state.params;
         getDetailProducts(id)
             .then(resJSON => {
-                const { detail,kieu_dang,chat_lieu,arr_kieu_dang,arr_size,arr_image,otherProducts, error} = resJSON;
-                
+                const { detail,kieu_dang,chat_lieu,arr_kieu_dang,arr_size,arr_image,otherProducts,size_guide, default_name_style, default_name_size,id_style,id_size, error} = resJSON;
                 if (error == false) {
                     this.setState({
                         detail: detail,
@@ -54,10 +61,14 @@ export default class DetailProduct extends Component{
                         arr_kieu_dang: arr_kieu_dang,
                         arr_size: arr_size,
                         arr_image: arr_image,
+                        size_guide: size_guide,
+                        default_name_size: default_name_size,
+                        default_name_style: default_name_style,
+                        id_size: id_size,
+                        id_style: id_style,
                         loaded: true,
                         otherProducts: otherProducts,
                     }); 
-                
                 }
             }).catch(err => {
                 // this.setState({ loaded: true });  
@@ -147,7 +158,34 @@ export default class DetailProduct extends Component{
             // this.getAllShowrooms();
           }
         );
-      }
+    }
+    setChooseStyle(index, id, value){
+        this.setState({
+            'default_style' : index,
+            'default_name_style': value,
+            'id_style' : id,
+        });
+    }
+    setChooseSize(index, id, value){
+        this.setState({
+            'default_size' : index,
+            'default_name_size': value,
+            'id_size' : id,
+        });
+    }
+
+
+    setModalVisible(visible) {
+        this.setState({
+            modalVisible: visible,
+        })
+    }
+    setModalVisibleSize(visible) {
+        this.setState({
+            modalVisibleSize: visible,
+        })
+    }
+
 
 
 
@@ -197,22 +235,28 @@ export default class DetailProduct extends Component{
                         <Text style={MainStyle.titleHDetailProduct}>Chất liệu: <Text style={MainStyle.txtBlack}>{this.state.chat_lieu}</Text></Text>
                     </View>
                     <View style={MainStyle.tDetailProduct}>
-                        <Text style={MainStyle.headerSlo}>Chọn kiểu dáng: <Text style={MainStyle.colorPriceProducts}>Slim-fit</Text></Text>
+                        <Text style={MainStyle.headerSlo}>Chọn kiểu dáng: <Text style={MainStyle.colorPriceProducts}>{this.state.default_name_style}</Text></Text>
                         <View style={MainStyle.vStyleProduct}>
-                            <Text style={[MainStyle.btnStylePro,MainStyle.btnBorderActive]}>12345</Text>
+                            {/* <Text style={[MainStyle.btnStylePro,MainStyle.btnBorderActive]}>12345</Text> */}
                             {this.state.arr_kieu_dang.map((item, index) => {return (
-                                <Text key={index} style={MainStyle.btnStylePro}>{item.name}</Text>
+                                <TouchableOpacity onPress={()=>this.setChooseStyle(index,item.id,item.name)}>
+                                    <Text key={index} style={[MainStyle.btnStylePro, { borderColor: this.state.default_style == index ? '#ff0700' : '#FFFFFF', borderWidth: 1 }]}>
+                                        {item.name}
+                                    </Text>
+                                </TouchableOpacity>
                             )})}
                         </View>
                     </View>
                     <View style={MainStyle.tDetailProduct}>
-                        <Text style={MainStyle.headerSlo}>Chọn kích cỡ: <Text style={MainStyle.colorPriceProducts}>Chọn kích cỡ</Text></Text>
+                        <Text style={MainStyle.headerSlo}>Chọn kích cỡ: <Text style={MainStyle.colorPriceProducts}>{this.state.default_name_size}</Text></Text>
                         <View style={MainStyle.vStyleProduct}>
                             {this.state.arr_size.map((item, index) => {return (
-                                <Text key={index} style={MainStyle.btnStylePro}>{item.name}</Text>
+                                <TouchableOpacity onPress={()=>this.setChooseSize(index,item.id,item.name)}>
+                                    <Text key={index} style={[MainStyle.btnStylePro,{ borderColor: this.state.default_size == index ? '#ff0700' : '#FFFFFF', borderWidth: 1 }]}>{item.name}</Text>
+                                </TouchableOpacity>
                             )})}
                         </View>
-                        <View style={MainStyle.hdSize}><Text style={MainStyle.txtHD }>Hướng dẫn chọn kích cỡ</Text></View>
+                        <TouchableOpacity onPress={()=>this.setModalVisibleSize()} style={MainStyle.hdSize}><Text style={MainStyle.txtHD }>Hướng dẫn chọn kích cỡ</Text></TouchableOpacity>
                     </View>
                     <View style={MainStyle.tDetailProduct}>
                         <View style={MainStyle.vNumberProduct}>
@@ -271,7 +315,7 @@ export default class DetailProduct extends Component{
                     transparent={true}
                     visible={this.state.modalVisible}
                     onRequestClose={() => {}}>
-                    <View style={MainStyle.tContainerImgModal}>
+                    <View style={[MainStyle.tContainerImgModal,MainStyle.modalBgBlack]}>
                         <View style={[MainStyle.tModalBody, { width: width - 40,marginLeft: 20,marginBottom: 25,alignItems: 'center'}]}> 
                             <ScrollView>
                                 <Image style={{width: this.state.imageWidth, height: this.state.imageHeight, alignItems: 'center',}} source={{ uri: this.state.image }} />
@@ -289,9 +333,30 @@ export default class DetailProduct extends Component{
                         </View>
                         
                     </View>
+                </Modal> 
+
+
+                {/* Popup hướng dẫn chọn size */}
+                <Modal 
+                    presentationStyle="overFullScreen"
+                    animationType="slide"
+                    transparent={true}
+                    visible={this.state.modalVisibleSize}
+                    onRequestClose={() => {}}>
+                    <View style={[MainStyle.modalSizeGuide]}> 
+                        <TouchableOpacity onPress={()=>this.setState({modalVisibleSize:false})} style={MainStyle.bgPopupScreen}></TouchableOpacity>
+                        <View style={MainStyle.visibalPop}>
+                            <HTML html={this.state.size_guide} imagesMaxWidth={Dimensions.get('window').width} />
+                            <TouchableOpacity style={MainStyle.tBtnModal} onPress={()=>this.setState({modalVisibleSize:false})}>
+                                <Text style={[MainStyle.txtModal,MainStyle.txtModalW]}>Đóng</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </Modal>
+
             </Container>
         );
     }
 }
+ 
  

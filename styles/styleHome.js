@@ -461,15 +461,38 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   tContainerImgModal:{
-    backgroundColor: '#000000',
     width: ScreenWidth,
     height: ScreenHeight,
     height: '100%',
     paddingTop: barHeight + 30,
     paddingBottom: 25,
   },
+  modalBgBlack:{
+    backgroundColor: '#000000'
+  },
+  modalBgWhite:{
+    backgroundColor: '#FFFFFF'
+  },
   tModalBody:{
     height: ScreenHeight - barHeight - 30 - 125,
+  },
+  bgPopupScreen:{
+    height: ScreenHeight,
+    width: ScreenWidth,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    position: 'relative',
+    zIndex: 0,
+  },
+  visibalPop:{
+    height: ScreenWidth,
+    backgroundColor: '#FFFFFF',
+    position: 'absolute',
+    width: ScreenWidth-40,
+    padding: 20,
+    left: 20,
+    bottom: 50,
+    borderRadius: 10,
+    zIndex: 9999,
   },
   tBtnModalSave:{
     width: 100,
