@@ -523,7 +523,96 @@ const styles = StyleSheet.create({
   txtModalW:{
     color: '#FFFFFF',
   },
+  pageCart:{
+    backgroundColor:'#eeeeee',
+    height: ScreenHeight,
+    width: ScreenWidth,
+    position: 'relative',
+    zIndex: 0,
+    paddingBottom: footerHeight+85,
+  },
+  itemCart:{
+    backgroundColor: '#FFFFFF',
+    borderBottomColor: '#c7c7c9',
+    borderBottomWidth: 1,
+  },
+  infoItemCart:{
+    paddingTop:10,
+    paddingBottom: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderBottomColor: '#eeeeee',
+    borderBottomWidth: 3,
+    flexDirection: 'row',
+  },
+  imgItemCart:{
+    marginRight:10, 
+    height: (ScreenWidth-40)/5,
+    width: (ScreenWidth -40)/5,
+  },
+  imgCart:{
+    height: (ScreenWidth-40)/5,
+    width: (ScreenWidth-40)/5,
+  },  
+  rightInfoItem:{
+    // backgroundColor: 'green',
+    width: (ScreenWidth-40)*4/5 -10,
+  },
+  lineTopItemCart:{
 
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  tProductItemCart:{
+    fontFamily: 'RobotoRegular',
+    fontSize: 16,
+    textTransform: 'uppercase',
+  },
+  fPriceItemCart:{
+    color: '#ff0700',
+    fontSize: 16,
+    fontFamily: 'RobotoRegular',
+  },
+  txtBCart:{
+    fontFamily: 'RobotoRegular',
+    fontSize: 15,  
+  },
+  taskCart:{
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    padding: 20,
+  },
+  editItemCart:{
+    flexDirection:'row',
+    marginLeft: 30
+  },
+  textTaskCart:{
+      fontSize: 15,
+      fontFamily: 'RobotoRegular',
+      color: '#777777',
+      paddingLeft: 5,
+  },
+  vBootTotalCt:{
+    height: footerHeight,
+    width: ScreenWidth,
+    backgroundColor: "#FFFFFF",
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 0,
+    zIndex: 9999,
+  },
+  totalPriceCart:{
+    width: ScreenWidth-150,
+    paddingLeft: 20,
+  },
+  payCart:{
+    backgroundColor: '#000000',
+    width: 150,
+    alignItems: 'center',
+  },
+  txtPayN:{
+    lineHeight: footerHeight,
+  },
 
 
 

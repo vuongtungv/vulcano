@@ -18,6 +18,8 @@ import SalesProducts from "./screens/products/SalesProducts";
 import AllProducts from "./screens/products/AllProducts";
 import ListProductsInCate from "./screens/products/ProductsInCate";  
 import DetailProduct from "./screens/products/DetailProduct";  
+import Cart from "./screens/products/Cart";  
+
 
 
  
@@ -57,6 +59,9 @@ export const VulcanoStack = createStackNavigator({
   },
   SalesProductsScreen:{
     screen: SalesProducts
+  },
+  CartScreen:{
+    screen: Cart
   },
 
 

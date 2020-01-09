@@ -21,6 +21,10 @@ export default class FooterBase extends Component {
         this.props.navigation.navigate('CategoriesScreen');
     }
 
+    gotoCart(){
+        this.props.navigation.navigate('CartScreen');
+    }
+
     gotoShowrooms(){
         this.props.navigation.navigate('ListShowroomsScreen');
     }
@@ -73,14 +77,25 @@ export default class FooterBase extends Component {
                     }
                 </TouchableOpacity>
                
-                <TouchableOpacity style={MainStyle.tFItem} >
-                    <View>
-                        <View style={MainStyle.tFItemBoundIcon}>
-                            {/* <Image style={{width: 30,height:25}} source={require("../../assets/bar_cart.png")} /> */}
-                            <Icon type="SimpleLineIcons" name="handbag" style={{ color: '#777777', fontSize: 27 }} />
+                <TouchableOpacity style={MainStyle.tFItem} onPress={()=>this.gotoCart()}>
+                    {
+                        page == 'cart' ?
+                        <View>
+                            <View style={MainStyle.tFItemBoundIcon}>
+                                {/* <Image style={{width: 30,height:25}} source={require("../../assets/bar_cart.png")} /> */}
+                                <Icon type="SimpleLineIcons" name="handbag" style={{ color: '#000000', fontSize: 27 }} />
+                            </View>
+                            <Text style={[MainStyle.tFItemText,{color: '#000000'}]}>Giỏ hàng</Text>
+                        </View>:
+                        <View>
+                            <View style={MainStyle.tFItemBoundIcon}>
+                                {/* <Image style={{width: 30,height:25}} source={require("../../assets/bar_cart.png")} /> */}
+                                <Icon type="SimpleLineIcons" name="handbag" style={{ color: '#777777', fontSize: 27 }} />
+                            </View>
+                            <Text style={[MainStyle.tFItemText,{color: '#777777'}]}>Giỏ hàng</Text>
                         </View>
-                        <Text style={[MainStyle.tFItemText,{color: '#777777'}]}>Giỏ hàng</Text>
-                    </View>
+                    }
+                    
                     
                 </TouchableOpacity>
                 

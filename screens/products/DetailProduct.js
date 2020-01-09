@@ -11,6 +11,10 @@ const { width } = Dimensions.get('window');
 const { heigth } = Dimensions.get('window');
 
 
+import saveStorage from './../api/saveStorage';
+import getStorage from './../api/getStorage';
+
+
 import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
@@ -188,6 +192,56 @@ export default class DetailProduct extends Component{
 
 
 
+    addCart(){
+		if(this.state.id_size == 0){
+			Alert.alert('Thông báo', 'Bạn vui lòng chọn size!');
+			return false;
+        }
+        if(this.state.id_style == 0){
+			Alert.alert('Thông báo', 'Bạn vui lòng chọn kiểu dáng!');
+			return false;
+        }
+        
+
+		if(this.state.amount < 1){
+			Alert.alert('Thông báo', 'Bạn vui lòng nhập số lượng!');
+			return false;
+        }
+        Alert.alert(this.state.detail.id);
+
+		getStorage('cart')
+        .then(cart => {
+			var tmp = [];
+			var existID = false;
+            if(cart != ''){
+				var arrCart = JSON.parse(cart);
+				arrCart.map(c => {
+					if(c.id == this.state.id){
+						c.quantity = parseInt(c.quantity) + parseInt(this.state.quantity);
+						existID = true;
+					}
+					tmp.push(c);
+				})
+			}
+			if(existID == false){
+				tmp.push({
+					id: this.state.detail.id,
+					size: this.state.id_size,
+                    style: this.state.id_style,
+                    amount: this.state.amount,
+				});
+			}
+			saveStorage('cart', JSON.stringify(tmp));
+			this.gotoCart();
+        })
+        .catch(err => console.log(err));
+	}
+
+    gotoCart(){
+        this.props.navigation.navigate('CartScreen');
+    }
+
+
 
     onRefresh() {
         this.arr = [];
@@ -301,10 +355,10 @@ export default class DetailProduct extends Component{
                         )})} 
                     </View>
                     <View style={MainStyle.quickTaskBottom}>
-                        <TouchableOpacity style={MainStyle.quickTouch}>
+                        <TouchableOpacity style={MainStyle.quickTouch} onPress={()=>this.addCart()}>
                             <Text style={[MainStyle.quickTouchText]}>Thêm vào giỏ hàng</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[MainStyle.quickTouch,{backgroundColor: '#000000'}]}>
+                        <TouchableOpacity style={[MainStyle.quickTouch,{backgroundColor: '#000000'}]} onPress={()=>this.gotoCart()}>
                             <Text style={[MainStyle.quickTouchText]}>Mua ngay</Text>
                         </TouchableOpacity>
                     </View>
