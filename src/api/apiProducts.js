@@ -37,3 +37,14 @@ export function getAllProducts(){
     return fetch(url)
     .then(res => res.json());
 };
+
+
+
+// cart
+export function get_product_by_cart(ids){
+    let url;  
+    url = global.BASE_URL+`/get_product_by_cart.api?cart=${ids}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};

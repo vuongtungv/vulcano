@@ -8,7 +8,7 @@ import getStorage from './../api/getStorage';
 import global from './../api/global';
 import {get_product_by_cart} from './../../src/api/apiProducts';
 
-export default class Cart extends React.Component {
+export default class Payment extends React.Component {
 	static navigationOptions = ({ navigation }) => ({
 		header: null
 	});
@@ -50,47 +50,6 @@ export default class Cart extends React.Component {
                         ids = ids + '|' + c.id+','+c.size+','+c.style+','+c.amount;
                 })
                 this.getListCart(ids);
-                // get_product_by_cart = () => {
-                //     this.setState({ loading: true });
-                //     get_product_by_cart(ids)
-                //     .then(resJSON => {
-                //         const {list, total } = resJSON;
-                //         console.log(list);
-                //         this.arr = list.concat(this.arr);
-                //         this.setState({
-                //             list: this.arr, 
-                //             refreshing: false,
-                //             loading: false,
-                //             total: total
-                //         });
-                //     }).catch(err => {
-                //         // this.setState({ loading: false }); 
-                //     });
-                // }
-                // console.log(ids);
-                // fetch(global.BASE_URL+'/get_product_by_cart.api', {  
-                //     method: 'POST',
-                //     headers: {
-                //       'Accept': 'application/json',
-                //       'Content-Type': 'application/json',
-                //     },
-                //     body: JSON.stringify({
-                //         cart:ids,
-                //     })
-                //   })
-                // .then(res => res.json())
-                // .then(resJSON => {
-                //     const {list, total } = resJSON;
-                //     console.log(list);
-                //     this.arr = list.concat(this.arr);
-                //     this.setState({
-                //         list: this.arr, 
-                //         refreshing: false,
-                //         loading: false,
-                //         total: total
-                //     });
-                // })
-                // .catch(err => console.log(err));
             }
         })
         .catch(err => console.log(err));
@@ -195,10 +154,10 @@ export default class Cart extends React.Component {
 
         return(
             <Container>
-                <HeaderBase page="cart" title={'Giỏ hàng'} navigation={navigation} />
-                <View style={MainStyle.pageCart}>
+                <HeaderBase page="cart" title={'Thanh toán'} navigation={navigation} />
+                <View style={[MainStyle.pageCart,{backgroundColor: "#FFFFFF"}]}>
                     <ScrollView style={MainStyle.scrollCart}>
-                    {this.state.list.map((item, index) => {return (
+                        {this.state.list.map((item, index) => {return (
                             <View style={MainStyle.itemCart} key={item.id}>
                             <View style={MainStyle.infoItemCart}>
                                 <View style={MainStyle.imgItemCart}>
@@ -226,19 +185,79 @@ export default class Cart extends React.Component {
                                     </View>
                                 </View>
                             </View>
-                            <View style={MainStyle.taskCart}>
-                                <TouchableOpacity style={MainStyle.editItemCart}>
-                                    <Text><Icon type="FontAwesome" name="edit" style={{ color: '#000000', fontSize: 20 }} /></Text>
-                                    <Text style={[MainStyle.textTaskCart]}>Chỉnh sửa</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={MainStyle.editItemCart}>
-                                    <Text><Icon type="AntDesign" name="delete" style={{ color: '#000000', fontSize: 20 }} /></Text>
-                                    <Text style={[MainStyle.textTaskCart]}>Xóa</Text>
-                                </TouchableOpacity>
-                            </View>
                         </View>
                         )})} 
-                   
+
+                        <View style={MainStyle.inforCustom}>
+                            <View style={MainStyle.vHeaderOtherNews}>
+                                <Text style={MainStyle.txtOtherNews}>Thông tin đặt hàng</Text>
+                                <View style={[MainStyle.brBottomOther, {width: 140}]}></View>
+                            </View>
+                            <Text style={MainStyle.inforNotePay}>Vui lòng đăng nhập tài khoản để thanh toán tiện lợi hơn</Text>
+                            <View style={MainStyle.lineInputPayment}>
+                                <View style={MainStyle.wid30}>
+                                    <Text style={[MainStyle.titleInput,{marginRight:5}]}>Họ tên</Text>
+                                    <Text style={[MainStyle.titleInput,{color: '#ff0700'}]}>*</Text>
+                                    </View>
+                                <View style={MainStyle.wid70}>
+                                    <TextInput
+                                        style={MainStyle.inputInforPay}
+                                        placeholder='1'
+                                        value={this.state.amount}
+                                        onChangeText={text => onChangeText(text)}
+                                        // value={value}
+                                        /> 
+                                </View>
+                            </View>
+                            <View style={MainStyle.lineInputPayment}>
+                                <View style={MainStyle.wid30}>
+                                    <Text style={[MainStyle.titleInput,{marginRight:5}]}>Email</Text>
+                                    <Text style={[MainStyle.titleInput,{color: '#ff0700'}]}>*</Text>
+                                    </View>
+                                <View style={MainStyle.wid70}>
+                                    <TextInput
+                                        style={MainStyle.inputInforPay}
+                                        placeholder='1'
+                                        value={this.state.amount}
+                                        onChangeText={text => onChangeText(text)}
+                                        // value={value}
+                                        /> 
+                                </View>
+                            </View>
+                            <View style={MainStyle.lineInputPayment}>
+                                <View style={MainStyle.wid30}>
+                                    <Text style={[MainStyle.titleInput,{marginRight:5}]}>Địa chỉ</Text>
+                                    <Text style={[MainStyle.titleInput,{color: '#ff0700'}]}>*</Text>
+                                    </View>
+                                <View style={MainStyle.wid70}>
+                                    <TextInput
+                                        style={MainStyle.inputInforPay}
+                                        placeholder='1'
+                                        value={this.state.amount}
+                                        onChangeText={text => onChangeText(text)}
+                                        // value={value}
+                                        /> 
+                                </View>
+                            </View>
+                            <View style={MainStyle.lineInputPayment}>
+                                <View style={MainStyle.wid30}>
+                                    <Text style={[MainStyle.titleInput,{marginRight:5}]}>Di động</Text>
+                                    <Text style={[MainStyle.titleInput,{color: '#ff0700'}]}>*</Text>
+                                    </View>
+                                <View style={MainStyle.wid70}>
+                                    <TextInput
+                                        style={MainStyle.inputInforPay}
+                                        placeholder='1'
+                                        value={this.state.amount}
+                                        onChangeText={text => onChangeText(text)}
+                                        // value={value}
+                                        /> 
+                                </View>
+                            </View>
+                        </View>
+                        
+
+                    
                     </ScrollView>
                 </View>
                 <View style={MainStyle.vBootTotalCt}>

@@ -547,12 +547,12 @@ const styles = StyleSheet.create({
   },
   imgItemCart:{
     marginRight:10, 
-    height: (ScreenWidth-40)/5,
     width: (ScreenWidth -40)/5,
+    height: (ScreenWidth-40)/5*(100/67),
   },
   imgCart:{
-    height: (ScreenWidth-40)/5,
-    width: (ScreenWidth-40)/5,
+    width: (ScreenWidth -40)/5,
+    height: (ScreenWidth-40)/5*(100/67),
   },  
   rightInfoItem:{
     // backgroundColor: 'green',
@@ -612,8 +612,44 @@ const styles = StyleSheet.create({
   },
   txtPayN:{
     lineHeight: footerHeight,
+    fontFamily: "RobotoRegular",
   },
-
+  inforCustom:{
+    paddingTop: 20,
+  },
+  inforNotePay:{
+    fontFamily: "RobotoRegular",
+    fontSize: 14,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  lineInputPayment:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 20,
+    paddingRight: 20,
+    marginBottom: 15,
+  },
+  inputInforPay:{
+    width: (ScreenWidth-40)*80/100,
+    height: 40,
+    borderColor: '#c2bcb2',
+    borderWidth: 1,
+    color: '#000000',
+    paddingLeft: 15,
+    paddingRight: 15,
+    fontFamily: 'RobotoRegular',
+    fontSize: 15,
+  },
+  wid30:{
+    flexDirection: 'row',
+  },
+  titleInput:{
+    height: 40,
+    lineHeight: 40,
+  },
 
 
 
