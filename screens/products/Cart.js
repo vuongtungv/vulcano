@@ -41,11 +41,10 @@ export default class Cart extends React.Component {
                 this.setState({cart});
                 
                 var arrCart = JSON.parse(cart);
-                console.log(arrCart);
                 var ids = '';
 				arrCart.map(c => {
                     if(ids == '')
-                        ids = c.id+','+c.size+','+c.quantity;
+                        ids = c.id+','+c.size+','+c.amount+','+c.style;
                     else
                         ids = ids + '|' + c.id+','+c.size+','+c.quantity;
                 });
@@ -81,7 +80,8 @@ export default class Cart extends React.Component {
 
     gotoPayment(){
         const {navigation} = this.props;
-        navigation.navigate('PaymentScreen', {total: this.state.total});
+        // navigation.navigate('PaymentScreen', {total: this.state.total});
+        navigation.navigate('PaymentScreen');
     }
 
     deleteItem(id){
@@ -156,198 +156,57 @@ export default class Cart extends React.Component {
                 <HeaderBase page="cart" title={'Giỏ hàng'} navigation={navigation} />
                 <View style={MainStyle.pageCart}>
                     <ScrollView style={MainStyle.scrollCart}>
-                        <View style={MainStyle.itemCart}>
-                            <View style={MainStyle.infoItemCart}>
-                                <View style={MainStyle.imgItemCart}>
-                                   <Image style={MainStyle.imgCart} source={require("../../assets/cart_img_product.png")} />
-                                </View>
-                                <View style={[MainStyle.rightInfoItem]}>
-                                    <View style={[MainStyle.lineTopItemCart,{marginBottom: 25}]}>
-                                        <View><Text style={MainStyle.tProductItemCart}>Áo sơ mi dài tay 9594</Text></View>
-                                        <View><Text style={[MainStyle.fPriceItemCart]}>498.000 đ</Text></View>
+                    <FlatList
+                        data={this.state.list}
+                        renderItem={({ item }) => (
+                            <View style={MainStyle.itemCart} key={item.id}>
+                                <View style={MainStyle.infoItemCart}>
+                                    <View style={MainStyle.imgItemCart}>
+                                    <Image style={MainStyle.imgCart} source={require("../../assets/cart_img_product.png")} />
                                     </View>
-                                    <View style={MainStyle.lineTopItemCart}>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Kiểu dáng: </Text>
-                                            <Text style={MainStyle.txtBCart}>Slim-fit</Text>
+                                    <View style={[MainStyle.rightInfoItem]}>
+                                        <View style={[MainStyle.lineTopItemCart,{marginBottom: 25}]}>
+                                            <View><Text style={MainStyle.tProductItemCart}>Áo sơ mi dài tay 9594</Text></View>
+                                            <View><Text style={[MainStyle.fPriceItemCart]}>498.000 đ</Text></View>
                                         </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Kích cỡ: </Text>
-                                            <Text style={MainStyle.txtBCart}>40</Text>
-                                        </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Số lượng: </Text>
-                                            <Text style={MainStyle.txtBCart}>2</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                            <View style={MainStyle.taskCart}>
-                                <TouchableOpacity style={MainStyle.editItemCart}>
-                                    <Text><Icon type="FontAwesome" name="edit" style={{ color: '#000000', fontSize: 20 }} /></Text>
-                                    <Text style={[MainStyle.textTaskCart]}>Chỉnh sửa</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={MainStyle.editItemCart}>
-                                    <Text><Icon type="AntDesign" name="delete" style={{ color: '#000000', fontSize: 20 }} /></Text>
-                                    <Text style={[MainStyle.textTaskCart]}>Xóa</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                        <View style={MainStyle.itemCart}>
-                            <View style={MainStyle.infoItemCart}>
-                                <View style={MainStyle.imgItemCart}>
-                                   <Image style={MainStyle.imgCart} source={require("../../assets/cart_img_product.png")} />
-                                </View>
-                                <View style={[MainStyle.rightInfoItem]}>
-                                    <View style={[MainStyle.lineTopItemCart,{marginBottom: 25}]}>
-                                        <View><Text style={MainStyle.tProductItemCart}>Áo sơ mi dài tay 9594</Text></View>
-                                        <View><Text style={[MainStyle.fPriceItemCart]}>498.000 đ</Text></View>
-                                    </View>
-                                    <View style={MainStyle.lineTopItemCart}>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Kiểu dáng: </Text>
-                                            <Text style={MainStyle.txtBCart}>Slim-fit</Text>
-                                        </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Kích cỡ: </Text>
-                                            <Text style={MainStyle.txtBCart}>40</Text>
-                                        </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Số lượng: </Text>
-                                            <Text style={MainStyle.txtBCart}>2</Text>
+                                        <View style={MainStyle.lineTopItemCart}>
+                                            <View style={{flexDirection: 'row'}}>
+                                                <Text style={MainStyle.txtBCart}>Kiểu dáng: </Text>
+                                                <Text style={MainStyle.txtBCart}>Slim-fit</Text>
+                                            </View>
+                                            <View style={{flexDirection: 'row'}}>
+                                                <Text style={MainStyle.txtBCart}>Kích cỡ: </Text>
+                                                <Text style={MainStyle.txtBCart}>40</Text>
+                                            </View>
+                                            <View style={{flexDirection: 'row'}}>
+                                                <Text style={MainStyle.txtBCart}>Số lượng: </Text>
+                                                <Text style={MainStyle.txtBCart}>2</Text>
+                                            </View>
                                         </View>
                                     </View>
                                 </View>
-                            </View>
-                            <View style={MainStyle.taskCart}>
-                                <TouchableOpacity style={MainStyle.editItemCart}>
-                                    <Text><Icon type="FontAwesome" name="edit" style={{ color: '#000000', fontSize: 20 }} /></Text>
-                                    <Text style={[MainStyle.textTaskCart]}>Chỉnh sửa</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={MainStyle.editItemCart}>
-                                    <Text><Icon type="AntDesign" name="delete" style={{ color: '#000000', fontSize: 20 }} /></Text>
-                                    <Text style={[MainStyle.textTaskCart]}>Xóa</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                        <View style={MainStyle.itemCart}>
-                            <View style={MainStyle.infoItemCart}>
-                                <View style={MainStyle.imgItemCart}>
-                                   <Image style={MainStyle.imgCart} source={require("../../assets/cart_img_product.png")} />
-                                </View>
-                                <View style={[MainStyle.rightInfoItem]}>
-                                    <View style={[MainStyle.lineTopItemCart,{marginBottom: 25}]}>
-                                        <View><Text style={MainStyle.tProductItemCart}>Áo sơ mi dài tay 9594</Text></View>
-                                        <View><Text style={[MainStyle.fPriceItemCart]}>498.000 đ</Text></View>
-                                    </View>
-                                    <View style={MainStyle.lineTopItemCart}>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Kiểu dáng: </Text>
-                                            <Text style={MainStyle.txtBCart}>Slim-fit</Text>
-                                        </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Kích cỡ: </Text>
-                                            <Text style={MainStyle.txtBCart}>40</Text>
-                                        </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Số lượng: </Text>
-                                            <Text style={MainStyle.txtBCart}>2</Text>
-                                        </View>
-                                    </View>
+                                <View style={MainStyle.taskCart}>
+                                    <TouchableOpacity style={MainStyle.editItemCart}>
+                                        <Text><Icon type="FontAwesome" name="edit" style={{ color: '#000000', fontSize: 20 }} /></Text>
+                                        <Text style={[MainStyle.textTaskCart]}>Chỉnh sửa</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={MainStyle.editItemCart}>
+                                        <Text><Icon type="AntDesign" name="delete" style={{ color: '#000000', fontSize: 20 }} /></Text>
+                                        <Text style={[MainStyle.textTaskCart]}>Xóa</Text>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
-                            <View style={MainStyle.taskCart}>
-                                <TouchableOpacity style={MainStyle.editItemCart}>
-                                    <Text><Icon type="FontAwesome" name="edit" style={{ color: '#000000', fontSize: 20 }} /></Text>
-                                    <Text style={[MainStyle.textTaskCart]}>Chỉnh sửa</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={MainStyle.editItemCart}>
-                                    <Text><Icon type="AntDesign" name="delete" style={{ color: '#000000', fontSize: 20 }} /></Text>
-                                    <Text style={[MainStyle.textTaskCart]}>Xóa</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                        <View style={MainStyle.itemCart}>
-                            <View style={MainStyle.infoItemCart}>
-                                <View style={MainStyle.imgItemCart}>
-                                   <Image style={MainStyle.imgCart} source={require("../../assets/cart_img_product.png")} />
-                                </View>
-                                <View style={[MainStyle.rightInfoItem]}>
-                                    <View style={[MainStyle.lineTopItemCart,{marginBottom: 25}]}>
-                                        <View><Text style={MainStyle.tProductItemCart}>Áo sơ mi dài tay 9594</Text></View>
-                                        <View><Text style={[MainStyle.fPriceItemCart]}>498.000 đ</Text></View>
-                                    </View>
-                                    <View style={MainStyle.lineTopItemCart}>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Kiểu dáng: </Text>
-                                            <Text style={MainStyle.txtBCart}>Slim-fit</Text>
-                                        </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Kích cỡ: </Text>
-                                            <Text style={MainStyle.txtBCart}>40</Text>
-                                        </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Số lượng: </Text>
-                                            <Text style={MainStyle.txtBCart}>2</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                            <View style={MainStyle.taskCart}>
-                                <TouchableOpacity style={MainStyle.editItemCart}>
-                                    <Text><Icon type="FontAwesome" name="edit" style={{ color: '#000000', fontSize: 20 }} /></Text>
-                                    <Text style={[MainStyle.textTaskCart]}>Chỉnh sửa</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={MainStyle.editItemCart}>
-                                    <Text><Icon type="AntDesign" name="delete" style={{ color: '#000000', fontSize: 20 }} /></Text>
-                                    <Text style={[MainStyle.textTaskCart]}>Xóa</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                        <View style={MainStyle.itemCart}>
-                            <View style={MainStyle.infoItemCart}>
-                                <View style={MainStyle.imgItemCart}>
-                                   <Image style={MainStyle.imgCart} source={require("../../assets/cart_img_product.png")} />
-                                </View>
-                                <View style={[MainStyle.rightInfoItem]}>
-                                    <View style={[MainStyle.lineTopItemCart,{marginBottom: 25}]}>
-                                        <View><Text style={MainStyle.tProductItemCart}>Áo sơ mi dài tay 9594</Text></View>
-                                        <View><Text style={[MainStyle.fPriceItemCart]}>498.000 đ</Text></View>
-                                    </View>
-                                    <View style={MainStyle.lineTopItemCart}>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Kiểu dáng: </Text>
-                                            <Text style={MainStyle.txtBCart}>Slim-fit</Text>
-                                        </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Kích cỡ: </Text>
-                                            <Text style={MainStyle.txtBCart}>40</Text>
-                                        </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Số lượng: </Text>
-                                            <Text style={MainStyle.txtBCart}>2</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                            <View style={MainStyle.taskCart}>
-                                <TouchableOpacity style={MainStyle.editItemCart}>
-                                    <Text><Icon type="FontAwesome" name="edit" style={{ color: '#000000', fontSize: 20 }} /></Text>
-                                    <Text style={[MainStyle.textTaskCart]}>Chỉnh sửa</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={MainStyle.editItemCart}>
-                                    <Text><Icon type="AntDesign" name="delete" style={{ color: '#000000', fontSize: 20 }} /></Text>
-                                    <Text style={[MainStyle.textTaskCart]}>Xóa</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
+                        )}
+                        refreshing={this.state.refreshing}
+                        keyExtractor={item => item.id}
+                    />
                     </ScrollView>
                 </View>
                 <View style={MainStyle.vBootTotalCt}>
                     <View style={MainStyle.totalPriceCart}>
                         <Text style={[MainStyle.txtPayN,{fontSize: 16}]}>Tổng tiền: <Text style={{color: '#ff0700'}}>489.000 đ</Text></Text>
                     </View>
-                    <TouchableOpacity style={MainStyle.payCart}>
+                    <TouchableOpacity style={MainStyle.payCart} onPress={()=>this.gotoPayment()}>
                         <Text style={[MainStyle.txtPayN,{fontFamily: 'RobotoRegular', fontSize: 18, color: '#FFFFFF'}]}>Thanh toán</Text>
                     </TouchableOpacity>
                 </View>
