@@ -25,7 +25,11 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "vn.vulcano.app"
+      "bundleIdentifier": "vn.vulcano.app",
+      "infoPlist": {
+        "NSPhotoLibraryAddUsageDescription": "Ứng dụng sử dụng thư viện ảnh để lưu ảnh sản phẩm",
+        "NSPhotoLibraryUsageDescription": "Ứng dụng sử dụng thư viện ảnh để lưu ảnh sản phẩm"
+      }
     },
     "android": {
       "package": "vn.vulcano.app"

@@ -1,5 +1,6 @@
 import React, { Component} from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList ,Picker, Alert} from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList , Alert} from 'react-native';
+import { Picker} from "native-base";
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
@@ -31,7 +32,7 @@ export default class Home extends Component{
     componentDidMount() {
         this.getCity();
         // this.getDistricts();
-        // this.getAllShowrooms();
+        this.getAllShowrooms();
     }
 
     getCity= () => {
@@ -136,6 +137,7 @@ export default class Home extends Component{
                     <View style={MainStyle.vMap}>
 
                     </View>
+                    
                     <View style={MainStyle.bSelectShowrooms}>
                         <Text style={MainStyle.txtShowrooms}>Tìm kiếm theo địa chỉ</Text>
                         <View style={MainStyle.borSelectSR}>

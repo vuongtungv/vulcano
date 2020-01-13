@@ -207,7 +207,7 @@ export default class DetailProduct extends Component{
 			Alert.alert('Thông báo', 'Bạn vui lòng nhập số lượng!');
 			return false;
         }
-        Alert.alert(this.state.detail.id);
+        // Alert.alert(this.state.detail.id);
 
 		getStorage('cart')
         .then(cart => {
@@ -329,11 +329,11 @@ export default class DetailProduct extends Component{
                                 <TouchableOpacity onPress={()=> this.plus()} style={MainStyle.minusNumbers}><Text>+</Text></TouchableOpacity>
                             </View> 
 
-                        </View>
-                        <View style={{flexDirection: 'row'}}>
+                        </View> 
+                        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
                             <Image style={{marginRight: 15,}} source={require('../../assets/icon_car.png')}/>
                             <Text style={[MainStyle.headerSlo,{lineHeight: 30}]}>
-                                Miễn phí vận chuyển cho đơn hàng từ <Text style={MainStyle.colorPriceProducts}>400.000 đ</Text>
+                                Miễn phí vận chuyển cho đơn hàng từ <Text style={[MainStyle.colorPriceProducts,MainStyle.headerSlo,{lineHeight: 30}]}> 400.000 đ</Text>
                             </Text>
                         </View>
                     </View>

@@ -132,6 +132,9 @@ export default class Home extends React.Component {
   SalesProducts(){
     this.props.navigation.navigate('SalesProductsScreen');
   }
+  sellingProducts(){
+    this.props.navigation.navigate('SalesProductsScreen');
+  }
 
 
 
@@ -202,7 +205,7 @@ export default class Home extends React.Component {
                     </TouchableOpacity>
                   )})}
             
-            <TouchableOpacity style={MainStyle.itemsCateSmallHome}>
+            <TouchableOpacity style={MainStyle.itemsCateSmallHome} onPress={()=>this.sellingProducts()}>
               <View style={MainStyle.viewSmallHome}>
                 <Image style={MainStyle.imgSmallHome} source={require("../assets/image_cate_small.png")} />
               </View>

@@ -52,24 +52,24 @@ export default class AllProducts extends Component{
                 <HeaderBase page="list_products" title={'Sản phẩm'} navigation={navigation} />
                 <View style={MainStyle.filterProducts}>
                     <View style={MainStyle.filterLeft}>
-                        <TouchableOpacity>
+                        <View>
                             <Text style={MainStyle.txtFilter}>Phổ biến</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{marginLeft: 35}}>
+                        </View>
+                        <View style={{marginLeft: 35}}>
                             <Text style={MainStyle.txtFilter}>Sale</Text>
-                        </TouchableOpacity>
+                        </View>
                     </View>
                     <View style={MainStyle.filterRight}>
-                        <TouchableOpacity style={[MainStyle.hasIconFilter,{marginRight: 35}]}>
+                        <View style={[MainStyle.hasIconFilter,{marginRight: 35}]}>
                             <Text style={MainStyle.txtFilter}>Giá
                                 <Icon type="MaterialCommunityIcons" name="swap-vertical" style={{color: '#000000', fontSize: 20 }} />
                             </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={MainStyle.hasIconFilter}>
+                        </View>
+                        <View style={MainStyle.hasIconFilter}>
                             <Text style={MainStyle.txtFilter}>Lọc sản phẩm
                                 <Icon type="AntDesign" name="filter" style={{positon: 'absolute',color: '#000000', fontSize: 20 }} />
                             </Text>
-                        </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
 

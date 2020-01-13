@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     paddingTop: 8,
     // borderTopColor: '#bbbbbb',
-    // borderTopWidth: 1 / PixelRatio.get(),
+    // borderTopWidth: 1 / PixelRatio.get(), 
     width: ScreenWidth,
     paddingLeft: 20,
     paddingRight: 20,
@@ -661,6 +661,8 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     marginBottom:footerHeight+20,
+    position: 'relative',
+    zIndex: -1,
   },
   itemNews:{
     marginTop: 20,
@@ -712,6 +714,8 @@ const styles = StyleSheet.create({
   },
   pageDetailNews:{
     paddingBottom: 68,
+    position: 'relative',
+    zIndex: -1,
   },
   bodyDetailNews:{
    paddingLeft: 20,

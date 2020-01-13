@@ -103,9 +103,9 @@ export default class HeaderBase extends Component {
                         <View style={MainStyle.logoHeader}> 
                             <Image style={{width: 99, height: 40}} source={require("../../assets/logo.png")} />
                         </View>
-                        <TouchableOpacity style={MainStyle.iconSearchHeader} onPress={()=>this.searchHome()}>
+                        <View style={MainStyle.iconSearchHeader} onPress={()=>this.searchHome()}>
                             <Icon type="FontAwesome" name="search" style={{ color: '#000000', fontSize: 22 }} />
-                        </TouchableOpacity>
+                        </View>
                     </View>
                 );
             case 'search':
@@ -152,9 +152,9 @@ export default class HeaderBase extends Component {
                         <View style={MainStyle.titleCenterHeader}> 
                             <Text style={MainStyle.txtCenterHeader}>{title}</Text>
                         </View>
-                        <TouchableOpacity style={MainStyle.iconSearchHeader} onPress={()=>this.searchHome()}>
+                        <View style={MainStyle.iconSearchHeader} onPress={()=>this.searchHome()}>
                             <Icon type="FontAwesome" name="search" style={{ color: '#000000', fontSize: 22 }} />
-                        </TouchableOpacity>
+                        </View>
                     </View>
                 );
 

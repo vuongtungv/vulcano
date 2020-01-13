@@ -122,7 +122,7 @@ export default class FooterBase extends Component {
                     
                 </TouchableOpacity>
 
-                <TouchableOpacity style={MainStyle.tFItem} onPress={() => {
+                <View style={MainStyle.tFItem} onPress={() => {
                     navigation.navigate('SurveyScreen');
                     }}>
                     <View style={MainStyle.tFItemBoundIcon}>
@@ -130,7 +130,7 @@ export default class FooterBase extends Component {
                         <Icon type="FontAwesome" name="user-o" style={{ color: '#777777', fontSize: 27 }} />
                     </View>
                     <Text style={[MainStyle.tFItemText,{color: "#777777"}]}>Profile</Text>
-                </TouchableOpacity>
+                </View>
             </View>
         );
     }

@@ -203,9 +203,8 @@ export default class Payment extends React.Component {
                                     <TextInput
                                         style={MainStyle.inputInforPay}
                                         placeholder='1'
-                                        value={this.state.amount}
-                                        onChangeText={text => onChangeText(text)}
-                                        // value={value}
+                                        onChangeText={(text) => this.setState({text})}
+                                        value={this.state.text}
                                         /> 
                                 </View>
                             </View>
@@ -215,7 +214,7 @@ export default class Payment extends React.Component {
                                     <Text style={[MainStyle.titleInput,{color: '#ff0700'}]}>*</Text>
                                     </View>
                                 <View style={MainStyle.wid70}>
-                                    <TextInput
+                                    <TextInput 
                                         style={MainStyle.inputInforPay}
                                         placeholder='1'
                                         value={this.state.amount}

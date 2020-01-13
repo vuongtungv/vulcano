@@ -227,14 +227,14 @@ export default class Cart extends React.Component {
                                 </View>
                             </View>
                             <View style={MainStyle.taskCart}>
-                                <TouchableOpacity style={MainStyle.editItemCart}>
+                                <View style={MainStyle.editItemCart}>
                                     <Text><Icon type="FontAwesome" name="edit" style={{ color: '#000000', fontSize: 20 }} /></Text>
                                     <Text style={[MainStyle.textTaskCart]}>Chỉnh sửa</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={MainStyle.editItemCart}>
+                                </View>
+                                <View style={MainStyle.editItemCart}>
                                     <Text><Icon type="AntDesign" name="delete" style={{ color: '#000000', fontSize: 20 }} /></Text>
                                     <Text style={[MainStyle.textTaskCart]}>Xóa</Text>
-                                </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
                         )})} 
