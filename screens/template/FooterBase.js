@@ -122,16 +122,19 @@ export default class FooterBase extends Component {
                     
                 </TouchableOpacity>
 
-                <View style={MainStyle.tFItem} onPress={() => {
-                    navigation.navigate('SurveyScreen');
-                    }}>
-                    <View style={MainStyle.tFItemBoundIcon}>
-                        {/* <Image style={{width: 30,height:25}} source={require("../../assets/bar_profile.png")} /> */}
-                        <Icon type="FontAwesome" name="user-o" style={{ color: '#777777', fontSize: 27 }} />
-                    </View>
-                    <Text style={[MainStyle.tFItemText,{color: "#777777"}]}>Profile</Text>
-                </View>
+                
+                
             </View>
         );
     }
 }
+
+// <View style={MainStyle.tFItem} onPress={() => {
+//                     navigation.navigate('SurveyScreen');
+//                     }}>
+//                     <View style={MainStyle.tFItemBoundIcon}>
+//                         {/* <Image style={{width: 30,height:25}} source={require("../../assets/bar_profile.png")} /> */}
+//                         <Icon type="FontAwesome" name="user-o" style={{ color: '#777777', fontSize: 27 }} />
+//                     </View>
+//                     <Text style={[MainStyle.tFItemText,{color: "#777777"}]}>Profile</Text>
+//                 </View>
