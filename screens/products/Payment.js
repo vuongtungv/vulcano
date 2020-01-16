@@ -76,76 +76,60 @@ export default class Payment extends React.Component {
         });
     }
 
-
-    updateCart(){
-        Alert.alert('Thông báo', 'Cập nhật đơn hàng thành công!');
-    }
-
     gotoPayment(){
         this.props.navigation.navigate('PaymentScreen');
     }
 
-    deleteItem(id){
-        var arrCart = JSON.parse(this.state.cart);
-        var tmp = [];
-        arrCart.map(c => {
-            if(c.id != id)
-                tmp.push(c);
-        });
-        saveStorage('cart', JSON.stringify(tmp));
-        this.makeRemoteRequest();
-    }
-
-    changeSize(id, size){
-        var arrCart = JSON.parse(this.state.cart);
-        var tmp = [];
-        arrCart.map(c => {
-            if(c.id != id)
-                tmp.push(c);
-            else
-                tmp.push({
-					id: c.id,
-					size: size,
-					quantity: c.quantity,
-				});
-        });
-        saveStorage('cart', JSON.stringify(tmp));
-        this.makeRemoteRequest();
-    }
-
-    changeQuantity(id, quantity){
-        var arrCart = JSON.parse(this.state.cart);
-        var tmp = [];
-        arrCart.map(c => {
-            if(c.id != id)
-                tmp.push(c);
-            else
-                tmp.push({
-					id: c.id,
-					size: c.size,
-					quantity: quantity,
-				});
-        });
-        saveStorage('cart', JSON.stringify(tmp));
-        this.makeRemoteRequest();
-    }
-
-    renderPrice(item){
-        if(item.discount > 0){ 
-            return(
-                <View style={[MainStyle.cartItemInfoItem, {flexDirection: 'row'}]}>
-                    <Text style={[MainStyle.cartItemInfoPrice, MainStyle.red]}>{item.price}</Text>
-                    <Text style={[MainStyle.cartItemInfoPrice, MainStyle.productItemPriceOld, {paddingLeft: 5}]}>{item.price_old}</Text>
-                </View>
-            );
-        }else{
+    renderButtonCheck1(){
+        if(this.state.isEdit == true)
             return (
-                <View style={MainStyle.cartItemInfoItem}>
-                    <Text style={[MainStyle.cartItemInfoPrice, MainStyle.red]}>{item.price}</Text>
+                <View>
+                    <TouchableOpacity style={[MainStyle.radioCheck,{marginBottom: 10}]} onPress={() => this.setStateEdit1('1')}>
+                        <View style={{flexDirection: 'row'}}>
+                            <View style={[MainStyle.fontAvo,{marginRight: 10,borderColor:'#dddddd', borderWidth: 1,padding: 2,marginTop: -2, borderRadius: 12, width:24, height: 24}]}>
+                                <View style={{width: 16, height: 16, borderRadius: 9}}></View>
+                            </View> 
+                            <Text style={[MainStyle.fontAvo,MainStyle.pTextDesNextFee]}>Giao hàng - Nhận tiền (COD)</Text>
+                        </View> 
+                    </TouchableOpacity> 
+                    <TouchableOpacity style={[MainStyle.radioCheck, {marginBottom: 10}]} onPress={() => this.setStateEdit1('2')}>
+                        <View style={{flexDirection: 'row'}}>
+                            <View style={[MainStyle.fontAvo,{marginRight: 10,borderColor:'#ED1E79', borderWidth: 1,padding: 3,marginTop: -2, borderRadius: 12, width:24, height: 24}]}>
+                                <View style={{backgroundColor: '#ED1E79', width: 16, height: 16, borderRadius: 8}}></View>
+                            </View> 
+                            <Text style={[MainStyle.fontAvo,MainStyle.pTextDesNextFee]}>Thanh toán online</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             )
-        }
+        else
+            return ( 
+            
+                <View>
+                    <TouchableOpacity style={[MainStyle.radioCheck, {marginBottom: 10}]} onPress={() => this.setStateEdit1('1')}>
+                        <View style={{flexDirection: 'row'}}>
+                            <View style={[MainStyle.fontAvo,{marginRight: 10,borderColor:'#ED1E79', borderWidth: 1,padding: 3,marginTop: -2, borderRadius: 12, width:24, height: 24}]}>
+                                <View style={{backgroundColor: '#ED1E79', width: 16, height: 16, borderRadius: 8}}></View>
+                            </View> 
+                            <Text style={[MainStyle.fontAvo,MainStyle.pTextDesNextFee]}>Giao hàng - Nhận tiền (COD)</Text>
+                        </View>
+                    </TouchableOpacity>
+                    
+                    <TouchableOpacity style={[MainStyle.radioCheck,{marginBottom: 10}]} onPress={() => this.setStateEdit1('2')}>
+                        <View style={{flexDirection: 'row'}}>
+                            <View style={[MainStyle.fontAvo,{marginRight: 10,borderColor:'#dddddd', borderWidth: 1,padding: 2,marginTop: -2, borderRadius: 12, width:24, height: 24}]}>
+                                <View style={{width: 16, height: 16, borderRadius: 9}}></View>
+                            </View> 
+                            <Text style={[MainStyle.fontAvo,MainStyle.pTextDesNextFee]}>Thanh toán online</Text>
+                        </View> 
+                    </TouchableOpacity>  
+                </View>
+            )
     }
+
+    
+
+    
 
 
 	
@@ -208,7 +192,7 @@ export default class Payment extends React.Component {
                                         /> 
                                 </View>
                             </View>
-                            <View style={MainStyle.lineInputPayment}>
+                            {/* <View style={MainStyle.lineInputPayment}>
                                 <View style={MainStyle.wid30}>
                                     <Text style={[MainStyle.titleInput,{marginRight:5}]}>Email</Text>
                                     <Text style={[MainStyle.titleInput,{color: '#ff0700'}]}>*</Text>
@@ -252,21 +236,28 @@ export default class Payment extends React.Component {
                                         // value={value}
                                         /> 
                                 </View>
-                            </View>
+                            </View> */}
                         </View>
+
+
+                        {/* <View style={MainStyle.inforCustom}>
+                            <View style={MainStyle.vHeaderOtherNews}>
+                                <Text style={MainStyle.txtOtherNews}>Hình thức thanh toán</Text>
+                                <View style={[MainStyle.brBottomOther, {width: 140}]}></View>
+                            </View>
+
+                        </View> */}
                         
 
                     
                     </ScrollView>
                 </View>
-                <View style={MainStyle.vBootTotalCt}>
-                    <View style={MainStyle.totalPriceCart}>
-                        <Text style={[MainStyle.txtPayN,{fontSize: 16}]}>Tổng tiền: <Text style={{fontSize: 18,color: '#ff0700'}}>{this.state.total} đ</Text></Text>
-                    </View>
-                    <TouchableOpacity style={MainStyle.payCart} onPress={()=>this.gotoPayment()}>
-                        <Text style={[MainStyle.txtPayN,{fontSize: 18, color: '#FFFFFF'}]}>Thanh toán</Text>
+                
+                {/* <View style={MainStyle.vBootTotalCt}>
+                    <TouchableOpacity style={MainStyle.submitPayment} onPress={()=>this.gotoPayment()}>
+                        <Text style={[MainStyle.txtPayN,{fontSize: 18, color: '#FFFFFF'}]}>Hoàn thành đặt mua</Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
             </Container>
         );
     }

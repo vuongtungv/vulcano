@@ -650,6 +650,12 @@ const styles = StyleSheet.create({
     height: 40,
     lineHeight: 40,
   },
+  submitPayment:{
+    backgroundColor: '#000000',
+    width: ScreenWidth,
+    height: footerHeight,
+    alignItems: 'center',
+  },
 
 
 
