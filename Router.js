@@ -37,6 +37,13 @@ import HomeVideos from "./screens/videos/Home";
 import HomeShowrooms from "./screens/showrooms/Home";
 
 
+// user
+import User from "./screens/user/Home";
+
+
+
+
+
 export const VulcanoStack = createStackNavigator({
   HomeScreen: {
     screen: Home
@@ -93,6 +100,11 @@ export const VulcanoStack = createStackNavigator({
     screen: HomeShowrooms
   },
 
+
+  // user
+  UserScreen:{
+    screen: User
+  }
 
 
 });

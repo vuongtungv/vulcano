@@ -28,6 +28,9 @@ export default class FooterBase extends Component {
     gotoShowrooms(){
         this.props.navigation.navigate('ListShowroomsScreen');
     }
+    gotoUser(){
+        this.props.navigation.navigate('UserScreen');
+    }
 
 
     render() {
@@ -118,10 +121,28 @@ export default class FooterBase extends Component {
                             <Text style={[MainStyle.tFItemText,{color: '#777777'}]}>Cửa hàng</Text>
                         </View>
                     }
-                    
-                    
                 </TouchableOpacity>
 
+                <TouchableOpacity style={MainStyle.tFItem} onPress={()=>this.gotoUser()}>
+                    {
+                        page == 'user' ?
+                        <View>
+                            <View style={MainStyle.tFItemBoundIcon}>
+                                {/* <Image style={{width: 30,height:25}} source={require("../../assets/bar_profile.png")} /> */}
+                                <Icon type="FontAwesome" name="user-o" style={{ color: '#000000', fontSize: 27 }} />
+                            </View>
+                            <Text style={[MainStyle.tFItemText,{color: "#000000"}]}>Profile</Text>
+                        </View> 
+                        :
+                        <View>
+                            <View style={MainStyle.tFItemBoundIcon}>
+                                {/* <Image style={{width: 30,height:25}} source={require("../../assets/bar_profile.png")} /> */}
+                                <Icon type="FontAwesome" name="user-o" style={{ color: '#777777', fontSize: 27 }} />
+                            </View>
+                            <Text style={[MainStyle.tFItemText,{color: "#777777"}]}>Profile</Text>
+                        </View>
+                    }
+                </TouchableOpacity>
                 
                 
             </View>
@@ -129,12 +150,3 @@ export default class FooterBase extends Component {
     }
 }
 
-// <View style={MainStyle.tFItem} onPress={() => {
-//                     navigation.navigate('SurveyScreen');
-//                     }}>
-//                     <View style={MainStyle.tFItemBoundIcon}>
-//                         {/* <Image style={{width: 30,height:25}} source={require("../../assets/bar_profile.png")} /> */}
-//                         <Icon type="FontAwesome" name="user-o" style={{ color: '#777777', fontSize: 27 }} />
-//                     </View>
-//                     <Text style={[MainStyle.tFItemText,{color: "#777777"}]}>Profile</Text>
-//                 </View>
