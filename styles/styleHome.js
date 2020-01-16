@@ -15,6 +15,9 @@ const styles = StyleSheet.create({
     width: ScreenWidth,
     height: ScreenHeight,  
   },
+  fontRegular:{
+    fontFamily: "RobotoRegular",
+  },
 
   // style footer
   tFooter:{
@@ -643,6 +646,13 @@ const styles = StyleSheet.create({
     fontFamily: 'RobotoRegular',
     fontSize: 15,
   },
+  TextGenderLine:{
+    width: (ScreenWidth-40)*80/100,
+    height: 40,
+    color: '#000000',
+    paddingTop: 10,
+    flexDirection: 'row',
+  },
   wid30:{
     flexDirection: 'row',
   },
@@ -655,6 +665,9 @@ const styles = StyleSheet.create({
     width: ScreenWidth,
     height: footerHeight,
     alignItems: 'center',
+  },
+  pTextMethodPayment:{
+    fontSize: 15,
   },
 
 
