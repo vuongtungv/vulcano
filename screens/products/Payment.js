@@ -6,7 +6,7 @@ import HeaderBase from '../template/HeaderBase';
 import saveStorage from './../api/saveStorage';
 import getStorage from './../api/getStorage';
 import global from './../api/global';
-import {get_product_by_cart} from './../../src/api/apiProducts';
+import {get_product_by_cart,submitDonHang} from './../../src/api/apiProducts';
 
 export default class Payment extends React.Component {
 	static navigationOptions = ({ navigation }) => ({
@@ -18,7 +18,7 @@ export default class Payment extends React.Component {
 		
         this.state = {
             list: [],
-            total: '',
+            total: 0,
 			page: 1,
 			refreshing: false,
             loading: false,
@@ -26,11 +26,12 @@ export default class Payment extends React.Component {
             methodPayment: false,
             valueMethodPayment: 1,
             genderTF: false,   
-            valueGender: 1,
             fullname: '',
+            valueGender: 1,
+            email: '',
             address: '',
             phone: '',
-            email: '',
+            ids: '',
 		}
 		
 		this.arr = [];
@@ -48,7 +49,7 @@ export default class Payment extends React.Component {
         .then(cart => {
             if(cart != ''){
                 this.setState({cart});
-                
+                // console.log(cart);
                 var arrCart = JSON.parse(cart);
                 var ids = '';
 				arrCart.map(c => {
@@ -57,6 +58,9 @@ export default class Payment extends React.Component {
                     else
                         ids = ids + '|' + c.id+','+c.size+','+c.style+','+c.amount;
                 })
+                this.setState({
+                    ids:ids
+                });
                 this.getListCart(ids);
             }
         })
@@ -86,16 +90,85 @@ export default class Payment extends React.Component {
 
     submitPayment(){
         var fullname = this.state.fullname;
+        var valueGender = this.state.valueGender;
         var email = this.state.email;
         var address = this.state.address;
         var phone = this.state.phone;
+        var valueMethodPayment = this.state.valueMethodPayment;
+        var ids = this.state.ids;
+        
+        // if(this.state.list==''){
+        //     Alert.alert('Rỗng');
+        // }else{
+        //     Alert.alert('Có sản phẩm');
+        // }
 
-        validateEmail = (email) => {
-            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-              return re.test(email);
-          };
+
+        if(fullname == ''){
+            Alert.alert('Họ tên không được để trống.');
+            return;
+        }else{
+            regex_name  =  /^[a-zA-Z ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s]+$/;
+            if (regex_name.test(fullname)) {   //điền đúng định dạng
+
+            }else{
+                Alert.alert('Họ tên phải là ký tự từ a-z.');
+                return;
+            } 
+        }
+
+
+        if(email == ''){
+            Alert.alert('Email không được để trống.');
+            return;
+        }else{
+            regex_email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if (regex_email.test(email)) {   //điền đúng định dạng
+
+            }else{
+                Alert.alert('Email không đúng định dạng.');
+                return;
+            } 
+        }
+
+        if(address == ''){
+            Alert.alert('Địa chỉ không được để trống.');
+            return;
+        }
+
+        if(phone == ''){
+            Alert.alert('Số điện thoại không được để trống.');
+            return;        
+        }else{
+            regex_phone = /^0\d{9}$/;
+            if (regex_phone.test(phone)) {   //điền đúng định dạng
+
+            }else{
+                Alert.alert('Số điện thoại gồm 10 số, bắt đầu từ số 0.');
+                return;
+            } 
+        }
+
+
+        submitDonHang(fullname, valueGender, email, address, phone,valueMethodPayment,ids)
+
+            .then((responseJson) => {
+                console.log(responseJson.order_id);
+                if (responseJson.error == '0') {
+                    this.setState({ rest_id: responseJson.order_id});
+
+                    // this.props.navigation.goBack();
+                    // global.onRefresh();
+                    saveStorage('cart', '');
+                    Alert.alert('Thông báo', responseJson.message);
+                    this.props.navigation.navigate('HomeScreen');
+                } else {
+                    Alert.alert('Thông báo', responseJson.message);
+                }
+            }).done();  
 
         
+          
     }
 
     renderButtonGender(){
@@ -261,7 +334,7 @@ export default class Payment extends React.Component {
                         </View>
                         )})} 
 
-                        {/* <View style={MainStyle.inforCustom}>
+                        <View style={MainStyle.inforCustom}>
                             <View style={MainStyle.vHeaderOtherNews}>
                                 <Text style={MainStyle.txtOtherNews}>Thông tin đặt hàng</Text>
                                 <View style={[MainStyle.brBottomOther, {width: 140}]}></View>
@@ -333,24 +406,27 @@ export default class Payment extends React.Component {
                                     />
                                 </View>
                             </View>
-                        </View> */}
+                        </View>
 
 
-                        {/* <View style={MainStyle.inforCustom}>
+                        <View style={MainStyle.inforCustom}>
                             <View style={MainStyle.vHeaderOtherNews}>
                                 <Text style={MainStyle.txtOtherNews}>Hình thức thanh toán</Text>
                                 <View style={[MainStyle.brBottomOther, {width: 140}]}></View>
                             </View>
                             {this.renderButtonMethodPayment()}
-                        </View> */}
+                        </View>
+                        
+
+                    
                     </ScrollView>
                 </View>
                 
-                {/* <View style={MainStyle.vBootTotalCt}>
+                <View style={MainStyle.vBootTotalCt}>
                     <TouchableOpacity style={MainStyle.submitPayment} onPress={()=>this.submitPayment()}>
                         <Text style={[MainStyle.txtPayN,{fontSize: 19, color: '#FFFFFF', textTransform: 'uppercase'}]}>Hoàn thành đặt mua</Text>
                     </TouchableOpacity>
-                </View> */}
+                </View>
             </Container>
         );
     }
