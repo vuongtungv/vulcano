@@ -164,7 +164,7 @@ export default class Cart extends React.Component {
                 tmp.push({
 					id: c.id,
 					size: c.size,
-					quantity: quantity,
+					amount: quantity,
 				});
         });
         saveStorage('cart', JSON.stringify(tmp));
@@ -231,10 +231,10 @@ export default class Cart extends React.Component {
                                     <Text><Icon type="FontAwesome" name="edit" style={{ color: '#000000', fontSize: 20 }} /></Text>
                                     <Text style={[MainStyle.textTaskCart]}>Chỉnh sửa</Text>
                                 </View>
-                                <View style={MainStyle.editItemCart}>
+                                <TouchableOpacity style={MainStyle.editItemCart} onPress={()=>this.deleteItem(item.id)}>
                                     <Text><Icon type="AntDesign" name="delete" style={{ color: '#000000', fontSize: 20 }} /></Text>
                                     <Text style={[MainStyle.textTaskCart]}>Xóa</Text>
-                                </View>
+                                </TouchableOpacity>
                             </View>
                         </View>
                         )})} 

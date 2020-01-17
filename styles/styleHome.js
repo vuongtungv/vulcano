@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     marginTop: 60 + 150,
   },
   marginBottomFooter:{
-    marginBottom: footerHeight
+    marginBottom: footerHeight,
   },  
 
   // Heaerder Base

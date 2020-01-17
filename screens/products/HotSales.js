@@ -57,7 +57,7 @@ export default class HotSales extends Component{
 
         return(
             <Container>
-                <HeaderBase page="categories" title={'Danh mục sản phẩm'} navigation={navigation} />
+                <HeaderBase page="categories" title={'Danh mục sản phẩm hot'} navigation={navigation} />
                 <View style={MainStyle.pageCategories}>
                     <View style={MainStyle.tabListCategories}>
                         {/* <TouchableOpacity style={[MainStyle.itemsTabCategories,MainStyle.activeItemsTabCategories]}>

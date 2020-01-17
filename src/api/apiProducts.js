@@ -1,9 +1,9 @@
 import global from './../../screens/api/global';
 
 // list products in cate
-export function getProductsInCate(id,type){
+export function getProductsInCate(id,type,products_sort,page){
     let url;
-    url = global.BASE_URL+`/products_in_cate.api?id=${id}&type=${type}`;
+    url = global.BASE_URL+`/products_in_cate.api?id=${id}&type=${type}&products_sort=${products_sort}&page=${page}`;
     console.log(url);
     return fetch(url)
     .then(res => res.json());
@@ -30,9 +30,9 @@ export function listCateSalesLv1(){
     return fetch(url)
     .then(res => res.json());
 };
-export function getAllProducts(){
+export function getAllProducts(page){
     let url;
-    url = global.BASE_URL+`/get_all_products.api`;
+    url = global.BASE_URL+`/get_all_products.api?page=${page}`;
     console.log(url);
     return fetch(url)
     .then(res => res.json());

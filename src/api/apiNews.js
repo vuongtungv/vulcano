@@ -1,9 +1,9 @@
 import global from './../../screens/api/global';
 
 // list news
-export function getListNews(){
+export function getListNews(page){
     let url;
-    url = global.BASE_URL+`/get_list_news.api`;
+    url = global.BASE_URL+`/get_list_news.api?page=${page}`;
     console.log(url);
     return fetch(url)
     .then(res => res.json());
@@ -23,9 +23,9 @@ export function getCateNews(){
     return fetch(url)
     .then(res => res.json());
 };
-export function getListNewsCate(id){
+export function getListNewsCate(id,page){
     let url;
-    url = global.BASE_URL+`/get_list_news_cate.api?id=${id}`;
+    url = global.BASE_URL+`/get_list_news_cate.api?id=${id}&page=${page}`;
     console.log(url);
     return fetch(url)
     .then(res => res.json());

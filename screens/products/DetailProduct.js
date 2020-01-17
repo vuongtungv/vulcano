@@ -262,7 +262,7 @@ export default class DetailProduct extends Component{
                             <TouchableOpacity style={[MainStyle.btnRa50,MainStyle.backDetailP]} onPress={() => this.gotoBack()}>
                                 <Icon type="FontAwesome" name="angle-left" style={[MainStyle.tHeaderIconMenu,{color: '#FFFFFF',fontSize:35}]} />
                             </TouchableOpacity> 
-                            <TouchableOpacity style={[MainStyle.btnRa50,MainStyle.addDetailP]}>
+                            <TouchableOpacity style={[MainStyle.btnRa50,MainStyle.addDetailP]} onPress={()=>this.gotoCart()}>
                                 <Icon type="SimpleLineIcons" name="handbag" style={{ color: '#FFFFFF', fontSize: 27 }} />
                             </TouchableOpacity>
                         {/* <View style={MainStyle.taskDetailP}>
