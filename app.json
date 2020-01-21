@@ -33,6 +33,7 @@
       }
     },
     "android": {
+      "versionCode": 2,
       "package": "vn.vulcano.app"
     }
   }

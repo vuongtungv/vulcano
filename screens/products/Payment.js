@@ -155,13 +155,13 @@ export default class Payment extends React.Component {
             .then((responseJson) => {
                 console.log(responseJson.order_id);
                 if (responseJson.error == '0') {
-                    this.setState({ rest_id: responseJson.order_id});
+                    this.setState({ order_id: responseJson.order_id});
 
                     // this.props.navigation.goBack();
                     // global.onRefresh();
                     saveStorage('cart', '');
-                    Alert.alert('Thông báo', responseJson.message);
-                    this.props.navigation.navigate('HomeScreen');
+                    // console.log(responseJson.order_id);
+                    this.props.navigation.navigate('PaymentSuccessScreen', {order_id : responseJson.order_id});
                 } else {
                     Alert.alert('Thông báo', responseJson.message);
                 }

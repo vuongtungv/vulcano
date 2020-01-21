@@ -20,6 +20,7 @@ import ListProductsInCate from "./screens/products/ProductsInCate";
 import DetailProduct from "./screens/products/DetailProduct";  
 import Cart from "./screens/products/Cart";  
 import Payment from "./screens/products/Payment";  
+import PaymentSuccess from "./screens/products/PaymentSuccess";  
 
 
 
@@ -46,7 +47,7 @@ import User from "./screens/user/Home";
 
 export const VulcanoStack = createStackNavigator({
   HomeScreen: {
-    screen: Home
+    screen: PaymentSuccess
   }, 
   SearchHomeScreen: {
     screen: SearchHome
@@ -73,6 +74,9 @@ export const VulcanoStack = createStackNavigator({
   },
   PaymentScreen:{
     screen: Payment
+  },
+  PaymentSuccessScreen:{
+    screen: PaymentSuccess
   },
 
 

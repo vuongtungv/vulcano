@@ -8,7 +8,7 @@ import { Container, Content, CheckBox, Icon } from "native-base";
 
 import {getCities, getDistricts, getAllShowrooms} from '../../src/api/apiShowrooms';
 
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView from 'react-native-maps';
 
 export default class Home extends Component{
     static navigationOptions = ({ navigation }) => ({
@@ -24,6 +24,13 @@ export default class Home extends Component{
             listCities:[],
             listDistricts: [],
             listAllShowrooms: [],
+
+            region: { 
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421
+            }
         }
 
         this.arr = [];
@@ -126,16 +133,22 @@ export default class Home extends Component{
     }
 
 
+
 	
     render() {
         const {navigation} = this.props;
-
-        return(
+        return( 
             <Container>
                 <HeaderBase page="showrooms" title={'Hệ thống cửa hàng Vulcano'} navigation={navigation} />
                 <ScrollView style={[MainStyle.pageShowrooms]}>
                     <View style={MainStyle.vMap}>
-
+                        <MapView 
+                        provider={MapView.PROVIDER_GOOGLE}
+                        initialRegion={this.state.region} 
+                        showCompass={true} 
+                        rotateEnabled={false}
+                        showUserLocation={true} 
+                        style={MainStyle.map} />
                     </View>
                     
                     <View style={MainStyle.bSelectShowrooms}>
@@ -149,7 +162,6 @@ export default class Home extends Component{
                                 //     this.setCityChange()
                                 // }
                                 onValueChange={(value)=>this.setCityChange(value)}
-                                
                             >
                                 <Picker.Item label="-- Chọn Tỉnh/TP --" value="0" />
                                 {this.state.listCities.map((item, index) => {return (

@@ -55,3 +55,11 @@ export function submitDonHang(fullname,valueGender,email,address,phone,valueMeth
     return fetch(url)
     .then(res => res.json());
 }
+
+export function getDetailOrder(id){
+    let url;  
+    url = global.BASE_URL+`/get_order_id.api?id=${id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+}
