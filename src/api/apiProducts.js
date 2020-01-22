@@ -30,9 +30,9 @@ export function listCateSalesLv1(){
     return fetch(url)
     .then(res => res.json());
 };
-export function getAllProducts(page){
+export function getAllProducts(page, products_sort){
     let url;
-    url = global.BASE_URL+`/get_all_products.api?page=${page}`;
+    url = global.BASE_URL+`/get_all_products.api?page=${page}&products_sort=${products_sort}`;
     console.log(url);
     return fetch(url)
     .then(res => res.json());

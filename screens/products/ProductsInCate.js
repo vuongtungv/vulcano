@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, Alert, FlatList } from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, Alert, FlatList,Modal } from 'react-native';
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
@@ -21,6 +21,7 @@ export default class ProductsInCate extends Component{
             list: [],
             isOrderPrice: true, // tăng dần
             products_sort: 0,
+            modalFilter: false,
         }
 
         this.arr = []; 
@@ -36,7 +37,10 @@ export default class ProductsInCate extends Component{
         this.arr = [];
         this.setState({ loading: true });
         const { id, type } = this.props.navigation.state.params;
-        getProductsInCate(id, type, this.state.products_sort, this.state.page)
+
+        products_sort = this.state.products_sort;
+
+        getProductsInCate(id, type, products_sort, this.state.page)
             .then(resJSON => {
                 const { list, category_name, error} = resJSON;
                 
@@ -101,6 +105,12 @@ export default class ProductsInCate extends Component{
     }
 
 
+    setModalFilter(visible) {
+        this.setState({
+            modalFilter: visible,
+        })
+    }
+
 	
     render() {
         const {navigation} = this.props;
@@ -123,11 +133,11 @@ export default class ProductsInCate extends Component{
                                 <Icon type="MaterialCommunityIcons" name="swap-vertical" style={{color: '#000000', fontSize: 20 }} />
                             </Text>
                         </TouchableOpacity>
-                        <View style={MainStyle.hasIconFilter}>
+                        <TouchableOpacity style={MainStyle.hasIconFilter} onPress={()=>this.setModalFilter()}>
                             <Text style={MainStyle.txtFilter}>Lọc sản phẩm
                                 <Icon type="AntDesign" name="filter" style={{positon: 'absolute',color: '#000000', fontSize: 20 }} />
                             </Text>
-                        </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
 
@@ -168,6 +178,27 @@ export default class ProductsInCate extends Component{
                     </View>
                 </View>
                 
+
+
+                {/* Modal filter */}
+                <Modal 
+                    presentationStyle="overFullScreen"
+                    animationType="slide"
+                    transparent={true}
+                    visible={this.state.modalFilter}
+                    onRequestClose={() => {}}>
+                    <View style={[MainStyle.modalSizeGuide]}> 
+                        <TouchableOpacity onPress={()=>this.setState({modalFilter:false})} style={MainStyle.bgPopupScreen}></TouchableOpacity>
+                        <ScrollView style={MainStyle.popFilter}>
+                            <View>
+                                <Text>FIlter</Text>
+                            </View>
+                        </ScrollView>
+                        
+                    </View>
+                </Modal>
+
+
 
                 <FooterBase navigation={navigation} page="muster"  />
             </Container>

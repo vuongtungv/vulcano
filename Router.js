@@ -47,7 +47,7 @@ import User from "./screens/user/Home";
 
 export const VulcanoStack = createStackNavigator({
   HomeScreen: {
-    screen: PaymentSuccess
+    screen: Home
   }, 
   SearchHomeScreen: {
     screen: SearchHome

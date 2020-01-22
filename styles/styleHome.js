@@ -669,6 +669,14 @@ const styles = StyleSheet.create({
   pTextMethodPayment:{
     fontSize: 15,
   },
+  popFilter:{
+    backgroundColor: '#FFFFFF',
+    height: ScreenHeight,
+    width: ScreenWidth*80/100,
+    position: 'absolute',
+    right: 0,
+    zIndex: 99,
+  },
 
 
 

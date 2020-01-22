@@ -17,7 +17,9 @@ export default class AllProducts extends Component{
         this.state = {
             page: 1,
 			refreshing: false,
-			loading: false,
+            loading: false,
+            isOrderPrice: true, // tăng dần
+            products_sort: 0,
         }
 
         this.arr = []; 
@@ -33,7 +35,8 @@ export default class AllProducts extends Component{
     makeRemoteRequest(){
         this.setState({ loading: true });
         // console.log(this.state.page);
-        getAllProducts(this.state.page)
+        products_sort = this.state.products_sort;
+        getAllProducts(this.state.page, products_sort)
         .then(resJSON => {
             const { list, category_name, error} = resJSON;
             
@@ -74,6 +77,24 @@ export default class AllProducts extends Component{
         );
 	};
 
+
+    setOrderPrice(){
+        this.setState({
+            isOrderPrice: !this.state.isOrderPrice,   
+        });
+        if(this.state.isOrderPrice == true){
+            this.setState({
+                products_sort: 1, // tăng dần
+            });
+        }else{
+            this.setState({
+                products_sort: 2, // tăng dần
+            });   
+        }
+        this.makeRemoteRequest();
+    }
+
+
 	
     render() {
         const {navigation} = this.props;
@@ -91,11 +112,11 @@ export default class AllProducts extends Component{
                         </View>
                     </View>
                     <View style={MainStyle.filterRight}>
-                        <View style={[MainStyle.hasIconFilter,{marginRight: 35}]}>
+                        <TouchableOpacity style={[MainStyle.hasIconFilter,{marginRight: 35}]} onPress={()=>this.setOrderPrice()}>
                             <Text style={MainStyle.txtFilter}>Giá
                                 <Icon type="MaterialCommunityIcons" name="swap-vertical" style={{color: '#000000', fontSize: 20 }} />
                             </Text>
-                        </View>
+                        </TouchableOpacity>
                         <View style={MainStyle.hasIconFilter}>
                             <Text style={MainStyle.txtFilter}>Lọc sản phẩm
                                 <Icon type="AntDesign" name="filter" style={{positon: 'absolute',color: '#000000', fontSize: 20 }} />
