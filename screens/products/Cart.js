@@ -19,10 +19,11 @@ export default class Cart extends React.Component {
         this.state = {
             list: [],
             total: '',
+            count: 0,
 			page: 1,
 			refreshing: false,
             loading: false,
-            cart: ''
+            cart: '',
 		}
 		
 		this.arr = [];
@@ -50,47 +51,8 @@ export default class Cart extends React.Component {
                         ids = ids + '|' + c.id+','+c.size+','+c.style+','+c.amount;
                 })
                 this.getListCart(ids);
-                // get_product_by_cart = () => {
-                //     this.setState({ loading: true });
-                //     get_product_by_cart(ids)
-                //     .then(resJSON => {
-                //         const {list, total } = resJSON;
-                //         console.log(list);
-                //         this.arr = list.concat(this.arr);
-                //         this.setState({
-                //             list: this.arr, 
-                //             refreshing: false,
-                //             loading: false,
-                //             total: total
-                //         });
-                //     }).catch(err => {
-                //         // this.setState({ loading: false }); 
-                //     });
-                // }
-                // console.log(ids);
-                // fetch(global.BASE_URL+'/get_product_by_cart.api', {  
-                //     method: 'POST',
-                //     headers: {
-                //       'Accept': 'application/json',
-                //       'Content-Type': 'application/json',
-                //     },
-                //     body: JSON.stringify({
-                //         cart:ids,
-                //     })
-                //   })
-                // .then(res => res.json())
-                // .then(resJSON => {
-                //     const {list, total } = resJSON;
-                //     console.log(list);
-                //     this.arr = list.concat(this.arr);
-                //     this.setState({
-                //         list: this.arr, 
-                //         refreshing: false,
-                //         loading: false,
-                //         total: total
-                //     });
-                // })
-                // .catch(err => console.log(err));
+            }else{
+                this.setState({ loading: false, refreshing: false,count: 0 });
             }
         })
         .catch(err => console.log(err));
@@ -100,16 +62,17 @@ export default class Cart extends React.Component {
         this.setState({ loading: true });
         get_product_by_cart(ids)
         .then(resJSON => {
-            const { list, total,error } = resJSON;
+            const { list, total,count, error } = resJSON;
             console.log(list);
             if (error == false) {
                 this.setState({
                     list: list,  
                     total: total,
                     error: false || null,  
+                    count: count,
                 });  
             } else {
-                this.setState({ loading: false, refreshing: false });
+                this.setState({ loading: false, refreshing: false,count: 0 });
             }
     
         }).catch(err => {
@@ -198,57 +161,69 @@ export default class Cart extends React.Component {
                 <HeaderBase page="cart" title={'Giỏ hàng'} navigation={navigation} />
                 <View style={MainStyle.pageCart}>
                     <ScrollView style={MainStyle.scrollCart}>
-                    {this.state.list.map((item, index) => {return (
-                            <View style={MainStyle.itemCart} key={item.id}>
-                            <View style={MainStyle.infoItemCart}>
-                                <View style={MainStyle.imgItemCart}>
-                                    {/* <Image style={MainStyle.imgCart} source={require("../../assets/cart_img_product.png")} /> */}
-                                    <Image style={MainStyle.imgCart} source={{uri:item.image }} />
-                                </View>
-                                <View style={[MainStyle.rightInfoItem]}>
-                                    <View style={[MainStyle.lineTopItemCart,{marginBottom: 25}]}>
-                                        <View><Text style={MainStyle.tProductItemCart}>{item.name}</Text></View>
-                                        <View><Text style={[MainStyle.fPriceItemCart]}>{item.price} đ</Text></View>
+                        {
+                            this.state.count > 0 ?
+                                this.state.list.map((item, index) => {return (
+                                    <View style={MainStyle.itemCart} key={item.id}>
+                                    <View style={MainStyle.infoItemCart}>
+                                        <View style={MainStyle.imgItemCart}>
+                                            {/* <Image style={MainStyle.imgCart} source={require("../../assets/cart_img_product.png")} /> */}
+                                            <Image style={MainStyle.imgCart} source={{uri:item.image }} />
+                                        </View>
+                                        <View style={[MainStyle.rightInfoItem]}>
+                                            <View style={[MainStyle.lineTopItemCart,{marginBottom: 25}]}>
+                                                <View><Text style={MainStyle.tProductItemCart}>{item.name}</Text></View>
+                                                <View><Text style={[MainStyle.fPriceItemCart]}>{item.price} đ</Text></View>
+                                            </View>
+                                            <View style={MainStyle.lineTopItemCart}>
+                                                <View style={{flexDirection: 'row'}}>
+                                                    <Text style={MainStyle.txtBCart}>Kiểu dáng: </Text>
+                                                    <Text style={MainStyle.txtBCart}>{item.style_name}</Text>
+                                                </View>
+                                                <View style={{flexDirection: 'row'}}>
+                                                    <Text style={MainStyle.txtBCart}>Kích cỡ: </Text>
+                                                    <Text style={MainStyle.txtBCart}>{item.size_name}</Text>
+                                                </View>
+                                                <View style={{flexDirection: 'row'}}>
+                                                    <Text style={MainStyle.txtBCart}>Số lượng: </Text>
+                                                    <Text style={MainStyle.txtBCart}>{item.amount}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
                                     </View>
-                                    <View style={MainStyle.lineTopItemCart}>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Kiểu dáng: </Text>
-                                            <Text style={MainStyle.txtBCart}>{item.style_name}</Text>
+                                    <View style={MainStyle.taskCart}>
+                                        <View style={MainStyle.editItemCart}>
+                                            <Text><Icon type="FontAwesome" name="edit" style={{ color: '#000000', fontSize: 20 }} /></Text>
+                                            <Text style={[MainStyle.textTaskCart]}>Chỉnh sửa</Text>
                                         </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Kích cỡ: </Text>
-                                            <Text style={MainStyle.txtBCart}>{item.size_name}</Text>
-                                        </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Số lượng: </Text>
-                                            <Text style={MainStyle.txtBCart}>{item.amount}</Text>
-                                        </View>
+                                        <TouchableOpacity style={MainStyle.editItemCart} onPress={()=>this.deleteItem(item.id)}>
+                                            <Text><Icon type="AntDesign" name="delete" style={{ color: '#000000', fontSize: 20 }} /></Text>
+                                            <Text style={[MainStyle.textTaskCart]}>Xóa</Text>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
-                            </View>
-                            <View style={MainStyle.taskCart}>
-                                <View style={MainStyle.editItemCart}>
-                                    <Text><Icon type="FontAwesome" name="edit" style={{ color: '#000000', fontSize: 20 }} /></Text>
-                                    <Text style={[MainStyle.textTaskCart]}>Chỉnh sửa</Text>
-                                </View>
-                                <TouchableOpacity style={MainStyle.editItemCart} onPress={()=>this.deleteItem(item.id)}>
-                                    <Text><Icon type="AntDesign" name="delete" style={{ color: '#000000', fontSize: 20 }} /></Text>
-                                    <Text style={[MainStyle.textTaskCart]}>Xóa</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                        )})} 
+                                )})
+                            :
+                            <View style={{padding: 20}}><Text style={{fontFamily: "RobotoRegular", fontSize: 15,}}>Không có sản phẩm nào trong giỏ hàng</Text></View>
+                        }
+                    
                    
                     </ScrollView>
                 </View>
-                <View style={MainStyle.vBootTotalCt}>
-                    <View style={MainStyle.totalPriceCart}>
-                        <Text style={[MainStyle.txtPayN,{fontSize: 16}]}>Tổng tiền: <Text style={{fontSize: 18,color: '#ff0700'}}>{this.state.total} đ</Text></Text>
-                    </View>
-                    <TouchableOpacity style={MainStyle.payCart} onPress={()=>this.gotoPayment()}>
-                        <Text style={[MainStyle.txtPayN,{fontSize: 18, color: '#FFFFFF'}]}>Thanh toán</Text>
-                    </TouchableOpacity>
-                </View>
+                {
+                    this.state.count > 0 ?
+                        <View style={MainStyle.vBootTotalCt}>
+                            <View style={MainStyle.totalPriceCart}>
+                                <Text style={[MainStyle.txtPayN,{fontSize: 16}]}>Tổng tiền: <Text style={{fontSize: 18,color: '#ff0700'}}>{this.state.total} đ</Text></Text>
+                            </View>
+                            <TouchableOpacity style={MainStyle.payCart} onPress={()=>this.gotoPayment()}>
+                                <Text style={[MainStyle.txtPayN,{fontSize: 18, color: '#FFFFFF'}]}>Thanh toán</Text>
+                            </TouchableOpacity>
+                        </View>
+                    :
+                    <View><Text></Text></View>
+                }
+                
             </Container>
         );
     }

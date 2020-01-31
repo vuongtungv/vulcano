@@ -240,6 +240,12 @@ export default class DetailProduct extends Component{
     gotoCart(){
         this.props.navigation.navigate('CartScreen');
     }
+    
+    buyNow(){
+        saveStorage('cart', '');
+        this.addCart();
+        // this.props.navigation.navigate('CartScreen');
+    }
 
 
 
@@ -347,15 +353,16 @@ export default class DetailProduct extends Component{
                             </TouchableOpacity> 
                         )})} 
                     </View>
-                    <View style={MainStyle.quickTaskBottom}>
+                    
+                </ScrollView>
+                <View style={MainStyle.quickTaskBottom}>
                         <TouchableOpacity style={MainStyle.quickTouch} onPress={()=>this.addCart()}>
                             <Text style={[MainStyle.quickTouchText]}>Thêm vào giỏ hàng</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[MainStyle.quickTouch,{backgroundColor: '#000000'}]} onPress={()=>this.gotoCart()}>
+                        <TouchableOpacity style={[MainStyle.quickTouch,{backgroundColor: '#000000'}]} onPress={()=>this.buyNow()}>
                             <Text style={[MainStyle.quickTouchText]}>Mua ngay</Text>
                         </TouchableOpacity>
                     </View>
-                </ScrollView>
                 <Modal 
                     presentationStyle="overFullScreen"
                     animationType="slide"
