@@ -244,7 +244,6 @@ export default class DetailProduct extends Component{
     buyNow(){
         saveStorage('cart', '');
         this.addCart();
-        // this.props.navigation.navigate('CartScreen');
     }
 
 

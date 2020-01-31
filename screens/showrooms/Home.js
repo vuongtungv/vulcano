@@ -25,12 +25,27 @@ export default class Home extends Component{
             listDistricts: [],
             listAllShowrooms: [],
             count: 1,
-            region: { 
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421
-            }
+            region: {
+                latitude: 21.037834051277333,
+				longitude: 105.8411953210175,
+				latitudeDelta: 0.922,
+				longitudeDelta: 0.421,
+            },
+            markers: [],
+            // markers: [{
+            //     title: 'hello1',
+            //     coordinates: {
+            //       latitude: 21.037834051277333,
+            //       longitude: 105.8411953210175
+            //     },
+            //   },
+            //   {
+            //     title: 'hello2',
+            //     coordinates: {
+            //       latitude: 21.123964463899238,
+            //       longitude: 105.97087409078244
+            //     },  
+            // }]
         }
 
         this.arr = [];
@@ -40,6 +55,7 @@ export default class Home extends Component{
         this.getCity();
         // this.getDistricts();
         this.getAllShowrooms();
+        console.log(this.state.markers)
     }
 
     getCity= () => {
@@ -115,7 +131,8 @@ export default class Home extends Component{
         this.setState({ loading: true });
         getAllShowrooms(this.state.city,this.state.district)
         .then(resJSON => {
-            const { list,count, error } = resJSON;
+            const { list,count, markers, error } = resJSON;
+            // console.log(markers);
             if (error == false) {
                 this.setState({
                     listAllShowrooms: list,  
@@ -123,6 +140,7 @@ export default class Home extends Component{
                     refreshing: false,
                     error: false || null,   
                     count: count,
+                    markers: markers,
                 });  
             } else {
                 this.setState({ loading: false, refreshing: false, count: 0 });
@@ -143,13 +161,25 @@ export default class Home extends Component{
                 <HeaderBase page="showrooms" title={'Hệ thống cửa hàng Vulcano'} navigation={navigation} />
                 <ScrollView style={[MainStyle.pageShowrooms]}>
                     <View style={MainStyle.vMap}>
-                        <MapView 
-                        provider={MapView.PROVIDER_GOOGLE}
-                        initialRegion={this.state.region} 
-                        showCompass={true} 
-                        rotateEnabled={false}
-                        showUserLocation={true} 
-                        style={MainStyle.map} />
+                        <MapView ref={ref => { this.map = ref; }}
+                            style={{ flex: 1 }}
+                            zoomEnabled = {true}
+                            initialRegion={this.state.region}
+                            >
+                            { this.state.count >0 ?
+                                 this.state.markers.map(marker => (
+                                    <MapView.Marker 
+                                    image={require('../../assets/logo_vul.png')}
+                                    coordinate={marker.coordinates}
+                                    title={marker.title}
+                                    />
+                                ))
+                                : 
+                                <MapView.Marker 
+                                    
+                                />
+                            }
+                        </MapView>
                     </View>
                     
                     <View style={MainStyle.bSelectShowrooms}>
