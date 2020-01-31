@@ -243,13 +243,6 @@ export default class DetailProduct extends Component{
 
 
 
-    onRefresh() {
-        this.arr = [];
-        this.setState({
-            listRest: []
-        });
-    }
-
 	 
     render() {
         const {navigation} = this.props;

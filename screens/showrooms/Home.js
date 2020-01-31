@@ -24,7 +24,7 @@ export default class Home extends Component{
             listCities:[],
             listDistricts: [],
             listAllShowrooms: [],
-
+            count: 1,
             region: { 
                 latitude: 37.78825,
                 longitude: -122.4324,
@@ -115,16 +115,17 @@ export default class Home extends Component{
         this.setState({ loading: true });
         getAllShowrooms(this.state.city,this.state.district)
         .then(resJSON => {
-            const { list, error } = resJSON;
+            const { list,count, error } = resJSON;
             if (error == false) {
                 this.setState({
                     listAllShowrooms: list,  
                     loading: false,
                     refreshing: false,
                     error: false || null,   
+                    count: count,
                 });  
             } else {
-                this.setState({ loading: false, refreshing: false });
+                this.setState({ loading: false, refreshing: false, count: 0 });
             }
         
         }).catch(err => {
@@ -187,15 +188,20 @@ export default class Home extends Component{
                         </View>
                     </View>
                     <View style={MainStyle.vListShowrooms}>
-                        {this.state.listAllShowrooms.map((item, index) => {return (
-                            <View key={item.id} style={MainStyle.itemShowrooms}>
-                                <Text style={MainStyle.txtNameShowrooms}>{item.name}</Text>
-                                <View style={{flexDirection: 'row'}}>
-                                    <Icon type="EvilIcons" name="location" style={{color: '#555555', fontSize: 26 }} />
-                                    <Text style={MainStyle.txtAddShowrooms}>{item.address}</Text>
+                        { this.state.count > 0 ?
+                            this.state.listAllShowrooms.map((item, index) => {return (
+                                <View key={item.id} style={MainStyle.itemShowrooms}>
+                                    <Text style={MainStyle.txtNameShowrooms}>{item.name}</Text>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Icon type="EvilIcons" name="location" style={{color: '#555555', fontSize: 26 }} />
+                                        <Text style={MainStyle.txtAddShowrooms}>{item.address}</Text>
+                                    </View>
                                 </View>
-                            </View>
-                        )})}  
+                            )})
+                            :
+                            <View><Text></Text></View>
+                        }
+                         
                         
                     </View>  
                 </ScrollView>

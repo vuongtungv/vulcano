@@ -4,7 +4,7 @@ import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
-import { getProductsInCate } from '../../src/api/apiProducts';
+import { getProductsInCate, filterArray } from '../../src/api/apiProducts';
 
 export default class ProductsInCate extends Component{
     static navigationOptions = ({ navigation }) => ({
@@ -22,17 +22,58 @@ export default class ProductsInCate extends Component{
             isOrderPrice: true, // tăng dần
             products_sort: 0,
             modalFilter: false,
+            listNameCateLevel1: [],
+            listStyles: [],
+            listColors: [],
+            listMaterials: [],
+            listSizes: [],
+            listPrice: [],
+            fill_id_cate: '',
+            fill_id_material: '',
+            fill_id_style: '',
+            fill_id_color: '',
+            fill_id_size: '',
+            fill_id_price: '',
         }
 
         this.arr = []; 
+        global.onRefresh = this.onRefresh.bind(this);
     }
 
     componentDidMount() {
         const { id, type } = this.props.navigation.state.params;
         this.makeRemoteRequest();
+        this.filterArray();
         
     }
 
+    filterArray = () => {
+        this.arr = [];
+        this.setState({ loading: true });
+        const { id, type } = this.props.navigation.state.params;
+
+        filterArray(id)
+            .then(resJSON => {
+                const { listNameCateLevel1,listStyles,listColors,listMaterials,listSizes, listPrice, error} = resJSON;
+                
+                if (error == false) {
+                    this.setState({
+                        listNameCateLevel1: listNameCateLevel1,
+                        listStyles: listStyles,
+                        listColors: listColors,
+                        listMaterials: listMaterials,
+                        listSizes: listSizes,
+                        listPrice: listPrice,
+                        refreshing: false,
+                        loading: false,
+                    });
+                
+                }
+            }).catch(err => {
+                // this.setState({ loaded: true });  
+        }); 
+    }
+    
     makeRemoteRequest = () => {
         this.arr = [];
         this.setState({ loading: true });
@@ -40,9 +81,17 @@ export default class ProductsInCate extends Component{
 
         products_sort = this.state.products_sort;
 
-        getProductsInCate(id, type, products_sort, this.state.page)
+        var id_cate= this.state.fill_id_cate;
+        var id_material= this.state.fill_id_material;
+        var id_style= this.state.fill_id_style;
+        var id_color= this.state.fill_id_color;
+        var id_size= this.state.fill_id_size;
+        var id_price= this.state.fill_id_price;
+    
+
+        getProductsInCate(id, type, products_sort, this.state.page, id_cate,id_material, id_style, id_color, id_size, id_price )
             .then(resJSON => {
-                const { list, category_name, error} = resJSON;
+                const { list, category_name,count, error} = resJSON;
                 
                 if (error == false) {
                     this.setState({
@@ -50,8 +99,13 @@ export default class ProductsInCate extends Component{
                         category_name : category_name,
                         refreshing: false,
                         loading: false,
+                        count: count,
                     });
                 
+                }else{
+                    this.setState({
+                        count: 0,
+                    });
                 }
             }).catch(err => {
                 // this.setState({ loaded: true });  
@@ -65,7 +119,7 @@ export default class ProductsInCate extends Component{
         () => {
             this.makeRemoteRequest();
         });
-        // console.log(this.state.page);
+        console.log(this.state.page);
     };
     renderFooter = () => {
         if (!this.state.loading) return null;
@@ -111,6 +165,68 @@ export default class ProductsInCate extends Component{
         })
     }
 
+
+    setStateCate(id){
+        this.setState({
+            fill_id_cate: id,
+        })
+    }
+    setStateMaterial(id){
+        this.setState({
+            fill_id_material: id,
+        })
+    }
+    setStateStyle(id){
+        this.setState({
+            fill_id_style: id,
+        })
+    }
+    setStateColor(id){
+        this.setState({
+            fill_id_color: id,
+        })
+    }
+    setStateSize(id){
+        this.setState({
+            fill_id_size: id,
+        })
+    }
+    setStatePrice(id){
+        this.setState({
+            fill_id_price: id,
+        })
+    }
+    resetFilter(){
+        this.setState({
+            fill_id_cate: '',
+            fill_id_material: '',
+            fill_id_style: '',
+            fill_id_color: '',
+            fill_id_size: '',
+            fill_id_price: '',
+        })
+    }
+    applyFilter(){
+        // this.props.navigation.goBack();
+        this.setState({
+            page: 1,
+        })
+        global.onRefresh();
+        this.setState({modalFilter:false});
+        // console.log(this.state.page);
+        // this.props.navigation.navigate('ListProductsInCateScreeen', {id: id, type: type, products_sort: products_sort,page: page, id_cate : id_cate, id_material:id_material, id_style:id_style, id_color:id_color, id_size:id_size, id_price:id_price });
+        this.makeRemoteRequest();
+    }
+
+    onRefresh() {
+        this.arr = [];
+        this.setState({
+            listRest: []
+        });
+    }
+
+
+
 	
     render() {
         const {navigation} = this.props;
@@ -154,27 +270,32 @@ export default class ProductsInCate extends Component{
                                 </View>
                             </TouchableOpacity>
                         )})}   */}
-                        <FlatList style={MainStyle.defaultContainerNew}
-                            data={this.state.list}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity key={item.id} style={MainStyle.itemProducts} onPress={()=>this.detailProduct(item.id)}> 
-                                    <View style={MainStyle.vImgItemPro}>
-                                        <Image style={{width: '100%', height:500}}  source={{uri: item.image}} />
-                                    </View>
-                                    <View style={MainStyle.bodyItemPro}>
-                                        <Text style={MainStyle.nameItemProducts}>{item.name}</Text>
-                                        <Text style={MainStyle.priceItemProducts}>{item.price} đ</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            )}
-                            // numColumns={6}
-                            contentContainerStyle={MainStyle.containerListProducts}
-                            ListFooterComponent={this.renderFooter}     
-                            refreshing={this.state.refreshing}
-                            keyExtractor={item => item.id}
-                            onEndReached={this.handleLoadMore}
-                            onEndReachedThreshold={0.5}
-                        />
+                        { this.state.count >0 ?
+                            <FlatList style={MainStyle.defaultContainerNew}
+                                data={this.state.list}
+                                renderItem={({ item }) => (
+                                    <TouchableOpacity key={item.id} style={MainStyle.itemProducts} onPress={()=>this.detailProduct(item.record_id)}> 
+                                        <View style={MainStyle.vImgItemPro}>
+                                            <Image style={{width: '100%', height:500}}  source={{uri: item.image}} />
+                                        </View>
+                                        <View style={MainStyle.bodyItemPro}>
+                                            <Text style={MainStyle.nameItemProducts}>{item.name}</Text>
+                                            <Text style={MainStyle.priceItemProducts}>{item.price} đ</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                )}
+                                // numColumns={6}
+                                contentContainerStyle={MainStyle.containerListProducts}
+                                ListFooterComponent={this.renderFooter}     
+                                refreshing={this.state.refreshing}
+                                keyExtractor={item => item.id}
+                                onEndReached={this.handleLoadMore}
+                                onEndReachedThreshold={0.5}
+                            />
+                            :
+                            <View><Text></Text></View>
+                        }
+                        
                     </View>
                 </View>
                 
@@ -190,8 +311,100 @@ export default class ProductsInCate extends Component{
                     <View style={[MainStyle.modalSizeGuide]}> 
                         <TouchableOpacity onPress={()=>this.setState({modalFilter:false})} style={MainStyle.bgPopupScreen}></TouchableOpacity>
                         <ScrollView style={MainStyle.popFilter}>
-                            <View>
-                                <Text>FIlter</Text>
+                            <ScrollView style={MainStyle.heightScrollFilter}>
+                                { this.state.listNameCateLevel1 !='' ?
+                                    <View style={{marginBottom: 10}}>
+                                        <Text style={MainStyle.titleFilter}>Nhóm sản phẩm:</Text>
+                                        <View style={MainStyle.listSelectItemFilter}>
+                                            {this.state.listNameCateLevel1.map((item, index) => {return (
+                                                <TouchableOpacity key={index} style={[MainStyle.itemFilter,{ backgroundColor: this.state.fill_id_cate==item.id ? '#000000' : '#FFFFFF' }]} onPress={()=>this.setStateCate(item.id)}>
+                                                    <Text style={[MainStyle.txtNameFilter,{ color: this.state.fill_id_cate==item.id ? '#FFFFFF' : '#000000' }]}>{item.name}</Text>
+                                                </TouchableOpacity>
+                                            )})}
+                                        </View>
+                                    </View>
+                                    :
+                                    <View><Text></Text></View>
+                                }
+                                { this.state.listMaterials !='' ?
+                                    <View style={{marginBottom: 10}}>
+                                        <Text style={MainStyle.titleFilter}>Chất liệu:</Text>
+                                        <View style={MainStyle.listSelectItemFilter}>
+                                            {this.state.listMaterials.map((item, index) => {return (
+                                                <TouchableOpacity key={index} style={[MainStyle.itemFilter,{ backgroundColor: this.state.fill_id_material==item.id ? '#000000' : '#FFFFFF' }]} onPress={()=>this.setStateMaterial(item.id)}>
+                                                    <Text style={[MainStyle.txtNameFilter,{ color: this.state.fill_id_material==item.id ? '#FFFFFF' : '#000000' }]}>{item.name}</Text>
+                                                </TouchableOpacity>
+                                            )})}
+                                        </View>
+                                    </View>
+                                    :
+                                    <View><Text></Text></View>
+                                }
+                                { this.state.listStyles !='' ?
+                                    <View style={{marginBottom: 10}}>
+                                        <Text style={MainStyle.titleFilter}>Kiểu dáng:</Text>
+                                        <View style={MainStyle.listSelectItemFilter}>
+                                            {this.state.listStyles.map((item, index) => {return (
+                                                <TouchableOpacity key={index} style={[MainStyle.itemFilter,{ backgroundColor: this.state.fill_id_style==item.id ? '#000000' : '#FFFFFF' }]} onPress={()=>this.setStateStyle(item.id)}>
+                                                    <Text style={[MainStyle.txtNameFilter,{ color: this.state.fill_id_style==item.id ? '#FFFFFF' : '#000000' }]}>{item.name}</Text>
+                                                </TouchableOpacity>
+                                            )})}
+                                        </View>
+                                    </View>
+                                    :
+                                    <View><Text></Text></View>
+                                }
+                                { this.state.listColors !='' ?
+                                    <View style={{marginBottom: 10}}>
+                                        <Text style={MainStyle.titleFilter}>Màu sắc:</Text>
+                                        <View style={MainStyle.listSelectItemFilter}>
+                                            {this.state.listColors.map((item, index) => {return (
+                                                <TouchableOpacity key={index} style={[MainStyle.itemFilter,{ backgroundColor: this.state.fill_id_color==item.id ? '#000000' : '#FFFFFF' }]} onPress={()=>this.setStateColor(item.id)}>
+                                                    <Text style={[MainStyle.txtNameFilter,{ color: this.state.fill_id_color==item.id ? '#FFFFFF' : '#000000' }]}>{item.name}</Text>
+                                                </TouchableOpacity>
+                                            )})}
+                                        </View>
+                                    </View>
+                                    :
+                                    <View><Text></Text></View>
+                                }
+                                { this.state.listSizes !='' ?
+                                    <View style={{marginBottom: 10}}>
+                                        <Text style={MainStyle.titleFilter}>Kích cỡ:</Text>
+                                        <View style={MainStyle.listSelectItemFilter}>
+                                            {this.state.listSizes.map((item, index) => {return (
+                                                <TouchableOpacity key={index} style={[MainStyle.itemFilter,{ backgroundColor: this.state.fill_id_size==item.id ? '#000000' : '#FFFFFF' }]} onPress={()=>this.setStateSize(item.id)}>
+                                                    <Text style={[MainStyle.txtNameFilter,{ color: this.state.fill_id_size==item.id ? '#FFFFFF' : '#000000' }]}>{item.name}</Text>
+                                                </TouchableOpacity>
+                                            )})}
+                                        </View>
+                                    </View>
+                                    :
+                                    <View><Text></Text></View>
+                                }
+                                { this.state.listPrice !='' ?
+                                    <View style={{marginBottom: 10}}>
+                                        <Text style={MainStyle.titleFilter}>Giá tiền:</Text>
+                                        <View style={MainStyle.listSelectItemFilter}>
+                                            {this.state.listPrice.map((item, index) => {return (
+                                                <TouchableOpacity key={index} style={[MainStyle.itemFilter,{ backgroundColor: this.state.fill_id_price==item.id ? '#000000' : '#FFFFFF' }]} onPress={()=>this.setStatePrice(item.id)}>
+                                                    <Text style={[MainStyle.txtNameFilter,{ color: this.state.fill_id_price==item.id ? '#FFFFFF' : '#000000' }]}>{item.name}</Text>
+                                                </TouchableOpacity>
+                                            )})}
+                                        </View>
+                                    </View>
+                                    :
+                                    <View><Text></Text></View>
+                                }
+                                
+                            </ScrollView>
+                            <View style={MainStyle.btnFilter}>
+                                <TouchableOpacity style={[MainStyle.widthBtnFil,{backgroundColor: '#000000'}]} onPress={()=>this.applyFilter()}>
+                                    <Text style={MainStyle.subFilter}>Áp dụng</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[MainStyle.widthBtnFil,{backgroundColor: '#aaaaaa'}]} onPress={()=>this.resetFilter()}>
+                                    <Text style={MainStyle.subFilter}>Thiết lập lại</Text>
+                                </TouchableOpacity>
                             </View>
                         </ScrollView>
                         

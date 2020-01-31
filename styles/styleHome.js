@@ -670,13 +670,63 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   popFilter:{
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#f3f2f8',
     height: ScreenHeight,
-    width: ScreenWidth*80/100,
+    width: ScreenWidth*85/100,
     position: 'absolute',
     right: 0,
     zIndex: 99,
   },
+  heightScrollFilter:{
+    height: ScreenHeight - barHeight - 70,
+    // backgroundColor: 'red',
+
+  },
+  titleFilter:{
+    fontFamily: "RobotoBold",
+    fontSize: 17,
+    marginLeft: 10,
+    marginTop: 10,
+  },
+  listSelectItemFilter:{
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  itemFilter:{
+    backgroundColor: '#FFFFFF',
+    margin: 10,
+    width: (ScreenWidth*85/100 - 60 ) / 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 50,
+    padding: 5,
+  },
+  txtNameFilter:{
+    fontFamily: 'RobotoRegular',
+    fontSize: 14,
+  },
+  btnFilter:{
+    // position: 'absolute',
+    bottom: 0,
+    width: ScreenWidth*85/100 - 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft: 10,
+    marginTop: 10,
+  },
+  widthBtnFil:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: ( ScreenWidth*85/100 - 30 ) / 2,
+    height: 50,
+  },
+  subFilter:{
+    color:'#FFFFFF',
+    fontFamily: 'RobotoRegular',
+    fontSize: 16,
+  },
+  
+
 
 
 

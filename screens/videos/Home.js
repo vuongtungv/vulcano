@@ -16,6 +16,7 @@ export default class Home extends Component{
         
         this.state = {
             listVideos:[],
+            page: 1,
         }
 
         this.arr = [];
@@ -26,8 +27,8 @@ export default class Home extends Component{
     }
 
     getAllVideos= () => {
-        this.setState({ loading: true });
-        getAllVideos()
+        // this.setState({ loading: true });
+        getAllVideos(this.state.page)
         .then(resJSON => {
             const { list, error } = resJSON;
             if (error == false) {
@@ -42,9 +43,34 @@ export default class Home extends Component{
             }
      
         }).catch(err => {
-        
+            this.setState({ loading: false }); 
         });
-      }
+    }
+
+
+    handleLoadMore = () => {
+        this.setState({
+            page: this.state.page + 1
+        },
+        () => {
+            this.getAllVideos();
+        });
+        // console.log(this.state.page);
+    };
+    renderFooter = () => {
+        if (!this.state.loading) return null;
+        return (
+            <View
+                style={{
+                    paddingVertical: 20,
+                    borderTopWidth: 1,
+                    borderColor: "#CED0CE"
+                }}
+            >
+                <ActivityIndicator animating size="large" />
+            </View>
+        );
+	};
 
 
 	
@@ -54,8 +80,8 @@ export default class Home extends Component{
         return(
             <Container>
                 <HeaderBase page="videos" title={'Vulcano videos'} navigation={navigation} />
-                <ScrollView style={[MainStyle.pageNews, {marginTop: 20}]}>
-                    {this.state.listVideos.map((item, index) => {return (
+                <View style={[MainStyle.pageNews, {marginTop: 20}]}>
+                    {/* {this.state.listVideos.map((item, index) => {return (
                         <View key={item.id} style={MainStyle.itemVideos}>
                             <WebView
                                 style={ MainStyle.styleVideos }
@@ -64,8 +90,27 @@ export default class Home extends Component{
                             />
                             <Text style={MainStyle.txtTitleVideos}>{item.title}</Text>
                         </View>
-                    )})}     
-                </ScrollView>
+                    )})}     */}
+                    <FlatList  
+                        data={this.state.listVideos}   
+                        renderItem={({ item }) => (
+                            <View key={item.id} style={MainStyle.itemVideos}>
+                                <WebView
+                                    style={ MainStyle.styleVideos }
+                                    javaScriptEnabled={true}
+                                    source={{uri: item.link}}
+                                />
+                                <Text style={MainStyle.txtTitleVideos}>{item.title}</Text>
+                            </View>
+                        )}
+                        keyExtractor={item => item.id}
+                        contentContainerStyle={MainStyle.containerListProducts}
+                        ListFooterComponent={this.renderFooter}     
+                        refreshing={this.state.refreshing}
+                        onEndReached={this.handleLoadMore}
+                        onEndReachedThreshold={0.5}
+                    />   
+                </View>
                 <FooterBase navigation={navigation} page="muster" />
             </Container>
         );
