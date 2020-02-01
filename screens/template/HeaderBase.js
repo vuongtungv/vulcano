@@ -103,9 +103,9 @@ export default class HeaderBase extends Component {
                         <View style={MainStyle.logoHeader}> 
                             <Image style={{width: 99, height: 40}} source={require("../../assets/logo.png")} />
                         </View>
-                        <View style={MainStyle.iconSearchHeader} onPress={()=>this.searchHome()}>
+                        <TouchableOpacity style={MainStyle.iconSearchHeader} onPress={()=>this.searchHome()}>
                             <Icon type="FontAwesome" name="search" style={{ color: '#000000', fontSize: 22 }} />
-                        </View>
+                        </TouchableOpacity>
                     </View>
                 );
             case 'search':

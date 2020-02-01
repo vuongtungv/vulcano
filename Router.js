@@ -21,6 +21,7 @@ import DetailProduct from "./screens/products/DetailProduct";
 import Cart from "./screens/products/Cart";  
 import Payment from "./screens/products/Payment";  
 import PaymentSuccess from "./screens/products/PaymentSuccess";  
+import PaymentWeb from "./screens/products/PaymentWeb";  
 
 
 
@@ -77,6 +78,9 @@ export const VulcanoStack = createStackNavigator({
   },
   PaymentSuccessScreen:{
     screen: PaymentSuccess
+  },
+  PaymentWebScreen:{
+    screen: PaymentWeb
   },
 
 

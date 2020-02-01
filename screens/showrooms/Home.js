@@ -177,7 +177,7 @@ export default class Home extends Component{
                                 : 
                                 <MapView.Marker 
                                     
-                                />
+                                /> 
                             }
                         </MapView>
                     </View>

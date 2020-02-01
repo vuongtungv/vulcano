@@ -95,7 +95,7 @@ export default class Payment extends React.Component {
         var address = this.state.address;
         var phone = this.state.phone;
         var valueMethodPayment = this.state.valueMethodPayment;
-        var ids = this.state.ids;
+        var ids = this.state.ids;                                                                                             
         
         // if(this.state.list==''){
         //     Alert.alert('Rỗng');
@@ -153,15 +153,20 @@ export default class Payment extends React.Component {
         submitDonHang(fullname, valueGender, email, address, phone,valueMethodPayment,ids)
 
             .then((responseJson) => {
-                console.log(responseJson.order_id);
+                // console.log(responseJson.order_id);
                 if (responseJson.error == '0') {
-                    this.setState({ order_id: responseJson.order_id});
+                    this.setState({ order_id: responseJson.order_id, link: responseJson.link});
 
                     // this.props.navigation.goBack();
                     // global.onRefresh();
                     saveStorage('cart', '');
                     // console.log(responseJson.order_id);
-                    this.props.navigation.navigate('PaymentSuccessScreen', {order_id : responseJson.order_id});
+                    if(valueMethodPayment ==1 ){
+                        this.props.navigation.navigate('PaymentSuccessScreen', {order_id : responseJson.order_id});
+                    }else{
+                        this.props.navigation.navigate('PaymentWebScreen', {order_id : responseJson.order_id, link : responseJson.link});
+                    }
+                    
                 } else {
                     Alert.alert('Thông báo', responseJson.message);
                 }

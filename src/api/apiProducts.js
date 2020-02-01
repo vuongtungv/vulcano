@@ -82,3 +82,13 @@ export function filterArray(id){
     return fetch(url)
     .then(res => res.json());
 }
+
+
+// search
+export function getSearchProducts(page,key){
+    let url;  
+    url = global.BASE_URL+`/get_search_products.api?page=${page}&key=${key}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+}

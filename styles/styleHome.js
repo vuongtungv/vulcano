@@ -968,7 +968,7 @@ const styles = StyleSheet.create({
   },
   inputSearch:{
     height: 40,
-
+    color: '#777777',
   },
 
 
