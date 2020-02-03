@@ -41,6 +41,10 @@ import HomeShowrooms from "./screens/showrooms/Home";
 
 // user
 import User from "./screens/user/Home";
+import Login from "./screens/user/Login";
+import Register from "./screens/user/Register";
+import ListOrder from "./screens/user/ListOrder";
+import UserDetailOrder from "./screens/user/DetailOrder";
 
 
 
@@ -112,7 +116,22 @@ export const VulcanoStack = createStackNavigator({
   // user
   UserScreen:{
     screen: User
-  }
+  },
+  LoginScreen:{
+    screen: Login
+  },
+  RegisterScreen:{
+    screen: Register
+  },
+  ListOrderScreen:{
+    screen: ListOrder
+  },
+  UserDetailOrderScreen:{
+    screen: UserDetailOrder
+  },
+
+
+
 
 
 });

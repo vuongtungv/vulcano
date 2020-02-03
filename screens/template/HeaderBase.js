@@ -227,6 +227,17 @@ export default class HeaderBase extends Component {
                         </View>
                     </View>
                 );
+            case 'user_list_order':
+                return(
+                    <View style={MainStyle.barHearder}>
+                        <TouchableOpacity style={MainStyle.backHeader} onPress={() => this.gotoBack()}>
+                            <Icon type="FontAwesome" name="angle-left" style={[MainStyle.tHeaderIconMenu,{fontSize:35}]} />
+                        </TouchableOpacity>
+                        <View style={MainStyle.titleCenterHeader}> 
+                            <Text style={MainStyle.txtCenterHeader}>{title}</Text>
+                        </View>
+                    </View>
+                );
             default: 
                 return(
                     <View style={MainStyle.barHearder}>

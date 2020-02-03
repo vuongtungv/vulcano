@@ -973,6 +973,139 @@ const styles = StyleSheet.create({
 
 
 
+  // user
+  userImage:{
+    backgroundColor: '#000000',
+    borderRadius: 40,
+    width: 80, 
+    height: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 20,
+  },
+  userHomeTab:{
+    flexDirection: 'row',
+    borderBottomColor: '#eeeeee',
+    borderBottomWidth: 1,
+    position: 'relative',
+  },
+  userHomeTitleTab:{
+    fontFamily: "RobotoRegular",
+    fontSize: 15,
+    lineHeight: 65,
+    marginLeft: 30,
+  },
+  userIconLeftTab:{
+    color: '#777777', 
+    fontSize: 25, 
+    lineHeight: 65,
+  },
+  userIconRightTab:{
+    color: '#777777', 
+    fontSize: 25, 
+    lineHeight: 65,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+  },
+  userLoginBanner:{
+    width: ScreenWidth,
+    height: ScreenWidth/2.25,
+    position: 'relative',
+    marginTop: barHeight,
+  },
+  userImgLoginB:{
+    width: ScreenWidth,
+    height: ScreenWidth/2.25
+  },
+  userImgCenterB:{
+    position: "absolute",
+    top: (ScreenWidth/2.25)/2-40,
+    left: ScreenWidth/2-40,
+  },
+  userTabLoginRegisterScreen:{
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#c8c8c8',
+  },
+  titleLoginRegis:{
+    width: ScreenWidth/2,
+    lineHeight: 35,
+    alignItems: 'center',
+  },
+  titleLoginRegisActive:{
+    borderBottomColor: '#000000',
+    borderBottomWidth: 5,
+  },
+  txtTabLoginRegister:{
+    fontFamily: "RobotoBold", 
+    fontSize: 18, 
+    color: '#777777',
+    lineHeight: 55
+  },
+  txtTabLoginRegisterActive:{
+    color: '#000000',
+  },
+  formLogin:{
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  styleInputLogin:{
+    fontFamily: 'RobotoRegular',
+    fontSize: 16,
+    color: '#999999',
+    paddingTop: 30,
+    paddingBottom: 15,
+    borderBottomColor: '#e0e0e0',
+    borderBottomWidth: 1,
+  },
+  vInputPass:{
+    position: 'relative',
+  },
+  showPass:{
+    fontFamily: 'RobotoRegular',
+    fontSize: 15,
+    position: 'absolute',
+    right: 0,
+    bottom: 15,
+  },
+  touchSubLogin:{
+    backgroundColor: '#000000',
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 30,
+  },
+  txtSubLogin:{
+    color: '#FFFFFF',
+    fontFamily: 'RobotoRegular',
+    fontSize: 18,
+    lineHeight: 60,
+    textTransform: 'uppercase',
+  },
+  userOrderItem:{
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderBottomColor: '#f8f8ff',
+    borderBottomWidth: 10,
+  },
+  nameOrderItem:{
+    fontFamily: "RobotoBold",
+    fontSize: 16,
+    color: '#000000',
+    lineHeight: 25,
+  },
+  briefOrderItem:{
+    fontFamily: "RobotoRegular",
+    fontSize: 14,
+    color: '#777777',
+    lineHeight: 23,
+  },
+
+
+  
+
 
 
 
