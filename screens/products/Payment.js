@@ -32,6 +32,7 @@ export default class Payment extends React.Component {
             address: '',
             phone: '',
             ids: '',
+            user_id : '',
 		}
 		
 		this.arr = [];
@@ -39,6 +40,16 @@ export default class Payment extends React.Component {
 	
 
 	componentDidMount(){
+        getStorage('user')
+        .then(user => {
+            if (user != '') {
+                let arrUser = JSON.parse(user);
+                console.log(arrUser);
+                this.setState({ 
+                    user_id: arrUser.id,
+                });
+            } 
+        });
         this.makeRemoteRequest();
 	}
 	
@@ -96,6 +107,7 @@ export default class Payment extends React.Component {
         var phone = this.state.phone;
         var valueMethodPayment = this.state.valueMethodPayment;
         var ids = this.state.ids;                                                                                             
+        var user_id = this.state.user_id;                                                                                             
         
         // if(this.state.list==''){
         //     Alert.alert('Rỗng');
@@ -150,7 +162,7 @@ export default class Payment extends React.Component {
         }
 
 
-        submitDonHang(fullname, valueGender, email, address, phone,valueMethodPayment,ids)
+        submitDonHang(user_id,fullname, valueGender, email, address, phone,valueMethodPayment,ids)
 
             .then((responseJson) => {
                 // console.log(responseJson.order_id);

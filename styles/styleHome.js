@@ -1102,6 +1102,14 @@ const styles = StyleSheet.create({
     color: '#777777',
     lineHeight: 23,
   },
+  userLogout:{
+    position: 'absolute',
+    bottom: footerHeight + 20,
+    backgroundColor: '#eeeeee',
+    width: ScreenWidth-40,
+    marginLeft: 20,
+    alignItems: 'center',
+  },
 
 
   

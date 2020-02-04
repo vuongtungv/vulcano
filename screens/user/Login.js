@@ -6,7 +6,8 @@ import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
 import { submitLogin } from '../../src/api/apiUser';
-
+import saveStorage from './../api/saveStorage';
+import getStorage from './../api/getStorage';
 
 export default class Login extends Component{
     static navigationOptions = ({ navigation }) => ({
@@ -69,10 +70,8 @@ export default class Login extends Component{
         submitLogin(username, password)
             .then((responseJson) => {
                 if (responseJson.error == '0') {
-                    this.setState({ rest_id: responseJson.rest_id});
-
                     saveStorage('user', JSON.stringify(responseJson.user));
-                    
+                    console.log(responseJson.user)
                     Alert.alert('Thông báo', 'Đăng nhập thành công.');
 
                     this.props.navigation.navigate('HomeScreen');

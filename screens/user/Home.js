@@ -5,10 +5,8 @@ import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
-
-import {getCities, getDistricts, getAllShowrooms} from '../../src/api/apiShowrooms';
-
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import saveStorage from './../api/saveStorage';
+import getStorage from './../api/getStorage'
 
 export default class Home extends Component{
     static navigationOptions = ({ navigation }) => ({
@@ -19,14 +17,29 @@ export default class Home extends Component{
         super(props);
         
         this.state = {
-            
+            user_id: '',
+            fullname: '',
+            email: '',
+            created_time: '',
         }
 
         this.arr = [];
     }
  
     componentDidMount() {
-        
+        getStorage('user')
+        .then(user => {
+            if (user != '') {
+                let arrUser = JSON.parse(user);
+                console.log(arrUser);
+                this.setState({ 
+                    user_id: arrUser.id,
+                    fullname: arrUser.fullname,
+                    email: arrUser.email,
+                    created_time: arrUser.created_time,
+                });
+            } 
+        });
     }
 
 
@@ -35,6 +48,13 @@ export default class Home extends Component{
     }
     gotoListOrder(){
         this.props.navigation.navigate('ListOrderScreen');
+    }
+    logout(){
+        saveStorage('user', '');
+        this.props.navigation.navigate('HomeScreen');
+    }
+    informationUser(){
+        this.props.navigation.navigate('InformationUserScreen');
     }
 
 
@@ -45,35 +65,64 @@ export default class Home extends Component{
         return(
             <Container>
                 <HeaderBase page="user" title={'Thành viên'} navigation={navigation} />
-                <View style={[MainStyle.pageShowrooms, ]}>
+                <ScrollView style={[MainStyle.pageShowrooms, {paddingBottom: 108}]}>
                     <View style={{padding: 20, flexDirection: 'row', justifyContent: 'flex-start'}}>
                         <View style={MainStyle.userImage}>
                             <Icon type="FontAwesome" name="user-o" style={{ color: '#FFFFFF', fontSize: 35 }} />
                         </View>   
-                        <View>
-                            <Text style={{ color: '#777777', fontFamily: "RobotoRegular", fontSize: 16,marginBottom: 10, marginTop: 10 }}>Chào mừng bạn đến với Vulcano</Text>
-                            <TouchableOpacity onPress={()=>this.gotoLogin()}>
-                                <Text style={{ fontFamily: "RobotoBold", fontSize: 17}}>Đăng nhập / Đăng ký</Text>
+                        {
+                            this.state.user_id ? 
+                            <View>
+                                <Text style={{ color: '#333333', fontFamily: "RobotoBold", fontSize: 16, marginTop: 10 }}>{this.state.fullname}</Text>
+                                <Text style={{ color: '#777777', fontFamily: "RobotoRegular", fontSize: 15}}>{this.state.email}</Text>
+                                <Text style={{ color: '#777777', fontFamily: "RobotoRegular", fontSize: 15}}>Thành viên từ: {this.state.created_time}</Text>
+                            </View> 
+                            :
+                            <View>
+                                <Text style={{ color: '#777777', fontFamily: "RobotoRegular", fontSize: 16,marginBottom: 10, marginTop: 10 }}>Chào mừng bạn đến với Vulcano</Text>
+                                <TouchableOpacity onPress={()=>this.gotoLogin()}>
+                                    <Text style={{ fontFamily: "RobotoBold", fontSize: 17}}>Đăng nhập / Đăng ký</Text>
+                                </TouchableOpacity>
+                            </View> 
+                        }
+                    </View>  
+                    {
+                        this.state.user_id ?
+                        <View style = {{borderTopColor: '#f8f8ff', borderTopWidth: 10, paddingLeft: 20, paddingRight: 20}}>
+                            <TouchableOpacity style={MainStyle.userHomeTab} onPress={()=>this.gotoListOrder()}>
+                                <Icon type="Feather" name="file-text" style={MainStyle.userIconLeftTab} />
+                                <Text style={MainStyle.userHomeTitleTab}>Quản lý đơn hàng</Text>
+                                <Icon type="FontAwesome" name="angle-right" style={MainStyle.userIconRightTab} />
                             </TouchableOpacity>
-                        </View> 
-                    </View>  
-                    <View style = {{borderTopColor: '#f8f8ff', borderTopWidth: 10, paddingLeft: 20, paddingRight: 20}}>
-                        <TouchableOpacity style={MainStyle.userHomeTab} onPress={()=>this.gotoListOrder()}>
-                            <Icon type="Feather" name="file-text" style={MainStyle.userIconLeftTab} />
-                            <Text style={MainStyle.userHomeTitleTab}>Quản lý đơn hàng</Text>
-                            <Icon type="FontAwesome" name="angle-right" style={MainStyle.userIconRightTab} />
+                            <TouchableOpacity style={MainStyle.userHomeTab} onPress={()=>this.informationUser()}>
+                                <Icon type="FontAwesome" name="user-o" style={MainStyle.userIconLeftTab} />
+                                <Text style={MainStyle.userHomeTitleTab}>Thông tin tài khoản</Text>
+                                <Icon type="FontAwesome" name="angle-right" style={MainStyle.userIconRightTab} />
+                            </TouchableOpacity>
+                            <View style={MainStyle.userHomeTab}>
+                                <Icon type="FontAwesome" name="phone" style={MainStyle.userIconLeftTab} />
+                                <Text style={MainStyle.userHomeTitleTab}>Hotline: <Text style={{color: '#ce1e1e'}}>0988191996</Text> (tư vấn miễn phí)</Text>
+                            </View>
+                        </View>
+                        :
+                        <View style = {{borderTopColor: '#f8f8ff', borderTopWidth: 10, paddingLeft: 20, paddingRight: 20}}>
+                            <View style={MainStyle.userHomeTab}>
+                                <Icon type="FontAwesome" name="phone" style={MainStyle.userIconLeftTab} />
+                                <Text style={MainStyle.userHomeTitleTab}>Hotline: <Text style={{color: '#ce1e1e'}}>0988191996</Text> (tư vấn miễn phí)</Text>
+                            </View>
+                        </View>
+                    }
+                </ScrollView>
+                {
+                    this.state.user_id ?
+                        <TouchableOpacity style={MainStyle.userLogout} onPress={()=>this.logout()}>
+                            <Text style={{fontFamily: "RobotoBold", color: '#000000', fontSize: 17, textTransform: 'uppercase', lineHeight:55}}>Đăng xuất</Text> 
                         </TouchableOpacity>
-                        <View style={MainStyle.userHomeTab}>
-                            <Icon type="FontAwesome" name="user-o" style={MainStyle.userIconLeftTab} />
-                            <Text style={MainStyle.userHomeTitleTab}>Thông tin tài khoản</Text>
-                            <Icon type="FontAwesome" name="angle-right" style={MainStyle.userIconRightTab} />
-                        </View>
-                        <View style={MainStyle.userHomeTab}>
-                            <Icon type="FontAwesome" name="phone" style={MainStyle.userIconLeftTab} />
-                            <Text style={MainStyle.userHomeTitleTab}>Hotline: <Text style={{color: '#ce1e1e'}}>0988191996</Text> (tư vấn miễn phí)</Text>
-                        </View>
-                    </View>  
-                </View>
+                    :
+                    <View><Text></Text></View>
+
+                }
+                
                 <FooterBase navigation={navigation} page="user" />
             </Container>
         );

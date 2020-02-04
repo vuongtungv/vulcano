@@ -45,6 +45,7 @@ import Login from "./screens/user/Login";
 import Register from "./screens/user/Register";
 import ListOrder from "./screens/user/ListOrder";
 import UserDetailOrder from "./screens/user/DetailOrder";
+import InformationUser from "./screens/user/InformationUser";
 
 
 
@@ -128,6 +129,9 @@ export const VulcanoStack = createStackNavigator({
   },
   UserDetailOrderScreen:{
     screen: UserDetailOrder
+  },
+  InformationUserScreen:{
+    screen: InformationUser
   },
 
 

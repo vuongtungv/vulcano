@@ -48,9 +48,9 @@ export function get_product_by_cart(ids){
     return fetch(url)
     .then(res => res.json());
 };
-export function submitDonHang(fullname,valueGender,email,address,phone,valueMethodPayment,ids){
+export function submitDonHang(user_id,fullname,valueGender,email,address,phone,valueMethodPayment,ids){
     let url;  
-    url = global.BASE_URL+`/submit_order.api?fullname=${fullname}&valueGender=${valueGender}&email=${email}&address=${address}&phone=${phone}&valueMethodPayment=${valueMethodPayment}&cart=${ids}`;
+    url = global.BASE_URL+`/submit_order.api?user_id=${user_id}&fullname=${fullname}&valueGender=${valueGender}&email=${email}&address=${address}&phone=${phone}&valueMethodPayment=${valueMethodPayment}&cart=${ids}`;
     console.log(url);
     return fetch(url)
     .then(res => res.json());
