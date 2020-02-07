@@ -17,6 +17,7 @@ export default class ProductsInCate extends Component{
         this.state = {
             allow_more: true,
             loading: true,
+            type : '',
             page: 1,
             list: [],
             isOrderPrice: true, // tăng dần
@@ -34,6 +35,8 @@ export default class ProductsInCate extends Component{
             fill_id_color: '',
             fill_id_size: '',
             fill_id_price: '',
+            fill_sales: false,
+            fill_famous: false,
         }
 
         this.arr = []; 
@@ -51,7 +54,8 @@ export default class ProductsInCate extends Component{
         this.arr = [];
         this.setState({ loading: true });
         const { id, type } = this.props.navigation.state.params;
-
+        this.setState({ type: type });
+        // console.log(this.state.type);
         filterArray(id)
             .then(resJSON => {
                 const { listNameCateLevel1,listStyles,listColors,listMaterials,listSizes, listPrice, error} = resJSON;
@@ -78,8 +82,10 @@ export default class ProductsInCate extends Component{
         this.arr = [];
         this.setState({ loading: true });
         const { id, type } = this.props.navigation.state.params;
-
+       
+    
         products_sort = this.state.products_sort;
+        
 
         var id_cate= this.state.fill_id_cate;
         var id_material= this.state.fill_id_material;
@@ -87,9 +93,10 @@ export default class ProductsInCate extends Component{
         var id_color= this.state.fill_id_color;
         var id_size= this.state.fill_id_size;
         var id_price= this.state.fill_id_price;
-    
+        var fill_sales = this.state.fill_sales;
+        var fill_famous = this.state.fill_famous;
 
-        getProductsInCate(id, type, products_sort, this.state.page, id_cate,id_material, id_style, id_color, id_size, id_price )
+        getProductsInCate(id, type, products_sort, this.state.page, id_cate,id_material, id_style, id_color, id_size, id_price, fill_sales, fill_famous )
             .then(resJSON => {
                 const { list, category_name,count, error} = resJSON;
                 
@@ -152,7 +159,7 @@ export default class ProductsInCate extends Component{
             });
         }else{
             this.setState({
-                products_sort: 2, // tăng dần
+                products_sort: 2, // giảm dần
             });   
         }
         this.makeRemoteRequest();
@@ -220,11 +227,20 @@ export default class ProductsInCate extends Component{
 
     onRefresh() {
         this.arr = [];
-        this.setState({
-            listRest: []
-        });
     }
 
+    setSales(){
+        this.setState({
+            fill_sales: !this.state.fill_sales,
+        });
+        this.makeRemoteRequest();
+    }
+    setFamous(){
+        this.setState({
+            fill_famous: !this.state.fill_famous,
+        });
+        this.makeRemoteRequest();
+    }
 
 
 	
@@ -236,12 +252,21 @@ export default class ProductsInCate extends Component{
                 <HeaderBase page="list_products" title={this.state.category_name} navigation={navigation} />
                 <View style={MainStyle.filterProducts}>
                     <View style={MainStyle.filterLeft}>
-                        <View>
-                            <Text style={MainStyle.txtFilter}>Phổ biến</Text>
-                        </View>
-                        <View style={{marginLeft: 35}}>
-                            <Text style={MainStyle.txtFilter}>Sale</Text>
-                        </View>
+                        {
+                            this.state.type == 'sales'
+                            ? 
+                            <View><Text></Text></View>
+                            :
+                            <View style={{flexDirection: 'row'}}>
+                                <TouchableOpacity onPress={()=>this.setFamous()}>
+                                    <Text style={MainStyle.txtFilter}>Phổ biến</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{marginLeft: 35}} onPress={()=>this.setSales()}>
+                                    <Text style={MainStyle.txtFilter}>Sale</Text>
+                                </TouchableOpacity>
+                            </View>
+                        } 
+                        
                     </View>
                     <View style={MainStyle.filterRight}>
                         <TouchableOpacity style={[MainStyle.hasIconFilter,{marginRight: 35}]} onPress={()=>this.setOrderPrice()}>
@@ -277,10 +302,25 @@ export default class ProductsInCate extends Component{
                                     <TouchableOpacity key={item.id} style={MainStyle.itemProducts} onPress={()=>this.detailProduct(item.record_id)}> 
                                         <View style={MainStyle.vImgItemPro}>
                                             <Image style={{width: '100%', height:500}}  source={{uri: item.image}} />
+                                            { item.is_sales == true ? 
+                                                <View style={{position: 'absolute', bottom: 20, left:20}}>
+                                                    <Text style={MainStyle.bgSales}>{item.giam}</Text>
+                                                </View>
+                                                :
+                                                <View><Text></Text></View>
+                                            }
+                                            
                                         </View>
                                         <View style={MainStyle.bodyItemPro}>
                                             <Text style={MainStyle.nameItemProducts}>{item.name}</Text>
-                                            <Text style={MainStyle.priceItemProducts}>{item.price} đ</Text>
+                                            { item.is_sales == true ? 
+                                                <View style={{flexDirection: 'row'}}>
+                                                    <Text style={[MainStyle.priceItemProducts, {textDecorationLine: 'line-through'}]}>{item.price_old} đ</Text>
+                                                    <Text style={[MainStyle.priceItemProducts, {marginLeft: 20, color: '#ff0700'}]}>{item.price} đ</Text>
+                                                </View>  
+                                                :
+                                                <View><Text style={MainStyle.priceItemProducts}>{item.price} đ</Text></View>
+                                            }
                                         </View>
                                     </TouchableOpacity>
                                 )}

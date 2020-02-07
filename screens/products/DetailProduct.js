@@ -292,7 +292,7 @@ export default class DetailProduct extends Component{
                             {/* <Text style={[MainStyle.btnStylePro,MainStyle.btnBorderActive]}>12345</Text> */}
                             {this.state.arr_kieu_dang.map((item, index) => {return (
                                 <TouchableOpacity onPress={()=>this.setChooseStyle(index,item.id,item.name)}>
-                                    <Text key={index} style={[MainStyle.btnStylePro, { borderColor: this.state.default_style == index ? '#ff0700' : '#FFFFFF', borderWidth: 1 }]}>
+                                    <Text key={index} style={[MainStyle.btnSizePro, { borderColor: this.state.default_style == index ? '#ff0700' : '#FFFFFF', borderWidth: 1 }]}>
                                         {item.name}
                                     </Text>
                                 </TouchableOpacity>
@@ -304,7 +304,7 @@ export default class DetailProduct extends Component{
                         <View style={MainStyle.vStyleProduct}>
                             {this.state.arr_size.map((item, index) => {return (
                                 <TouchableOpacity onPress={()=>this.setChooseSize(index,item.id,item.name)}>
-                                    <Text key={index} style={[MainStyle.btnStylePro,{ borderColor: this.state.default_size == index ? '#ff0700' : '#FFFFFF', borderWidth: 1 }]}>{item.name}</Text>
+                                    <Text key={index} style={[MainStyle.btnSizePro,{ borderColor: this.state.default_size == index ? '#ff0700' : '#FFFFFF', borderWidth: 1 }]}>{item.name}</Text>
                                 </TouchableOpacity>
                             )})}
                         </View>
@@ -398,12 +398,12 @@ export default class DetailProduct extends Component{
                     onRequestClose={() => {}}>
                     <View style={[MainStyle.modalSizeGuide]}> 
                         <TouchableOpacity onPress={()=>this.setState({modalVisibleSize:false})} style={MainStyle.bgPopupScreen}></TouchableOpacity>
-                        <View style={MainStyle.visibalPop}>
-                            <HTML html={this.state.size_guide} imagesMaxWidth={Dimensions.get('window').width} />
-                            <TouchableOpacity style={MainStyle.tBtnModal} onPress={()=>this.setState({modalVisibleSize:false})}>
+                        <ScrollView style={MainStyle.visibalPop}>
+                            <HTML html={this.state.size_guide} imagesMaxWidth={Dimensions.get('window').width -80} />
+                            {/* <TouchableOpacity style={MainStyle.tBtnModal} onPress={()=>this.setState({modalVisibleSize:false})}>
                                 <Text style={[MainStyle.txtModal,MainStyle.txtModalW]}>Đóng</Text>
-                            </TouchableOpacity>
-                        </View>
+                            </TouchableOpacity> */}
+                        </ScrollView>
                     </View>
                 </Modal>
 

@@ -34,6 +34,8 @@ export default class AllProducts extends Component{
             fill_id_color: '',
             fill_id_size: '',
             fill_id_price: '',
+            fill_sales: false,
+            fill_famous: false,
         }
 
         this.arr = []; 
@@ -51,8 +53,7 @@ export default class AllProducts extends Component{
     makeRemoteRequest(){
         this.setState({ loading: true });
         // console.log(this.state.page);
-        products_sort = this.state.products_sort;
-
+        var products_sort = this.state.products_sort;
         var id_cate= this.state.fill_id_cate;
         var id_material= this.state.fill_id_material;
         var id_style= this.state.fill_id_style;
@@ -60,7 +61,11 @@ export default class AllProducts extends Component{
         var id_size= this.state.fill_id_size;
         var id_price= this.state.fill_id_price;
 
-        getAllProducts(this.state.page, products_sort, id_cate, id_material, id_style, id_color, id_size, id_price)
+        var fill_sales = this.state.fill_sales;
+        var fill_famous = this.state.fill_famous;
+
+
+        getAllProducts(this.state.page, products_sort, id_cate, id_material, id_style, id_color, id_size, id_price, fill_sales, fill_famous)
         .then(resJSON => {
             const { list,count, error} = resJSON;      
             if (error == false) {
@@ -144,6 +149,7 @@ export default class AllProducts extends Component{
                 products_sort: 2, // tăng dần
             });   
         }
+        console.log(this.state.products_sort);
         this.makeRemoteRequest();
     }
 
@@ -207,11 +213,21 @@ export default class AllProducts extends Component{
     }
     onRefresh() {
         this.arr = [];
-        this.setState({
-            listRest: []
-        });
     }
 
+
+    setSales(){
+        this.setState({
+            fill_sales: !this.state.fill_sales,
+        });
+        this.makeRemoteRequest();
+    }
+    setFamous(){
+        this.setState({
+            fill_famous: !this.state.fill_famous,
+        });
+        this.makeRemoteRequest();
+    }
 	
     render() {
         const {navigation} = this.props;
@@ -221,12 +237,12 @@ export default class AllProducts extends Component{
                 <HeaderBase page="list_products" title={'Sản phẩm'} navigation={navigation} />
                 <View style={MainStyle.filterProducts}>
                     <View style={MainStyle.filterLeft}>
-                        <View>
+                        <TouchableOpacity onPress={()=>this.setFamous()}>
                             <Text style={MainStyle.txtFilter}>Phổ biến</Text>
-                        </View>
-                        <View style={{marginLeft: 35}}>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{marginLeft: 35}} onPress={()=>this.setSales()}>
                             <Text style={MainStyle.txtFilter}>Sale</Text>
-                        </View>
+                        </TouchableOpacity>
                     </View>
                     <View style={MainStyle.filterRight}>
                         <TouchableOpacity style={[MainStyle.hasIconFilter,{marginRight: 35}]} onPress={()=>this.setOrderPrice()}>

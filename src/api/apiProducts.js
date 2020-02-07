@@ -1,9 +1,9 @@
 import global from './../../screens/api/global';
 
 // list products in cate
-export function getProductsInCate(id,type,products_sort,page, id_cate, id_material, id_style, id_color, id_size, id_price){
+export function getProductsInCate(id,type,products_sort,page, id_cate, id_material, id_style, id_color, id_size, id_price, fill_sales, fill_famous){
     let url;
-    url = global.BASE_URL+`/products_in_cate.api?id=${id}&type=${type}&products_sort=${products_sort}&page=${page}&id_cate=${id_cate}&id_material=${id_material}&id_style=${id_style}&id_color=${id_color}&id_size=${id_size}&id_price=${id_price}`;
+    url = global.BASE_URL+`/products_in_cate.api?id=${id}&type=${type}&products_sort=${products_sort}&page=${page}&id_cate=${id_cate}&id_material=${id_material}&id_style=${id_style}&id_color=${id_color}&id_size=${id_size}&id_price=${id_price}&fill_sales=${fill_sales}&fill_famous=${fill_famous}`;
     console.log(url);
     return fetch(url)
     .then(res => res.json());
@@ -30,9 +30,9 @@ export function listCateSalesLv1(){
     return fetch(url)
     .then(res => res.json());
 };
-export function getAllProducts(page, products_sort, id_cate, id_material, id_style, id_color, id_size, id_price){
+export function getAllProducts(page, products_sort, id_cate, id_material, id_style, id_color, id_size, id_price, fill_sales, fill_famous){
     let url;
-    url = global.BASE_URL+`/get_all_products.api?page=${page}&products_sort=${products_sort}&id_cate=${id_cate}&id_material=${id_material}&id_style=${id_style}&id_color=${id_color}&id_size=${id_size}&id_price=${id_price}`;
+    url = global.BASE_URL+`/get_all_products.api?page=${page}&products_sort=${products_sort}&id_cate=${id_cate}&id_material=${id_material}&id_style=${id_style}&id_color=${id_color}&id_size=${id_size}&id_price=${id_price}&fill_sales=${fill_sales}&fill_famous=${fill_famous}`;
     console.log(url);
     return fetch(url)
     .then(res => res.json());

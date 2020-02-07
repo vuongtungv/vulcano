@@ -176,15 +176,15 @@ export default class Cart extends React.Component {
                                                 <View><Text style={[MainStyle.fPriceItemCart]}>{item.price} đ</Text></View>
                                             </View>
                                             <View style={MainStyle.lineTopItemCart}>
-                                                <View style={{flexDirection: 'row'}}>
+                                                <View style={{flexDirection: 'row', width: '46%', flexWrap: 'wrap'}}>
                                                     <Text style={MainStyle.txtBCart}>Kiểu dáng: </Text>
-                                                    <Text style={MainStyle.txtBCart}>{item.style_name}</Text>
+                                                    <View><Text style={MainStyle.txtBCart}>{item.style_name}</Text></View>
                                                 </View>
-                                                <View style={{flexDirection: 'row'}}>
+                                                <View style={{flexDirection: 'row', width: '23%', flexWrap: 'wrap'}}>
                                                     <Text style={MainStyle.txtBCart}>Kích cỡ: </Text>
                                                     <Text style={MainStyle.txtBCart}>{item.size_name}</Text>
                                                 </View>
-                                                <View style={{flexDirection: 'row'}}>
+                                                <View style={{flexDirection: 'row',width: '23%', flexWrap: 'wrap'}}>
                                                     <Text style={MainStyle.txtBCart}>Số lượng: </Text>
                                                     <Text style={MainStyle.txtBCart}>{item.amount}</Text>
                                                 </View>

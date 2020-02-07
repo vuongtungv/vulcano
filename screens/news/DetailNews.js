@@ -91,7 +91,7 @@ export default class DetailNews extends Component{
                         <View style={MainStyle.briefDetailNews}>
                             <Text style={MainStyle.txtBriefDetailNews}>{this.state.detail.summary}</Text>
                         </View>
-                        <View style={MainStyle.vDescriptNews}>
+                        <View style={[MainStyle.vDescriptNews]}>
                             {/* <Text style={MainStyle.txtDescriptNews}>
                                 Đối với phái mạnh quần âu đã trở thành một phần không thể thiếu. Một chiếc quần âu cao cấp không chỉ mang lại sự chuyên nghiệp, lịch lãm mà còn là chìa khóa giúp phái mạnh tự tin, làm chủ mọi tình huống.                                
                             </Text>

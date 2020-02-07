@@ -407,17 +407,23 @@ const styles = StyleSheet.create({
     marginLeft: -20,
     // backgroundColor: 'red',
   },
-  btnStylePro:{
+  btnSizePro:{
     backgroundColor: '#eeeeee',
     color: '#000000',
     fontFamily: 'RobotoRegular',
     width: (ScreenWidth-100)/4,
     textAlign: 'center',
-    lineHeight: (ScreenWidth-100)/8,
-    height: (ScreenWidth-100)/8, 
+    // lineHeight: (ScreenWidth-100)/8,
+    // height: (ScreenWidth-100)/8, 
     marginLeft: 20, 
     marginBottom: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
+  
   btnBorderActive:{
     borderWidth: 1,
     borderColor: '#ff0700',
@@ -724,6 +730,17 @@ const styles = StyleSheet.create({
     color:'#FFFFFF',
     fontFamily: 'RobotoRegular',
     fontSize: 16,
+  },
+  bgSales:{
+    backgroundColor: '#ff0700',
+    borderRadius: 5,
+    color: '#FFFFFF', 
+    fontFamily: "RobotoRegular", 
+    fontSize: 15,
+    paddingTop: 5,
+    paddingBottom: 5, 
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   
 
