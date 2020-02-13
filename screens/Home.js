@@ -192,18 +192,18 @@ export default class Home extends React.Component {
           </View>
 
           <View style={[MainStyle.cateSmallHome]}>
-                {this.state.listCate.map((item, index) => {return (
-                    <TouchableOpacity key={index} style={MainStyle.itemsCateSmallHome} onPress={()=>this.listProductsInCate(item.id)}>
-                      <View style={MainStyle.viewSmallHome}>
-                        {/* <Image style={MainStyle.imgSmallHome} source={require("../assets/image_cate_small.png")} /> */}
-                        <Image style={MainStyle.imgSmallHome} source={{uri: item.image}} />
-                      </View>
-                      <View style={MainStyle.bodySmallHome}>
-                        <Text style={MainStyle.titleSmall}>{item.name}</Text>
-                        <Text style={MainStyle.viewAll}>Xem tất cả sản phẩm ></Text>
-                      </View>
-                    </TouchableOpacity>
-                  )})}
+            {this.state.listCate.map((item, index) => {return (
+                <TouchableOpacity key={index} style={MainStyle.itemsCateSmallHome} onPress={()=>this.listProductsInCate(item.id)}>
+                  <View style={MainStyle.viewSmallHome}>
+                    {/* <Image style={MainStyle.imgSmallHome} source={require("../assets/image_cate_small.png")} /> */}
+                    <Image style={MainStyle.imgSmallHome} source={{uri: item.image}} />
+                  </View>
+                  <View style={MainStyle.bodySmallHome}>
+                    <Text style={MainStyle.titleSmall}>{item.name}</Text>
+                    <Text style={MainStyle.viewAll}>Xem tất cả sản phẩm ></Text>
+                  </View>
+                </TouchableOpacity>
+            )})}
             
             <TouchableOpacity style={MainStyle.itemsCateSmallHome} onPress={()=>this.sellingProducts()}>
               <View style={MainStyle.viewSmallHome}>

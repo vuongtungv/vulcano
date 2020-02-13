@@ -148,74 +148,77 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   bannerHome:{
-    width:ScreenWidth-40,
-    height:(ScreenWidth-40)/3,
-    paddingLeft: 20,
+    width:ScreenWidth,
+    height:ScreenWidth/3,
   },
   itemsBannerHome:{
-    width:ScreenWidth-40,
-    height:(ScreenWidth-40)/3,
+    width:ScreenWidth,
+    height:ScreenWidth/3,
   },
 
 
 
   // danh sách sản phẩm small
   cateSmallHome:{
-    width: ScreenWidth-20,
-    marginLeft: 10,
+    // width: ScreenWidth-20,
+    width: ScreenWidth,
+    // marginLeft: 10,
     marginTop: 10,
     flexDirection: 'row', 
+    justifyContent: 'space-between',
     flexWrap: 'wrap',
   },
   itemsCateSmallHome:{
-    width: (ScreenWidth-60)/2,
-    margin: 10,
-    overflow: 'hidden',
+    width: (ScreenWidth-10)/2,
+    marginTop: 10,
+  
   },
   imgSmallHome:{
-    width: (ScreenWidth-60)/2,
-    height:(ScreenWidth-60)/2, 
+    width: (ScreenWidth-10)/2,
+    height:(ScreenWidth-10)/2, 
   },
   bodySmallHome:{
     backgroundColor:'#000000',
-    paddingTop:20,
-    paddingBottom:10,
+    paddingTop:10,
     alignItems: 'center',
     marginTop: -1,
+    paddingBottom: 10,
   },
   titleSmall:{
     fontFamily: 'RobotoBold',
     color:'#FFFFFF',
     fontSize:20,
+    marginBottom: 0,
     textTransform:"uppercase",
   },
   viewAll:{
     color:'#FFFFFF',
     fontFamily: 'RobotoLight',
+    marginBottom: 0,
   },
   lineBlack:{
     marginBottom: 30,
-    width: ScreenWidth-40,
-    marginLeft: 20,
+    marginTop: 10,
+    width: ScreenWidth,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   itemsLine:{
-    width: (ScreenWidth-60)/2,
+    width: (ScreenWidth-10)/2,
     height: 2,
     backgroundColor: "#000000"
   },
   cateBigHome:{
-    width: ScreenWidth-40,
-    marginLeft: 20,
+    width: ScreenWidth,
+    // marginLeft: 20,
   },
   imgBigHome:{
-    width: ScreenWidth-40,
-    height: ScreenWidth-40,
+    width: ScreenWidth,
+    height: ScreenWidth,
   },
   imgBigHome:{
-    width: ScreenWidth-40,
-    height: ScreenWidth-40,
+    width: ScreenWidth,
+    height: ScreenWidth,
   },
   bodyBigHome:{
     alignItems: 'center',
