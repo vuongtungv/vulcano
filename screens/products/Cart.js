@@ -1,12 +1,12 @@
 import React from 'react';
 import {Text, View, ScrollView, Image, TouchableOpacity, FlatList, TextInput, Alert } from 'react-native';
-import { Container, Content, CheckBox, Icon } from "native-base";
+import { Container, Content, CheckBox, Icon,Picker } from "native-base";
 import MainStyle from '../../styles/MainStyle';
 import HeaderBase from '../template/HeaderBase';
 import saveStorage from './../api/saveStorage';
 import getStorage from './../api/getStorage';
 import global from './../api/global';
-import {get_product_by_cart} from './../../src/api/apiProducts';
+import {get_product_by_cart , getSizeStyleEditItemCart} from './../../src/api/apiProducts';
 
 export default class Cart extends React.Component {
 	static navigationOptions = ({ navigation }) => ({
@@ -24,6 +24,8 @@ export default class Cart extends React.Component {
 			refreshing: false,
             loading: false,
             cart: '',
+            editItemCart : false,
+            idEdit: '',
 		}
 		
 		this.arr = [];
@@ -100,7 +102,7 @@ export default class Cart extends React.Component {
         this.makeRemoteRequest();
     }
 
-    changeSize(id, size){
+    updateItemCart(id){
         var arrCart = JSON.parse(this.state.cart);
         var tmp = [];
         arrCart.map(c => {
@@ -109,47 +111,95 @@ export default class Cart extends React.Component {
             else
                 tmp.push({
 					id: c.id,
-					size: size,
-					quantity: c.quantity,
-				});
+					size: this.state.size,
+					style: this.state.style,
+					amount: this.state.amount,
+                });
+                this.setState({
+                    editItemCart : false,
+                    idEdit: '',
+                    size: 0,
+                    style: 0,
+                    arr_size:[],
+                    arr_kieu_dang:[],
+                    amount: '',
+                });
         });
         saveStorage('cart', JSON.stringify(tmp));
         this.makeRemoteRequest();
     }
 
-    changeQuantity(id, quantity){
-        var arrCart = JSON.parse(this.state.cart);
-        var tmp = [];
-        arrCart.map(c => {
-            if(c.id != id)
-                tmp.push(c);
-            else
-                tmp.push({
-					id: c.id,
-					size: c.size,
-					amount: quantity,
-				});
+    editItemCart(id, size, style, amount){
+        this.setState({
+            editItemCart : false,
+            idEdit: '',
+            size: 0,
+            style: 0,
+            arr_size:[],
+            arr_kieu_dang:[],
+            amount: '',
         });
-        saveStorage('cart', JSON.stringify(tmp));
-        this.makeRemoteRequest();
+        this.setState({
+            editItemCart : true,
+            idEdit: id,
+            size: size,
+            style: style,
+            amount: amount,
+        });
+        
+        getSizeStyleEditItemCart(id)
+            .then(resJSON => {
+                const { arr_kieu_dang,arr_size, error} = resJSON;
+                if (error == false) {
+                    this.setState({
+                        arr_size: arr_size,
+                        arr_kieu_dang: arr_kieu_dang,
+                        loaded: true,
+                    }); 
+                }
+            }).catch(err => {
+                // this.setState({ loaded: true });  
+            }); 
     }
 
-    renderPrice(item){
-        if(item.discount > 0){ 
-            return(
-                <View style={[MainStyle.cartItemInfoItem, {flexDirection: 'row'}]}>
-                    <Text style={[MainStyle.cartItemInfoPrice, MainStyle.red]}>{item.price}</Text>
-                    <Text style={[MainStyle.cartItemInfoPrice, MainStyle.productItemPriceOld, {paddingLeft: 5}]}>{item.price_old}</Text>
-                </View>
-            );
+    minus(){
+        if(parseInt(this.state.amount)<=1){
+            var a = 1;
         }else{
-            return (
-                <View style={MainStyle.cartItemInfoItem}>
-                    <Text style={[MainStyle.cartItemInfoPrice, MainStyle.red]}>{item.price}</Text>
-                </View>
-            )
+            a = parseInt(this.state.amount)-1;
         }
+        var min = a.toString();
+        
+        this.setState({
+            'amount' : min
+        });
+        console.log(a);
     }
+    plus(){ 
+        a = parseInt(this.state.amount)+1;
+        var add = a.toString();
+        this.setState({
+            'amount' : add
+        });
+        console.log(a);
+    }
+    setAmount=(value, index)=>{
+        var min = value.toString();
+        
+        this.setState(
+          {
+            "amount": min
+          },
+          () => {
+            // here is our callback that will be fired after state change.
+            // Alert.alert(this.state.city);
+            // this.getDistricts();
+            // this.getAllShowrooms();
+          }
+        );
+    }
+    
+
 
 
 	
@@ -176,26 +226,86 @@ export default class Cart extends React.Component {
                                                 <View><Text style={[MainStyle.fPriceItemCart]}>{item.price} đ</Text></View>
                                             </View>
                                             <View style={MainStyle.lineTopItemCart}>
-                                                <View style={{flexDirection: 'row', width: '46%', flexWrap: 'wrap'}}>
+                                                <View style={{flexDirection: 'row', width: '44%', flexWrap: 'wrap'}}>
                                                     <Text style={MainStyle.txtBCart}>Kiểu dáng: </Text>
-                                                    <View><Text style={MainStyle.txtBCart}>{item.style_name}</Text></View>
+                                                    {
+                                                        this.state.editItemCart == true && this.state.idEdit == item.id ? 
+                                                        <View style={{marginLeft: 0, width: '90%',borderWidth: 1, borderColor: '#dddddd'}}>
+                                                            <Picker
+                                                                selectedValue={this.state.style}
+                                                                style={{width: '100%', height: 28, color: '#000000', backgroundColor: '#FFFFFF'}}
+                                                                onValueChange={(itemValue, itemIndex) =>
+                                                                    this.setState({style: itemValue})
+                                                                }
+                                                            >
+                                                                {this.state.arr_kieu_dang.map((item, index) => {return (
+                                                                    <Picker.Item key={item.id} label={item.name} value={item.id} />
+                                                                )})} 
+                                                            </Picker>
+                                                        </View>
+                                                        :
+                                                        <View><Text style={MainStyle.txtBCart}>{item.style_name}</Text></View>
+                                                    }
+                                                    
                                                 </View>
-                                                <View style={{flexDirection: 'row', width: '23%', flexWrap: 'wrap'}}>
+                                                <View style={{flexDirection: 'row', width: '30%', flexWrap: 'wrap'}}>
                                                     <Text style={MainStyle.txtBCart}>Kích cỡ: </Text>
-                                                    <Text style={MainStyle.txtBCart}>{item.size_name}</Text>
+                                                    {
+                                                        this.state.editItemCart == true && this.state.idEdit == item.id ? 
+                                                        <View style={{marginLeft: 0, width: '90%',borderWidth: 1, borderColor: '#dddddd'}}>
+                                                            <Picker
+                                                                selectedValue={this.state.size}
+                                                                style={{width: '100%', height: 28, color: '#000000', backgroundColor: '#FFFFFF'}}
+                                                                onValueChange={(itemValue, itemIndex) =>
+                                                                    this.setState({size: itemValue})
+                                                                }
+                                                            >
+                                                                {this.state.arr_size.map((item, index) => {return (
+                                                                    <Picker.Item key={item.id} label={item.name} value={item.id} />
+                                                                )})} 
+                                                            </Picker>
+                                                        </View>
+                                                        :
+                                                        <Text style={MainStyle.txtBCart}>{item.size_name}</Text>
+                                                    }
                                                 </View>
-                                                <View style={{flexDirection: 'row',width: '23%', flexWrap: 'wrap'}}>
+                                                <View style={{flexDirection: 'row',width: '25%', flexWrap: 'wrap'}}>
                                                     <Text style={MainStyle.txtBCart}>Số lượng: </Text>
-                                                    <Text style={MainStyle.txtBCart}>{item.amount}</Text>
+                                                    {
+                                                        this.state.editItemCart == true && this.state.idEdit == item.id ? 
+                                                        <View style={MainStyle.touchNumbers}>
+                                                            <TouchableOpacity onPress={()=> this.minus()} style={MainStyle.minusNumbers}><Text>-</Text></TouchableOpacity>
+                                                            <TextInput
+                                                                style={{height: 30, textAlign: 'center', width: 30, borderWidth: 1, borderColor: '#ff0700', borderRadius: 3}}
+                                                                placeholder='1'
+                                                                value={this.state.amount}
+                                                                onChangeText={text => this.setAmount(text)}
+                                                                keyboardType={'numeric'}
+                                                                />  
+                                                            <TouchableOpacity onPress={()=> this.plus()} style={MainStyle.minusNumbers}><Text>+</Text></TouchableOpacity>
+                                                        </View> 
+                                                        :
+                                                        <Text style={MainStyle.txtBCart}>{item.amount}</Text>
+                                                    }
+                                                    
                                                 </View>
                                             </View>
                                         </View>
                                     </View>
                                     <View style={MainStyle.taskCart}>
-                                        <View style={MainStyle.editItemCart}>
-                                            <Text><Icon type="FontAwesome" name="edit" style={{ color: '#000000', fontSize: 20 }} /></Text>
-                                            <Text style={[MainStyle.textTaskCart]}>Chỉnh sửa</Text>
-                                        </View>
+                                        {
+                                            this.state.editItemCart == true && this.state.idEdit == item.id ? 
+                                            <TouchableOpacity style={MainStyle.editItemCart} onPress={()=> this.updateItemCart(item.id)}>
+                                                <Text><Icon type="FontAwesome" name="edit" style={{ color: '#000000', fontSize: 20 }} /></Text>
+                                                <Text style={[MainStyle.textTaskCart]}>Cập nhật</Text>
+                                            </TouchableOpacity>
+                                            :
+                                            <TouchableOpacity style={MainStyle.editItemCart} onPress={()=> this.editItemCart(item.id, item.size, item.style, item.amount)}>
+                                                <Text><Icon type="FontAwesome" name="edit" style={{ color: '#000000', fontSize: 20 }} /></Text>
+                                                <Text style={[MainStyle.textTaskCart]}>Chỉnh sửa</Text>
+                                            </TouchableOpacity>
+                                        }
+                                        
                                         <TouchableOpacity style={MainStyle.editItemCart} onPress={()=>this.deleteItem(item.id)}>
                                             <Text><Icon type="AntDesign" name="delete" style={{ color: '#000000', fontSize: 20 }} /></Text>
                                             <Text style={[MainStyle.textTaskCart]}>Xóa</Text>

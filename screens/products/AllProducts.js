@@ -1,10 +1,14 @@
 import React, { Component} from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, Alert,FlatList, Modal } from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, Alert,FlatList, Modal, Dimensions } from 'react-native';
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
 import { getAllProducts, filterArrayAll } from '../../src/api/apiProducts';
+
+
+let ScreenWidth = Dimensions.get("window").width;
+let ScreenHeight = Dimensions.get("window").height;
 
 export default class AllProducts extends Component{
     static navigationOptions = ({ navigation }) => ({
@@ -120,20 +124,22 @@ export default class AllProducts extends Component{
         });
         // console.log(this.state.page);
     };
+    
     renderFooter = () => {
         if (!this.state.loading) return null;
+    
         return (
-            <View
-                style={{
-                    paddingVertical: 20,
-                    borderTopWidth: 1,
-                    borderColor: "#CED0CE"
-                }}
-            >
-                <ActivityIndicator animating size="large" />
-            </View>
+          <View
+            style={{
+              paddingVertical: 20,
+              borderTopWidth: 1,
+              borderColor: "#CED0CE"
+            }}
+          >
+            <ActivityIndicator animating size="large" />
+          </View>
         );
-	};
+      };
 
 
     setOrderPrice(){
@@ -266,7 +272,7 @@ export default class AllProducts extends Component{
                                 renderItem={({ item }) => (
                                     <TouchableOpacity key={item.id} style={MainStyle.itemProducts} onPress={()=>this.detailProduct(item.record_id)}> 
                                         <View style={MainStyle.vImgItemPro}>
-                                            <Image style={{width: '100%', height:500}}  source={{uri: item.image}} />
+                                            <Image style={{width: ScreenWidth-40, height: (ScreenWidth-40)*item.heightImage/item.widthImage  }}  source={{uri: item.image}} />
                                         </View>
                                         <View style={MainStyle.bodyItemPro}>
                                             <Text style={MainStyle.nameItemProducts}>{item.name}</Text>
@@ -276,7 +282,7 @@ export default class AllProducts extends Component{
                                 )}
                                 // numColumns={6}
                                 contentContainerStyle={MainStyle.containerListProducts}
-                                ListFooterComponent={this.renderFooter}     
+                                ListFooterComponent={this.renderFooter}   
                                 refreshing={this.state.refreshing}
                                 keyExtractor={item => item.id}
                                 onEndReached={this.handleLoadMore}

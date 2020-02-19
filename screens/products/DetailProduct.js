@@ -99,6 +99,18 @@ export default class DetailProduct extends Component{
         });
         this.setState({ image, modalVisible: true });   
     }
+    
+    showImagesDefault(){
+        const image = this.state.detail.image.replace('/original/', '/original/');
+        var w = this.state.detail.widthImageOriginal;
+        var h = this.state.detail.heightImageOriginal;
+        var imageWidth = width - 40;
+            var imageHeight = imageWidth*h/w;
+            this.setState({
+                imageWidth, imageHeight
+            });
+        this.setState({ image, modalVisible: true });   
+    }
     imgModalSave(){
         const uri = this.state.image;
         var filename = uri.substring(uri.lastIndexOf('/')+1);
@@ -163,6 +175,7 @@ export default class DetailProduct extends Component{
           }
         );
     }
+    
     setChooseStyle(index, id, value){
         this.setState({
             'default_style' : index,
@@ -252,7 +265,7 @@ export default class DetailProduct extends Component{
     render() {
         const {navigation} = this.props;
 
-        return(
+        return(  
             <Container>
                 {/* <HeaderBase page="list_products" title={'Sản phẩm'} navigation={navigation} /> */}
                 <ScrollView>
@@ -261,21 +274,22 @@ export default class DetailProduct extends Component{
                                 <Icon type="FontAwesome" name="angle-left" style={[MainStyle.tHeaderIconMenu,{color: '#FFFFFF',fontSize:35}]} />
                             </TouchableOpacity> 
                             <TouchableOpacity style={[MainStyle.btnRa50,MainStyle.addDetailP]} onPress={()=>this.gotoCart()}>
-                                <Icon type="SimpleLineIcons" name="handbag" style={{ color: '#FFFFFF', fontSize: 27 }} />
+                                <Icon type="SimpleLineIcons" name="handbag" style={{ color: '#FFFFFF', fontSize: 25 }} />
                             </TouchableOpacity>
-                        {/* <View style={MainStyle.taskDetailP}>
-                            <TouchableOpacity style={[MainStyle.btnRa50,MainStyle.backDetailP]} onPress={() => this.gotoBack()}>
-                                <Icon type="FontAwesome" name="angle-left" style={[MainStyle.tHeaderIconMenu,{color: '#FFFFFF',fontSize:35}]} />
-                            </TouchableOpacity> 
-                            <TouchableOpacity style={[MainStyle.btnRa50,MainStyle.addDetailP]}>
-                                <Icon type="SimpleLineIcons" name="handbag" style={{ color: '#FFFFFF', fontSize: 27 }} />
-                            </TouchableOpacity>
-                        </View> */}
-                        <Swiper>
-                            {this.state.arr_image.map((item, index) => {return (
-                                <TouchableOpacity key={item.id} onPress={() => this.showImages(index)}>
-                                    <Image style={MainStyle.itemsSlideDetailProduct} source={{ uri:item.image}} />    
+                        <Swiper >
+                            <View>  
+                                <TouchableOpacity onPress={() => this.showImagesDefault()}>
+                                    <Image style={[MainStyle.itemsSlideDetailProduct]} source={{ uri:this.state.detail.image}} />    
                                 </TouchableOpacity>
+                            </View>
+                            
+                            {this.state.arr_image.map((item, index) => {return (
+                                <View>
+                                    <TouchableOpacity key={item.id} onPress={() => this.showImages(index)}>
+                                        <Image style={MainStyle.itemsSlideDetailProduct} source={{ uri:item.image}} />    
+                                    </TouchableOpacity>
+                                </View>
+                                
                             )})} 
                         </Swiper>
                     </View>
@@ -303,7 +317,7 @@ export default class DetailProduct extends Component{
                         <Text style={MainStyle.headerSlo}>Chọn kích cỡ: <Text style={MainStyle.colorPriceProducts}>{this.state.default_name_size}</Text></Text>
                         <View style={MainStyle.vStyleProduct}>
                             {this.state.arr_size.map((item, index) => {return (
-                                <TouchableOpacity onPress={()=>this.setChooseSize(index,item.id,item.name)}>
+                                <TouchableOpacity key={index} onPress={()=>this.setChooseSize(index,item.id,item.name)}>
                                     <Text key={index} style={[MainStyle.btnSizePro,{ borderColor: this.state.default_size == index ? '#ff0700' : '#FFFFFF', borderWidth: 1 }]}>{item.name}</Text>
                                 </TouchableOpacity>
                             )})}

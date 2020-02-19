@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList , Alert, TextInput} from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList , Alert, TextInput, KeyboardAvoidingView} from 'react-native';
 import { Picker} from "native-base";
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
@@ -38,6 +38,10 @@ export default class Login extends Component{
     gotoRegister(){
         this.props.navigation.navigate('RegisterScreen');
     }
+    forgotPassword(){
+        this.props.navigation.navigate('FogotPasswordScreen');
+    }
+    
 
     showPass(){
         this.setState({ showPassword: !this.state.showPassword });
@@ -103,31 +107,36 @@ export default class Login extends Component{
                         <Text style={[MainStyle.txtTabLoginRegister]}>Đăng ký</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={MainStyle.formLogin}>
-                    <TextInput
-                        style={MainStyle.styleInputLogin}
-                        placeholder='Email / Số điện thoại'
-                        onChangeText={(username) => this.setState({username})}
-                        value={this.state.username}
-                    />
-                    <View style={MainStyle.vInputPass}>
+                <KeyboardAvoidingView
+                    behavior='height'
+                >
+                    <View style={MainStyle.formLogin}>
                         <TextInput
                             style={MainStyle.styleInputLogin}
-                            placeholder='Mật khẩu'
-                            secureTextEntry={this.state.showPassword}
-                            onChangeText={(password) => this.setState({password})}
-                            value={this.state.password}
+                            placeholder='Email / Số điện thoại'
+                            onChangeText={(username) => this.setState({username})}
+                            value={this.state.username}
                         />
-                        <TouchableOpacity style={MainStyle.showPass} onPress={()=>this.showPass()}><Text>{this.state.textShowHidden}</Text></TouchableOpacity>
+                        <View style={MainStyle.vInputPass}>
+                            <TextInput
+                                style={MainStyle.styleInputLogin}
+                                placeholder='Mật khẩu'
+                                secureTextEntry={this.state.showPassword}
+                                onChangeText={(password) => this.setState({password})}
+                                value={this.state.password}
+                            />
+                            <TouchableOpacity style={MainStyle.showPass} onPress={()=>this.showPass()}><Text>{this.state.textShowHidden}</Text></TouchableOpacity>
+                        </View>
+                        <TouchableOpacity style={MainStyle.touchSubLogin} onPress={()=>this.submitLogin()}>
+                            <Text style={MainStyle.txtSubLogin}>Đăng nhập</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{alignItems: 'center'}} onPress={()=>this.forgotPassword()}>
+                            <Text style={{fontSize: 15, fontFamily: "RobotoRegular", color: '#000000', marginTop: 10}}>Quên mật khẩu?</Text>
+                        </TouchableOpacity>
+                        
                     </View>
-                    <TouchableOpacity style={MainStyle.touchSubLogin} onPress={()=>this.submitLogin()}>
-                        <Text style={MainStyle.txtSubLogin}>Đăng nhập</Text>
-                    </TouchableOpacity>
-                    <View style={{alignItems: 'center'}}>
-                        <Text style={{fontSize: 15, fontFamily: "RobotoRegular", color: '#000000', marginTop: 10}}>Quên mật khẩu?</Text>
-                    </View>
-                    
-                </View>
+                </KeyboardAvoidingView>
+
             </Container>
         );
     }

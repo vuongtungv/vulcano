@@ -133,8 +133,8 @@ export default class Home extends Component{
                                                 </View>
                                                 <View style={[MainStyle.rightInfoItem]}>
                                                     <View style={[MainStyle.lineTopItemCart,{marginBottom: 25}]}>
-                                                        <View><Text style={MainStyle.tProductItemCart}>{item.name}</Text></View>
-                                                        <View><Text style={[MainStyle.fPriceItemCart]}>{item.price} đ</Text></View>
+                                                        <View style={{width: '70%'}}><Text style={MainStyle.tProductItemCart}>{item.name}</Text></View>
+                                                        <View style={{width: '30%',alignItems: 'flex-end'}}><Text style={[MainStyle.fPriceItemCart]}>{item.price} đ</Text></View>
                                                     </View>
                                                 </View>
                                             </View>

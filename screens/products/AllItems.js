@@ -86,7 +86,7 @@ export default class AllItems extends Component{
                                     <Text style={MainStyle.nameCate}>{item.name}</Text>
                                 </View>
                             </TouchableOpacity>
-                        )})}  
+                        )})}   
                     </ScrollView> 
                 </View>
                 <FooterBase navigation={navigation} page="categories"  />

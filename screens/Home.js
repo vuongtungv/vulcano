@@ -7,10 +7,10 @@ import {
   TouchableOpacity,
   Alert,
   Image,
-  FlatList
+  FlatList,
+  Dimensions
 } from "react-native";
 import { Container, Icon, CheckBox } from "native-base";
-
 import Swiper from "react-native-swiper";
 import MainStyle from "../styles/MainStyle.js";
 import { ScrollView } from "react-native-gesture-handler";
@@ -19,6 +19,8 @@ import HeaderBase from './template/HeaderBase';
 import {getSlidesHome, getOneBanner, getCateIdHome, cateBigHome} from './../src/api/apiHome';
 import { ProductsInCate } from './../src/api/apiProducts';
 
+let ScreenWidth = Dimensions.get("window").width;
+let ScreenHeight = Dimensions.get("window").height;
 
 export default class Home extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -29,9 +31,10 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       listSlide: [],
-      oneBanner: '', 
+      oneBanner: [],
       listCate: [],
       listCateBig: '',
+      heightSwiper: '',
   };  
 
   }
@@ -50,11 +53,12 @@ export default class Home extends React.Component {
     // this.setState({ loading: true });
     getSlidesHome()
     .then(resJSON => {
-        const { list, error } = resJSON;
+        const { list, error,widthSwiper,heightSwiper } = resJSON;
         if (error == false) {
             this.setState({
               listSlide: list,  
               error: false || null,  
+              heightSwiper: heightSwiper/widthSwiper,
             });  
         } else {
             this.setState({ loading: false, refreshing: false });
@@ -72,7 +76,7 @@ export default class Home extends React.Component {
             this.setState({
               oneBanner: list,  
               error: false || null,  
-            });  
+            });    
         } else {
             this.setState({ loading: false, refreshing: false });
         }
@@ -89,7 +93,9 @@ export default class Home extends React.Component {
             this.setState({
               listCate: list,  
               error: false || null,  
-            });  
+            });
+            
+
         } else {
             this.setState({ loading: false, refreshing: false });
         }
@@ -140,19 +146,23 @@ export default class Home extends React.Component {
 
   render() {
     const { navigation, page, title, heading } = this.props;
+
     return (
       <Container>
         <HeaderBase page="home" title={'Trang chủ'} navigation={navigation} />
         <ScrollView>
-          <View style={MainStyle.slideHome}>
+          <View style={[MainStyle.slideHome,{width: ScreenWidth, height:ScreenWidth*this.state.heightSwiper}]}>
               <Swiper autoplay={true} autoplayTimeout={4}>
                   {this.state.listSlide.map((item, index) => {return (
-                    <Image key={item.id} style={[MainStyle.itemsSlideHome]} source={{uri: item.image}} />
+                    <View>
+                      <Image key={index} style={[MainStyle.itemsSlideHome,{ width: ScreenWidth, height: ScreenWidth*item.heightImage/item.widthImage}]} source={{uri: item.image}} />
+                    </View>
+                    
                   )})}
                 {/* <Image style={MainStyle.itemsSlideHome} source={require("../assets/image_slide.png")} /> */}
               </Swiper> 
           </View> 
-        
+         
           <View style={MainStyle.cateHome} >
               <TouchableOpacity style={MainStyle.itemCateHome} onPress={()=> this.gotoProducts()}>
                 <View style={MainStyle.iconCenter}>
@@ -186,17 +196,20 @@ export default class Home extends React.Component {
               </TouchableOpacity>
           </View>
 
-          <View style={[MainStyle.bannerHome]}>
-            {/* <Image style={MainStyle.itemsBannerHome} source={require("../assets/banner_home.png")} /> */}
-            <Image style={MainStyle.itemsBannerHome} source={{uri: this.state.oneBanner.image}} />
-          </View>
+          {this.state.oneBanner.map((item, index) => {return (
+            <View key={index} style={[MainStyle.bannerHome,{width: ScreenWidth, height:ScreenWidth*item.heightImage/item.widthImage }]}>
+              {/* <Image style={MainStyle.itemsBannerHome} source={require("../assets/banner_home.png")} /> */}
+              <Image style={[MainStyle.itemsBannerHome,{width: ScreenWidth, height:ScreenWidth*item.heightImage/item.widthImage }]} source={{uri: item.image}} />
+            </View>
+          )})}
+
 
           <View style={[MainStyle.cateSmallHome]}>
             {this.state.listCate.map((item, index) => {return (
-                <TouchableOpacity key={index} style={MainStyle.itemsCateSmallHome} onPress={()=>this.listProductsInCate(item.id)}>
+                <TouchableOpacity key={index} style={[MainStyle.itemsCateSmallHome]} onPress={()=>this.listProductsInCate(item.id)}>
                   <View style={MainStyle.viewSmallHome}>
                     {/* <Image style={MainStyle.imgSmallHome} source={require("../assets/image_cate_small.png")} /> */}
-                    <Image style={MainStyle.imgSmallHome} source={{uri: item.image}} />
+                    <Image style={[MainStyle.imgSmallHome]} source={{uri: item.image}} />
                   </View>
                   <View style={MainStyle.bodySmallHome}>
                     <Text style={MainStyle.titleSmall}>{item.name}</Text>
@@ -226,10 +239,10 @@ export default class Home extends React.Component {
             <FlatList  
                     data={this.state.listCateBig}   
                     renderItem={({ item }) => (
-                      <View style={MainStyle.itemBigHome} >
-                        <View style={MainStyle.imgBigHome}>
+                      <View key={item.id} style={MainStyle.itemBigHome} >
+                        <View style={[MainStyle.imgBigHome,{width: ScreenWidth, height:ScreenWidth*item.heightImage/item.widthImage }]}>
                           {/* <Image style={MainStyle.imgBigHome} source={require("../assets/image_cate_big.png")} /> */}
-                          <Image style={MainStyle.imgBigHome} source={{ uri: item.image}} />
+                          <Image style={[MainStyle.imgBigHome,{width: ScreenWidth, height:ScreenWidth*item.heightImage/item.widthImage }]} source={{ uri: item.image}} />
                         </View>
                         <View style={MainStyle.bodyBigHome}>
                           <Text style={MainStyle.titleBig}>{item.name} Vulcano</Text>
