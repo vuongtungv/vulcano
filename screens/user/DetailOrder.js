@@ -53,8 +53,8 @@ export default class ListOrder extends Component{
                     <View style={MainStyle.userOrderItem}>
                         <Text style={MainStyle.nameOrderItem}>{this.state.detail.name}</Text>
                         <Text style={MainStyle.briefOrderItem}>Mã đơn hàng: {this.state.detail.code}</Text>
-                        <Text style={MainStyle.briefOrderItem}>Đặt hàng: {this.state.time_order} {this.state.created_time}</Text>
-                        <Text style={MainStyle.briefOrderItem}>Trạng thái: {this.state.status}</Text>
+                        <Text style={MainStyle.briefOrderItem}>Đặt hàng: {this.state.detail.time_order} {this.state.detail.created_time}</Text>
+                        <Text style={MainStyle.briefOrderItem}>Trạng thái: {this.state.detail.status}</Text>
                     </View>
                     <View style={MainStyle.userOrderItem}>
                         <Text style={MainStyle.nameOrderItem}>Địa chỉ người nhận</Text>

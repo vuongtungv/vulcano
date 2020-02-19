@@ -30,11 +30,19 @@
       "infoPlist": {
         "NSPhotoLibraryAddUsageDescription": "Ứng dụng sử dụng thư viện ảnh để lưu ảnh sản phẩm",
         "NSPhotoLibraryUsageDescription": "Ứng dụng sử dụng thư viện ảnh để lưu ảnh sản phẩm"
+      },
+      "config": {
+        "googleMapsApiKey": "AIzaSyAxnwYXjzmun8Cob-tALehR4rDLhtLg-O4"
       }
     },
     "android": {
       "versionCode": 5,
-      "package": "vn.vulcano.app"
+      "package": "vn.vulcano.app",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAxnwYXjzmun8Cob-tALehR4rDLhtLg-O4"
+        }
+      }
     }
   }
 }

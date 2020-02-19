@@ -64,6 +64,15 @@ export function getDetailOrder(id){
     .then(res => res.json());
 }
 
+export function getSizeStyleEditItemCart(id){
+    let url;  
+    url = global.BASE_URL+`/get_size_style_edit_item_cart.api?id=${id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+}
+
+
 
 
 

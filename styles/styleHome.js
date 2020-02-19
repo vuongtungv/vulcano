@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
   },
   tFItemText:{
     fontSize: 12,
-    fontFamily: 'RobotoBold',
-    marginTop: 5,
+    fontFamily: "RobotoBold",
+    marginTop: 5,   
   },
   tContainerDefault:{
     zIndex: 10,
@@ -104,9 +104,6 @@ const styles = StyleSheet.create({
   
   
   
-  
-  
-  
   padding20:{
     width: ScreenWidth-40,
     paddingLeft: 20,
@@ -115,7 +112,8 @@ const styles = StyleSheet.create({
 
   slideHome: {
     width: ScreenWidth,
-    height: ScreenWidth
+    height: '100%',
+    backgroundColor: 'red',
   },
   itemsSlideHome: {
     width: ScreenWidth,
@@ -159,10 +157,8 @@ const styles = StyleSheet.create({
 
 
   // danh sách sản phẩm small
-  cateSmallHome:{
-    // width: ScreenWidth-20,
+  cateSmallHome:{  
     width: ScreenWidth,
-    // marginLeft: 10,
     marginTop: 10,
     flexDirection: 'row', 
     justifyContent: 'space-between',
@@ -211,10 +207,6 @@ const styles = StyleSheet.create({
   cateBigHome:{
     width: ScreenWidth,
     // marginLeft: 20,
-  },
-  imgBigHome:{
-    width: ScreenWidth,
-    height: ScreenWidth,
   },
   imgBigHome:{
     width: ScreenWidth,
@@ -349,14 +341,14 @@ const styles = StyleSheet.create({
   },
   slideImageProduct:{
     width: ScreenWidth,
-    height: ScreenWidth*1.5,
+    height: ScreenWidth*1.2,
     marginTop: barHeight,
     position: 'relative',
     zIndex: -1,
   },
   itemsSlideDetailProduct:{
     width: ScreenWidth,
-    height: ScreenWidth*1.5,
+    height: ScreenWidth*1.2,
   },
   backDetailP:{
     position: 'absolute',

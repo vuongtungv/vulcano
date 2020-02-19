@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList , Alert, TextInput, DatePickerIOS} from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList , Alert, TextInput, DatePickerIOS, KeyboardAvoidingView} from 'react-native';
 import { Picker} from "native-base";
 import DatePicker from 'react-native-datepicker';
 
@@ -143,11 +143,11 @@ export default class Register extends Component{
             Alert.alert('Số điện thoại không được để trống.');
             return;        
         }else{
-            regex_phone = /^0\d{9}$/;
-            if (regex_phone.test(phone)) {   //điền đúng định dạng
+            regex_phone = /^[0-9 .]+$/;
+            if (regex_phone.test(phone) && (phone.length ==10 || phone.length== 11)) {   //điền đúng định dạng
 
             }else{
-                Alert.alert('Số điện thoại gồm 10 số, bắt đầu từ số 0.');
+                Alert.alert('Số điện thoại gồm 10 hoặc 11 số.');
                 return;
             } 
         }
@@ -167,14 +167,14 @@ export default class Register extends Component{
         }
 
         if(password == ''){
-            Alert.alert('Mật khẩu không được.');
+            Alert.alert('Mật khẩu không được để trống.');
             return;
         }else{
             regex_password = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
             if(regex_password.test(password)){ //điền đúng định dạng
 
             }else{
-                Alert.alert('Mật khẩu ít nhất 8 ký tư, 1 số, 1 chữ hoa, 1 chữ thường.');
+                Alert.alert('Mật khẩu ít nhất 8 ký tự trong đó bao gồm chữ hoa, chữ thường và số.');
                 return;
             }
         }
@@ -202,91 +202,97 @@ export default class Register extends Component{
 
         return(
             <Container>
-                <View style={MainStyle.userLoginBanner}>
-                    <Image style={MainStyle.userImgLoginB} source={require("../../assets/banner_login_register.png")} />
-                    <View style={MainStyle.userImgCenterB}>
-                        <View style={MainStyle.userImage}>
-                            <Icon type="FontAwesome" name="user-o" style={{ color: '#FFFFFF', fontSize: 35 }} />
+                <KeyboardAvoidingView
+                    behavior='height'
+                    // keyboardVerticalOffset={80}
+                >
+                    <ScrollView>  
+                        <View style={MainStyle.userLoginBanner}>
+                            <Image style={MainStyle.userImgLoginB} source={require("../../assets/banner_login_register.png")} />
+                            <View style={MainStyle.userImgCenterB}>
+                                <View style={MainStyle.userImage}>
+                                    <Icon type="FontAwesome" name="user-o" style={{ color: '#FFFFFF', fontSize: 35 }} />
+                                </View>
+                            </View>
                         </View>
-                    </View>
-                </View>
-                <View style={MainStyle.userTabLoginRegisterScreen}>
-                    <TouchableOpacity style={[MainStyle.titleLoginRegis]} onPress={()=>this.gotoLogin()}>
-                        <Text style={[MainStyle.txtTabLoginRegister]}>Đăng nhập</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[MainStyle.titleLoginRegis, MainStyle.titleLoginRegisActive]} onPress={()=>this.gotoRegister()}>
-                        <Text style={[MainStyle.txtTabLoginRegister, MainStyle.txtTabLoginRegisterActive]}>Đăng ký</Text>
-                    </TouchableOpacity>
-                </View>
-                    <ScrollView>
-                    <View style={MainStyle.formLogin}>
-                        <TextInput
-                            style={MainStyle.styleInputLogin}
-                            placeholder='Họ và tên'
-                            onChangeText={(fullname) => this.setState({fullname})}
-                            value={this.state.fullname}
-                        />
-                        <TextInput
-                            style={MainStyle.styleInputLogin}
-                            placeholder='Số điện thoại'
-                            onChangeText={(phone) => this.setState({phone})}
-                            value={this.state.phone}
-                        />
-                        <TextInput
-                            style={MainStyle.styleInputLogin}
-                            placeholder='Email'
-                            onChangeText={(email) => this.setState({email})}
-                            value={this.state.email}
-                        />
-                        <View style={MainStyle.vInputPass}>
-                            <TextInput
-                                style={MainStyle.styleInputLogin}
-                                placeholder='Mật khẩu'
-                                secureTextEntry={this.state.showPassword}
-                                onChangeText={(password) => this.setState({password})}
-                                value={this.state.password}
-                            />
-                            <TouchableOpacity style={MainStyle.showPass} onPress={()=>this.showPass()}><Text>{this.state.textShowHidden}</Text></TouchableOpacity>
+                        <View style={MainStyle.userTabLoginRegisterScreen}>
+                            <TouchableOpacity style={[MainStyle.titleLoginRegis]} onPress={()=>this.gotoLogin()}>
+                                <Text style={[MainStyle.txtTabLoginRegister]}>Đăng nhập</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[MainStyle.titleLoginRegis, MainStyle.titleLoginRegisActive]} onPress={()=>this.gotoRegister()}>
+                                <Text style={[MainStyle.txtTabLoginRegister, MainStyle.txtTabLoginRegisterActive]}>Đăng ký</Text>
+                            </TouchableOpacity>
                         </View>
-                        <View style={{paddingTop: 25,paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: '#e0e0e0'}}>
-                            <DatePicker 
-                                mode="date"
-                                date= {this.state.birthday}
-                                placeholder="Ngày sinh"
-                                format="DD/MM/YYYY"
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                customStyles={{
-                                    dateText: {
-                                        fontFamily: 'RobotoRegular',
-                                        fontSize: 15,
-                                    },
-                                    dateIcon: {
-                                        position: 'absolute',
-                                        left: 0,
-                                        top: 4,
-                                        marginLeft: 0,
-                                        width:0
-                                    },
-                                    dateInput: {
-                                        position: 'absolute',
-                                        left:0,
-                                        borderWidth:0,
-                                    }
-                                }}
-                                onDateChange={(date) => { this.setState({ birthday: date }) }}
-                            />
-                        </View>
-                        <View style={{paddingTop: 30, paddingBottom: 10}}>
-                            {this.renderButtonGender()}
-                        </View>
-                        <TouchableOpacity style={[MainStyle.touchSubLogin, {marginBottom: 30, marginTop: 10,}]} onPress={()=>this.submitRegister()}>
-                            <Text style={MainStyle.txtSubLogin}>Đăng ký</Text>
-                        </TouchableOpacity>
-                        
-                    </View>
-                </ScrollView>
-                
+                        <View style={MainStyle.formLogin}>
+                                            <TextInput
+                                                style={MainStyle.styleInputLogin}
+                                                placeholder='Họ và tên'
+                                                onChangeText={(fullname) => this.setState({fullname})}
+                                                value={this.state.fullname}
+                                            />
+                                            <TextInput
+                                                style={MainStyle.styleInputLogin}
+                                                placeholder='Số điện thoại'
+                                                onChangeText={(phone) => this.setState({phone})}
+                                                value={this.state.phone}
+                                                keyboardType={'numeric'}
+                                            />
+                                            <TextInput
+                                                style={MainStyle.styleInputLogin}
+                                                placeholder='Email'
+                                                onChangeText={(email) => this.setState({email})}
+                                                value={this.state.email}
+                                            />
+                                            <View style={MainStyle.vInputPass}>
+                                                <TextInput
+                                                    style={MainStyle.styleInputLogin}
+                                                    placeholder='Mật khẩu'
+                                                    secureTextEntry={this.state.showPassword}
+                                                    onChangeText={(password) => this.setState({password})}
+                                                    value={this.state.password}
+                                                />
+                                                <TouchableOpacity style={MainStyle.showPass} onPress={()=>this.showPass()}><Text>{this.state.textShowHidden}</Text></TouchableOpacity>
+                                            </View>
+                                            <View style={{paddingTop: 25,paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: '#e0e0e0'}}>
+                                                <DatePicker 
+                                                    mode="date"
+                                                    date= {this.state.birthday}
+                                                    placeholder="Ngày sinh"
+                                                    format="DD/MM/YYYY"
+                                                    confirmBtnText="Confirm"
+                                                    cancelBtnText="Cancel"
+                                                    customStyles={{
+                                                        dateText: {
+                                                            fontFamily: 'RobotoRegular',
+                                                            fontSize: 15,
+                                                        },
+                                                        dateIcon: {
+                                                            position: 'absolute',
+                                                            left: 0,
+                                                            top: 4,
+                                                            marginLeft: 0,
+                                                            width:0
+                                                        },
+                                                        dateInput: {
+                                                            position: 'absolute',
+                                                            left:0,
+                                                            borderWidth:0,
+                                                        }
+                                                    }}
+                                                    onDateChange={(date) => { this.setState({ birthday: date }) }}
+                                                />
+                                            </View>
+                                            <View style={{paddingTop: 30, paddingBottom: 10}}>
+                                                {this.renderButtonGender()}
+                                            </View>
+                                            <TouchableOpacity style={[MainStyle.touchSubLogin, {marginBottom: 30, marginTop: 10,}]} onPress={()=>this.submitRegister()}>
+                                                <Text style={MainStyle.txtSubLogin}>Đăng ký</Text>
+                                            </TouchableOpacity>
+                                            
+                                        </View>
+
+                    </ScrollView>
+                </KeyboardAvoidingView>
             </Container>
         );
     }

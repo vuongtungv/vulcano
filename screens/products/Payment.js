@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, ScrollView, Image, TouchableOpacity, FlatList, TextInput, Alert } from 'react-native';
+import {Text, View, ScrollView, Image, TouchableOpacity, FlatList, TextInput, Alert, KeyboardAvoidingView } from 'react-native';
 import { Container, Content, CheckBox, Icon } from "native-base";
 import MainStyle from '../../styles/MainStyle';
 import HeaderBase from '../template/HeaderBase';
@@ -7,6 +7,9 @@ import saveStorage from './../api/saveStorage';
 import getStorage from './../api/getStorage';
 import global from './../api/global';
 import {get_product_by_cart,submitDonHang} from './../../src/api/apiProducts';
+
+
+
 
 export default class Payment extends React.Component {
 	static navigationOptions = ({ navigation }) => ({
@@ -47,7 +50,21 @@ export default class Payment extends React.Component {
                 console.log(arrUser);
                 this.setState({ 
                     user_id: arrUser.id,
+                    fullname: arrUser.fullname,
+                    valueGender: arrUser.gender,
+                    email: arrUser.email,
+                    address: arrUser.address,
+                    phone: arrUser.phone,
                 });
+                if(this.state.valueGender == 1 ){
+                    this.setState({
+                        genderTF: false,   
+                    });
+                }else{
+                    this.setState({
+                        genderTF: true,   
+                    });
+                } 
             } 
         });
         this.makeRemoteRequest();
@@ -152,11 +169,12 @@ export default class Payment extends React.Component {
             Alert.alert('Số điện thoại không được để trống.');
             return;        
         }else{
-            regex_phone = /^0\d{9}$/;
-            if (regex_phone.test(phone)) {   //điền đúng định dạng
+            // regex_phone = /^0\d{9}$/;
+            regex_phone = /^[0-9 .]+$/;
+            if (regex_phone.test(phone) && (phone.length ==10 || phone.length== 11)) {   //điền đúng định dạng
 
             }else{
-                Alert.alert('Số điện thoại gồm 10 số, bắt đầu từ số 0.');
+                Alert.alert('Số điện thoại gồm 10 hoặc 11 số.');
                 return;
             } 
         }
@@ -306,10 +324,6 @@ export default class Payment extends React.Component {
         }    
     }
 
-    
-
-    
-
 
 	
     render() {
@@ -319,124 +333,135 @@ export default class Payment extends React.Component {
             <Container>
                 <HeaderBase page="cart" title={'Thanh toán'} navigation={navigation} />
                 <View style={[MainStyle.pageCart,{backgroundColor: "#FFFFFF"}]}>
-                    <ScrollView style={MainStyle.scrollCart}>
-                        {this.state.list.map((item, index) => {return (
-                            <View style={MainStyle.itemCart} key={item.id}>
-                            <View style={MainStyle.infoItemCart}>
-                                <View style={MainStyle.imgItemCart}>
-                                    {/* <Image style={MainStyle.imgCart} source={require("../../assets/cart_img_product.png")} /> */}
-                                    <Image style={MainStyle.imgCart} source={{uri:item.image }} />
-                                </View>
-                                <View style={[MainStyle.rightInfoItem]}>
-                                    <View style={[MainStyle.lineTopItemCart,{marginBottom: 25}]}>
-                                        <View><Text style={MainStyle.tProductItemCart}>{item.name}</Text></View>
-                                        <View><Text style={[MainStyle.fPriceItemCart]}>{item.price} đ</Text></View>
+                    <KeyboardAvoidingView
+                        behavior='height'
+                        keyboardVerticalOffset={80}
+                    >
+                        <ScrollView style={[MainStyle.scrollCart]}>
+                            {this.state.list.map((item, index) => {return (
+                                <View style={MainStyle.itemCart} key={item.id}>
+                                <View style={MainStyle.infoItemCart}>
+                                    <View style={MainStyle.imgItemCart}>
+                                        {/* <Image style={MainStyle.imgCart} source={require("../../assets/cart_img_product.png")} /> */}
+                                        <Image style={MainStyle.imgCart} source={{uri:item.image }} />
                                     </View>
-                                    <View style={MainStyle.lineTopItemCart}>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Kiểu dáng: </Text>
-                                            <Text style={MainStyle.txtBCart}>{item.style_name}</Text>
+                                    <View style={[MainStyle.rightInfoItem]}>
+                                        <View style={[MainStyle.lineTopItemCart,{marginBottom: 25}]}>
+                                            <View><Text style={MainStyle.tProductItemCart}>{item.name}</Text></View>
+                                            <View><Text style={[MainStyle.fPriceItemCart]}>{item.price} đ</Text></View>
                                         </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Kích cỡ: </Text>
-                                            <Text style={MainStyle.txtBCart}>{item.size_name}</Text>
+                                        <View style={MainStyle.lineTopItemCart}>
+                                            <View style={{flexDirection: 'row'}}>
+                                                <Text style={MainStyle.txtBCart}>Kiểu dáng: </Text>
+                                                <Text style={MainStyle.txtBCart}>{item.style_name}</Text>
+                                            </View>
+                                            <View style={{flexDirection: 'row'}}>
+                                                <Text style={MainStyle.txtBCart}>Kích cỡ: </Text>
+                                                <Text style={MainStyle.txtBCart}>{item.size_name}</Text>
+                                            </View>
+                                            <View style={{flexDirection: 'row'}}>
+                                                <Text style={MainStyle.txtBCart}>Số lượng: </Text>
+                                                <Text style={MainStyle.txtBCart}>{item.amount}</Text>
+                                            </View>
                                         </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={MainStyle.txtBCart}>Số lượng: </Text>
-                                            <Text style={MainStyle.txtBCart}>{item.amount}</Text>
+                                    </View>
+                                </View>
+                            </View>
+                            )})} 
+
+                            <View style={MainStyle.inforCustom}>
+                                <View style={MainStyle.vHeaderOtherNews}>
+                                    <Text style={MainStyle.txtOtherNews}>Thông tin đặt hàng</Text>
+                                    <View style={[MainStyle.brBottomOther, {width: 140}]}></View>
+                                </View>
+                                {
+                                    this.state.user_id 
+                                    ? 
+                                        <View><Text></Text></View>
+                                    :
+                                    <View>
+                                        <Text style={MainStyle.inforNotePay}>Vui lòng đăng nhập tài khoản để thanh toán tiện lợi hơn</Text>
+                                    </View>
+                                }
+                                
+                                
+                                    <View style={MainStyle.lineInputPayment}>
+                                        <View style={MainStyle.wid30}>
+                                            <Text style={[MainStyle.titleInput,{marginRight:5}]}>Họ tên</Text>
+                                            <Text style={[MainStyle.titleInput,{color: '#ff0700'}]}>*</Text>
+                                            </View>
+                                        <View style={MainStyle.wid70}>
+                                            <TextInput
+                                                style={MainStyle.inputInforPay}
+                                                placeholder='Họ tên'
+                                                onChangeText={(fullname) => this.setState({fullname})}
+                                                value={this.state.fullname}
+                                                /> 
                                         </View>
                                     </View>
-                                </View>
+                                    <View style={MainStyle.lineInputPayment}>
+                                        <View style={MainStyle.wid30}>
+                                            <Text style={[MainStyle.titleInput,{marginRight:5}]}>Giới tính</Text>
+                                            <Text style={[MainStyle.titleInput,{color: '#ff0700'}]}>*</Text>
+                                            </View>
+                                        <View style={MainStyle.wid70}>
+                                            {this.renderButtonGender()}
+                                        </View>
+                                    </View>
+                                    <View style={MainStyle.lineInputPayment}>
+                                        <View style={MainStyle.wid30}>
+                                            <Text style={[MainStyle.titleInput,{marginRight:5}]}>Email</Text>
+                                            <Text style={[MainStyle.titleInput,{color: '#ff0700'}]}>*</Text>
+                                            </View>
+                                        <View style={MainStyle.wid70}>
+                                            <TextInput
+                                                style={MainStyle.inputInforPay}
+                                                placeholder='Email'
+                                                onChangeText={(email) => this.setState({email})}
+                                                value={this.state.email}
+                                                /> 
+                                        </View>
+                                    </View>
+                                    <View style={MainStyle.lineInputPayment}>
+                                        <View style={MainStyle.wid30}>
+                                            <Text style={[MainStyle.titleInput,{marginRight:5}]}>Địa chỉ</Text>
+                                            <Text style={[MainStyle.titleInput,{color: '#ff0700'}]}>*</Text>
+                                            </View>
+                                        <View style={MainStyle.wid70}>
+                                            <TextInput
+                                                style={MainStyle.inputInforPay}
+                                                placeholder='Địa chỉ'
+                                                onChangeText={(address) => this.setState({address})}
+                                                value={this.state.address}
+                                            />
+                                        </View>
+                                    </View>
+                                    <View style={MainStyle.lineInputPayment}>
+                                        <View style={MainStyle.wid30}>
+                                            <Text style={[MainStyle.titleInput,{marginRight:5}]}>Di động</Text>
+                                            <Text style={[MainStyle.titleInput,{color: '#ff0700'}]}>*</Text>
+                                        </View>
+                                        <View style={MainStyle.wid70}>
+                                            <TextInput
+                                                style={MainStyle.inputInforPay}
+                                                placeholder='Di dộng'
+                                                onChangeText={(phone) => this.setState({phone})}
+                                                value={this.state.phone}
+                                                keyboardType={'numeric'}
+                                            />
+                                        </View>
+                                    </View>
                             </View>
-                        </View>
-                        )})} 
 
-                        <View style={MainStyle.inforCustom}>
-                            <View style={MainStyle.vHeaderOtherNews}>
-                                <Text style={MainStyle.txtOtherNews}>Thông tin đặt hàng</Text>
-                                <View style={[MainStyle.brBottomOther, {width: 140}]}></View>
-                            </View>
-                            <Text style={MainStyle.inforNotePay}>Vui lòng đăng nhập tài khoản để thanh toán tiện lợi hơn</Text>
-                            <View style={MainStyle.lineInputPayment}>
-                                <View style={MainStyle.wid30}>
-                                    <Text style={[MainStyle.titleInput,{marginRight:5}]}>Họ tên</Text>
-                                    <Text style={[MainStyle.titleInput,{color: '#ff0700'}]}>*</Text>
-                                    </View>
-                                <View style={MainStyle.wid70}>
-                                    <TextInput
-                                        style={MainStyle.inputInforPay}
-                                        placeholder='Họ tên'
-                                        onChangeText={(fullname) => this.setState({fullname})}
-                                        value={this.state.fullname}
-                                        /> 
+                            <View style={MainStyle.inforCustom}>
+                                <View style={MainStyle.vHeaderOtherNews}>
+                                    <Text style={MainStyle.txtOtherNews}>Hình thức thanh toán</Text>
+                                    <View style={[MainStyle.brBottomOther, {width: 140}]}></View>
                                 </View>
+                                {this.renderButtonMethodPayment()}
                             </View>
-                            <View style={MainStyle.lineInputPayment}>
-                                <View style={MainStyle.wid30}>
-                                    <Text style={[MainStyle.titleInput,{marginRight:5}]}>Giới tính</Text>
-                                    <Text style={[MainStyle.titleInput,{color: '#ff0700'}]}>*</Text>
-                                    </View>
-                                <View style={MainStyle.wid70}>
-                                    {this.renderButtonGender()}
-                                </View>
-                            </View>
-                            <View style={MainStyle.lineInputPayment}>
-                                <View style={MainStyle.wid30}>
-                                    <Text style={[MainStyle.titleInput,{marginRight:5}]}>Email</Text>
-                                    <Text style={[MainStyle.titleInput,{color: '#ff0700'}]}>*</Text>
-                                    </View>
-                                <View style={MainStyle.wid70}>
-                                    <TextInput
-                                        style={MainStyle.inputInforPay}
-                                        placeholder='Email'
-                                        onChangeText={(email) => this.setState({email})}
-                                        value={this.state.email}
-                                        /> 
-                                </View>
-                            </View>
-                            <View style={MainStyle.lineInputPayment}>
-                                <View style={MainStyle.wid30}>
-                                    <Text style={[MainStyle.titleInput,{marginRight:5}]}>Địa chỉ</Text>
-                                    <Text style={[MainStyle.titleInput,{color: '#ff0700'}]}>*</Text>
-                                    </View>
-                                <View style={MainStyle.wid70}>
-                                    <TextInput
-                                        style={MainStyle.inputInforPay}
-                                        placeholder='Địa chỉ'
-                                        onChangeText={(address) => this.setState({address})}
-                                        value={this.state.address}
-                                    />
-                                </View>
-                            </View>
-                            <View style={MainStyle.lineInputPayment}>
-                                <View style={MainStyle.wid30}>
-                                    <Text style={[MainStyle.titleInput,{marginRight:5}]}>Di động</Text>
-                                    <Text style={[MainStyle.titleInput,{color: '#ff0700'}]}>*</Text>
-                                    </View>
-                                <View style={MainStyle.wid70}>
-                                    <TextInput
-                                        style={MainStyle.inputInforPay}
-                                        placeholder='Di dộng'
-                                        onChangeText={(phone) => this.setState({phone})}
-                                        value={this.state.phone}
-                                        keyboardType={'numeric'}
-                                    />
-                                </View>
-                            </View>
-                        </View>
-
-
-                        <View style={MainStyle.inforCustom}>
-                            <View style={MainStyle.vHeaderOtherNews}>
-                                <Text style={MainStyle.txtOtherNews}>Hình thức thanh toán</Text>
-                                <View style={[MainStyle.brBottomOther, {width: 140}]}></View>
-                            </View>
-                            {this.renderButtonMethodPayment()}
-                        </View>
-                        
-
-                    
-                    </ScrollView>
+                        </ScrollView>
+                    </KeyboardAvoidingView>
                 </View>
                 
                 <View style={MainStyle.vBootTotalCt}>

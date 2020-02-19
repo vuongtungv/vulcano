@@ -27,6 +27,14 @@ export function submitLogin(username, password){
     return fetch(url)
     .then(res => res.json());
 };
+export function forgotPassword(email){
+    let url;
+    url = global.BASE_URL+`/forgot_password.api?email=${email}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+
 
 
 // Danh sách đặt hàng

@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList , Alert,DatePickerIOS, TextInput} from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList , Alert,DatePickerIOS, TextInput, KeyboardAvoidingView} from 'react-native';
 import { Picker} from "native-base";
 import DatePicker from 'react-native-datepicker';
 import MainStyle from '../../styles/MainStyle';
@@ -212,13 +212,13 @@ export default class InformationUser extends Component{
                 if(regex_password.test(newPassword)){ //điền đúng định dạng
                     
                 }else{
-                    Alert.alert('Mật khẩu ít nhất 8 ký tư, 1 số, 1 chữ hoa, 1 chữ thường.');
+                    Alert.alert('Mật khẩu ít nhất 8 ký tự trong đó bao gồm chữ hoa, chữ thường và số.');
                     return;
                 }
                 if(regex_password.test(reNewPassword)){ //điền đúng định dạng
                     
                 }else{
-                    Alert.alert('Mật khẩu ít nhất 8 ký tư, 1 số, 1 chữ hoa, 1 chữ thường.');
+                    Alert.alert('Mật khẩu ít nhất 8 ký tự trong đó bao gồm chữ hoa, chữ thường và số.');
                     return;
                 }
                 if(newPassword != reNewPassword){
@@ -228,6 +228,7 @@ export default class InformationUser extends Component{
                 
             }else{
                 Alert.alert('Vui lòng nhập mật khẩu mới.');
+                return;
             }
         }
 
@@ -257,7 +258,11 @@ export default class InformationUser extends Component{
         return(
             <Container>
                 <HeaderBase page="user" title={'Thông tin tài khoản'} navigation={navigation} />
+                <KeyboardAvoidingView
+                        behavior='height'
+                    >
                 <ScrollView>
+                
                     <View style={{backgroundColor: '#eeeeee', borderBottomColor: '#cccccc', borderBottomWidth: 1, padding: 20,}}>
                         <Text style={{fontFamily: "RobotoBold", fontSize: 17, color: '#333333'}}>Cá nhân</Text>
                     </View>
@@ -376,9 +381,9 @@ export default class InformationUser extends Component{
                             <Text style={MainStyle.txtSubLogin}>Cập nhật</Text>
                         </TouchableOpacity>
                     </View>
-                    
-                </ScrollView>
                 
+                </ScrollView>
+                </KeyboardAvoidingView>
             </Container>
         );
     }

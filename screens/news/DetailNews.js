@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions } from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions,WebView } from 'react-native';
 import MainStyle from './../../styles/MainStyle';
 import FooterBase from './../template/FooterBase';
 import HeaderBase from './../template/HeaderBase';
@@ -101,6 +101,7 @@ export default class DetailNews extends Component{
                             
                             <Image style={{width: '100%'}} source={require('../../assets/img_detail_news.png')}/> */}
                             <HTML html={this.state.detail.content} imagesMaxWidth={Dimensions.get('window').width} />
+                            
                         </View> 
                         <View style={MainStyle.tagsDetailNews}>
                             <Icon type="FontAwesome" name="tags" style={{ color: '#000000', fontSize: 27 }} />
