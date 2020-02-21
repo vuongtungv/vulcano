@@ -91,7 +91,7 @@ export default class Home extends Component{
         return(
             <Container>
                 <HeaderBase page="news" title={'Tin tức và sự kiện'} navigation={navigation} />
-                <View style={{paddingBottom: 68}}>
+                <View style={pageDetailNews}>
                     <View style={MainStyle.pageNews}>
                         <FlatList  
                             data={this.state.listNews}   
