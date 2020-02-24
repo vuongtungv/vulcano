@@ -259,9 +259,10 @@ export default class InformationUser extends Component{
             <Container>
                 <HeaderBase page="user" title={'Thông tin tài khoản'} navigation={navigation} />
                 <KeyboardAvoidingView
-                        behavior='height'
+                        behavior='padding'
+                        style={{marginBottom: 98}}
                     >
-                <ScrollView>
+                <ScrollView >
                 
                     <View style={{backgroundColor: '#eeeeee', borderBottomColor: '#cccccc', borderBottomWidth: 1, padding: 20,}}>
                         <Text style={{fontFamily: "RobotoBold", fontSize: 17, color: '#333333'}}>Cá nhân</Text>
@@ -377,7 +378,7 @@ export default class InformationUser extends Component{
                         </View>
                                     
 
-                        <TouchableOpacity style={[MainStyle.touchSubLogin, {marginBottom: 30, marginTop: 20,}]} onPress={()=>this.updateUser()}>
+                        <TouchableOpacity style={[MainStyle.touchSubLogin, {marginTop: 20}]} onPress={()=>this.updateUser()}>
                             <Text style={MainStyle.txtSubLogin}>Cập nhật</Text>
                         </TouchableOpacity>
                     </View>

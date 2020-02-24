@@ -92,7 +92,7 @@ export default class CateNews extends Component{
         return(
             <Container>
                 <HeaderBase page="news" title={this.state.category_name} navigation={navigation} />
-                <View style={pageDetailNews}>
+                <View style={Mainstyle.pageDetailNews}>
                     <View style={MainStyle.pageNews}>
                         <FlatList  
                             data={this.state.listNews}   

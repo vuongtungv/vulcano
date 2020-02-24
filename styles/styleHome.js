@@ -11,7 +11,7 @@ const footerHeight = 68;
 
 
 const styles = StyleSheet.create({
-  tSplash:{
+  tSplashs:{
     width: ScreenWidth,
     height: ScreenHeight,  
   },
