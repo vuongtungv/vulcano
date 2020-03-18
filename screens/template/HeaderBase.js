@@ -82,6 +82,9 @@ export default class HeaderBase extends Component {
     searchHome(){
         this.props.navigation.navigate('SearchHomeScreen');
     }
+    notifiHome(){
+        this.props.navigation.navigate('NotifiHomeScreen');
+    }
 
     
     onRefresh() {
@@ -105,6 +108,15 @@ export default class HeaderBase extends Component {
                         </View>
                         <TouchableOpacity style={MainStyle.iconSearchHeader} onPress={()=>this.searchHome()}>
                             <Icon type="FontAwesome" name="search" style={{ color: '#000000', fontSize: 22 }} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={MainStyle.iconNotifiHeader} onPress={()=>this.notifiHome()}>
+                            {/* <Icon type="Ionicons" name="ios-notifications-outline" style={{ color: '#000000', fontSize: 25 }} /> */}
+                            <View style={MainStyle.vNotify}>
+                                <Image style={{width: 21, height: 23 }} source={require("../../assets/icon_notify.png")} />
+                                <View style={MainStyle.vnumNotify}>
+                                    <Text style={MainStyle.tnumNotify}>99</Text>
+                                </View>
+                            </View>
                         </TouchableOpacity>
                     </View>
                 );

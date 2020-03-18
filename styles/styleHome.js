@@ -87,9 +87,36 @@ const styles = StyleSheet.create({
   iconSearchHeader:{
     position:'absolute',
     bottom: 20,
-    right: 40,
+    right: 80,
     zIndex: 999,
   },
+  iconNotifiHeader:{
+    position:'absolute',
+    bottom: 20,
+    right: 40,
+    zIndex: 999,
+    // backgroundColor: 'green'
+  },
+  vNotify:{
+    position: 'relative',
+  },
+  vnumNotify:{
+    backgroundColor: '#ff0000', 
+    width: 22, 
+    height: 22, 
+    borderRadius: 11, 
+    justifyContent: 'center', 
+    alignItems: 'center',
+    position:'absolute',
+    top: -10,
+    right: -10,
+  },
+  tnumNotify:{
+    fontFamily: 'RobotoRegular', 
+    fontSize: 12, 
+    color: '#FFFFFF',
+  },
+
   txtCenterHeader:{
     fontFamily: "RobotoBold",
     fontSize: 18
@@ -248,6 +275,7 @@ const styles = StyleSheet.create({
   },
   listCategories:{
     width: '73%',
+    marginBottom: 148,
   },
   itemsTabCategories:{
     backgroundColor: '#FFFFFF',
@@ -563,7 +591,6 @@ const styles = StyleSheet.create({
     width: (ScreenWidth-40)*4/5 -10,
   },
   lineTopItemCart:{
-
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -624,8 +651,6 @@ const styles = StyleSheet.create({
   inforNotePay:{
     fontFamily: "RobotoRegular",
     fontSize: 14,
-    paddingLeft: 20,
-    paddingRight: 20,
     paddingTop: 10,
     paddingBottom: 10,
   },
@@ -1122,7 +1147,11 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     alignItems: 'center',
   },
-
+  dateTimeNotifi:{
+    fontFamily: 'RobotoRegular',
+    color: '#777777',
+    fontSize: 14,
+  },
 
   
 

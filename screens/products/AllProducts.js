@@ -55,8 +55,10 @@ export default class AllProducts extends Component{
     }
 
     makeRemoteRequest(){
-        this.setState({ loading: true });
+        this.setState({ loading: true,
+            refreshing: true, });
         // console.log(this.state.page);
+        
         var products_sort = this.state.products_sort;
         var id_cate= this.state.fill_id_cate;
         var id_material= this.state.fill_id_material;
@@ -67,7 +69,6 @@ export default class AllProducts extends Component{
 
         var fill_sales = this.state.fill_sales;
         var fill_famous = this.state.fill_famous;
-
 
         getAllProducts(this.state.page, products_sort, id_cate, id_material, id_style, id_color, id_size, id_price, fill_sales, fill_famous)
         .then(resJSON => {
@@ -241,13 +242,14 @@ export default class AllProducts extends Component{
         return(
             <Container>
                 <HeaderBase page="list_products" title={'Sản phẩm'} navigation={navigation} />
+                <View style={{paddingBottom:55}}>
                 <View style={MainStyle.filterProducts}>
                     <View style={MainStyle.filterLeft}>
                         <TouchableOpacity onPress={()=>this.setFamous()}>
-                            <Text style={MainStyle.txtFilter}>Phổ biến</Text>
+                            <Text style={[MainStyle.txtFilter]}>Phổ biến</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{marginLeft: 35}} onPress={()=>this.setSales()}>
-                            <Text style={MainStyle.txtFilter}>Sale</Text>
+                            <Text style={[MainStyle.txtFilter]}>Sale</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={MainStyle.filterRight}>
@@ -273,10 +275,24 @@ export default class AllProducts extends Component{
                                     <TouchableOpacity key={item.id} style={MainStyle.itemProducts} onPress={()=>this.detailProduct(item.record_id)}> 
                                         <View style={MainStyle.vImgItemPro}>
                                             <Image style={{width: ScreenWidth-40, height: (ScreenWidth-40)*item.heightImage/item.widthImage  }}  source={{uri: item.image}} />
+                                            { item.is_sales == true ? 
+                                                <View style={{position: 'absolute', bottom: 20, left:20}}>
+                                                    <Text style={MainStyle.bgSales}>{item.giam}</Text>
+                                                </View>
+                                                :
+                                                <View><Text></Text></View>
+                                            }
                                         </View>
                                         <View style={MainStyle.bodyItemPro}>
                                             <Text style={MainStyle.nameItemProducts}>{item.name}</Text>
-                                            <Text style={MainStyle.priceItemProducts}>{item.price} đ</Text>
+                                            { item.is_sales == true ? 
+                                                <View style={{flexDirection: 'row'}}>
+                                                    <Text style={[MainStyle.priceItemProducts, {textDecorationLine: 'line-through'}]}>{item.price_old} đ</Text>
+                                                    <Text style={[MainStyle.priceItemProducts, {marginLeft: 20, color: '#ff0700'}]}>{item.price} đ</Text>
+                                                </View>  
+                                                :
+                                                <View><Text style={MainStyle.priceItemProducts}>{item.price} đ</Text></View>
+                                            }
                                         </View>
                                     </TouchableOpacity>
                                 )}
@@ -405,6 +421,8 @@ export default class AllProducts extends Component{
                         
                     </View>
                 </Modal>
+                
+                </View>
                 
                 <FooterBase navigation={navigation} page="muster"  />
             </Container>

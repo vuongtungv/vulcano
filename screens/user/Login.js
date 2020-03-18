@@ -28,7 +28,7 @@ export default class Login extends Component{
     }
  
     componentDidMount() {
-        
+        const { token } = this.props.navigation.state.params;
     }
 
 
@@ -60,7 +60,7 @@ export default class Login extends Component{
     submitLogin(){
         var username = this.state.username;
         var password = this.state.password;
-
+        const { token } = this.props.navigation.state.params;
         if(username == ''){
             Alert.alert('Số điện thoại hoặc email không được trống');
             return;
@@ -71,7 +71,7 @@ export default class Login extends Component{
             return;        
         }
 
-        submitLogin(username, password)
+        submitLogin(username, password, token)
             .then((responseJson) => {
                 if (responseJson.error == '0') {
                     saveStorage('user', JSON.stringify(responseJson.user));

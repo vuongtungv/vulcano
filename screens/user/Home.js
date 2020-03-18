@@ -5,6 +5,12 @@ import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
+
+
+import { registerForPushNotificationsAsync } from './../api/registerForPushNotificationsAsync';
+import { Notifications } from 'expo';
+import Constants from 'expo-constants';
+
 import saveStorage from './../api/saveStorage';
 import getStorage from './../api/getStorage'
 
@@ -21,12 +27,15 @@ export default class Home extends Component{
             fullname: '',
             email: '',
             created_time: '',
+            notification: {},
+            token: '',
+            keyboardAvoidingViewKey:'keyboardAvoidingViewKey'
         }
 
         this.arr = [];
     }
  
-    componentDidMount() {
+    async componentDidMount() {
         getStorage('user')
         .then(user => {
             if (user != '') {
@@ -38,13 +47,36 @@ export default class Home extends Component{
                     email: arrUser.email,
                     created_time: arrUser.created_time,
                 });
-            } 
+            }else{
+                registerForPushNotificationsAsync();
+                this._notificationSubscription = Notifications.addListener(this._handleNotification);
+            }  
         });
+        try {
+            var token = await Notifications.getExpoPushTokenAsync();
+            if (!Constants.isDevice) {
+                var token = '';
+            }else{
+                var token = await Notifications.getExpoPushTokenAsync();
+            }
+            this.setState({token});
+            console.log(this.state.token);
+            
+        } catch (e) {
+            console.log('Error token');
+        }
+
+        this.keyboardHideListener = Keyboard.addListener(Platform.OS === 'android' ? 'keyboardDidHide': 'keyboardWillHide', this.keyboardHideListener.bind(this));
     }
+
+    _handleNotification = notification => {
+        // do whatever you want to do with the notification
+        this.setState({ notification: notification });
+    };
 
 
     gotoLogin(){
-        this.props.navigation.navigate('LoginScreen');
+        this.props.navigation.navigate('LoginScreen', {token: this.state.token});
     }
     gotoListOrder(){
         this.props.navigation.navigate('ListOrderScreen');
@@ -67,6 +99,12 @@ export default class Home extends Component{
                 <HeaderBase page="user" title={'Thành viên'} navigation={navigation} />
                 <ScrollView style={[MainStyle.pageShowrooms, {paddingBottom: 108}]}>
                     <View style={{padding: 20, flexDirection: 'row', justifyContent: 'flex-start'}}>
+                        {/* <View>
+                            <Text>Origin: {this.state.notification.origin}</Text>
+                            <Text>Data: {JSON.stringify(this.state.notification.data)}</Text>
+                            <Text>Token {this.state.token}</Text>
+                        </View> */}
+
                         <View style={MainStyle.userImage}>
                             <Icon type="FontAwesome" name="user-o" style={{ color: '#FFFFFF', fontSize: 35 }} />
                         </View>   

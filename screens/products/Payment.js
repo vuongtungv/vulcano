@@ -324,6 +324,10 @@ export default class Payment extends React.Component {
         }    
     }
 
+    loginUser(){
+        this.props.navigation.navigate('LoginScreen');
+    }
+
 
 	
     render() {
@@ -379,8 +383,10 @@ export default class Payment extends React.Component {
                                     ? 
                                         <View><Text></Text></View>
                                     :
-                                    <View>
-                                        <Text style={MainStyle.inforNotePay}>Vui lòng đăng nhập tài khoản để thanh toán tiện lợi hơn</Text>
+                                    <View style={{flexDirection: 'row', paddingLeft: 20}}>
+                                        <View><Text style={MainStyle.inforNotePay}>Vui lòng </Text></View>
+                                        <TouchableOpacity onPress={()=>this.loginUser()}><Text style={[MainStyle.inforNotePay,{color: '#ff0700'}]}>đăng nhập</Text></TouchableOpacity> 
+                                        <View><Text style={MainStyle.inforNotePay}> tài khoản để thanh toán tiện lợi hơn</Text></View>
                                     </View>
                                 }
                                 

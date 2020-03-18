@@ -47,7 +47,7 @@ import ListOrder from "./screens/user/ListOrder";
 import UserDetailOrder from "./screens/user/DetailOrder";
 import InformationUser from "./screens/user/InformationUser";
 import ForgotPassword from "./screens/user/ForgotPassword";
-
+import NotifiHome from "./screens/user/NotifiHome";
 
 
 
@@ -136,6 +136,9 @@ export const VulcanoStack = createStackNavigator({
   },
   FogotPasswordScreen:{
     screen: ForgotPassword
+  },
+  NotifiHomeScreen:{
+    screen: NotifiHome
   },
 
 

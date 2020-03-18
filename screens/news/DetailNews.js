@@ -1,10 +1,11 @@
 import React, { Component} from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions,WebView } from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions,WebView,PixelRatio  } from 'react-native';
 import MainStyle from './../../styles/MainStyle';
 import FooterBase from './../template/FooterBase';
 import HeaderBase from './../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
 import HTML from 'react-native-render-html';
+
 import {getDetailNews} from '../../src/api/apiNews';
 import { FlatList } from 'react-native-gesture-handler';
 let ScreenWidth = Dimensions.get("window").width;
@@ -60,10 +61,11 @@ export default class DetailNews extends Component{
             listRest: []
         });
     }
-
+    
     
     render() {
         const {navigation} = this.props;
+        
 
         return(   
             <Container>
@@ -100,8 +102,10 @@ export default class DetailNews extends Component{
                             </Text>
                             
                             <Image style={{width: '100%'}} source={require('../../assets/img_detail_news.png')}/> */}
-                            <HTML html={this.state.detail.content} imagesMaxWidth={Dimensions.get('window').width} />
-                            
+                            <HTML 
+                                html={this.state.detail.content} imagesMaxWidth={ScreenWidth} 
+                            />
+
                         </View> 
                         <View style={MainStyle.tagsDetailNews}>
                             <Icon type="FontAwesome" name="tags" style={{ color: '#000000', fontSize: 27 }} />

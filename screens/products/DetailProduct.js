@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView ,TextInput,Dimensions,Modal, Alert, Linking} from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image,FlatList, ScrollView ,TextInput,Dimensions,Modal, Alert, Linking} from 'react-native';
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
@@ -89,7 +89,7 @@ export default class DetailProduct extends Component{
     }
 
     showImages(index){
-        const image = this.state.arr_image[index].image.replace('/original/', '/original/');
+        const image = this.state.arr_image[index].image.replace('/large/', '/original/');
         Image.getSize(image, (w, h) => {
             var imageWidth = width - 40;
             var imageHeight = imageWidth*h/w;
@@ -100,17 +100,17 @@ export default class DetailProduct extends Component{
         this.setState({ image, modalVisible: true });   
     }
     
-    showImagesDefault(){
-        const image = this.state.detail.image.replace('/original/', '/original/');
-        var w = this.state.detail.widthImageOriginal;
-        var h = this.state.detail.heightImageOriginal;
-        var imageWidth = width - 40;
-            var imageHeight = imageWidth*h/w;
-            this.setState({
-                imageWidth, imageHeight
-            });
-        this.setState({ image, modalVisible: true });   
-    }
+    // showImagesDefault(){
+    //     const image = this.state.detail.image.replace('/large/', '/original/');
+    //     var w = this.state.detail.widthImageOriginal;
+    //     var h = this.state.detail.heightImageOriginal;
+    //     var imageWidth = width - 40;
+    //         var imageHeight = imageWidth*h/w;
+    //         this.setState({
+    //             imageWidth, imageHeight
+    //         });
+    //     this.setState({ image, modalVisible: true });   
+    // }
     imgModalSave(){
         const uri = this.state.image;
         var filename = uri.substring(uri.lastIndexOf('/')+1);
@@ -267,31 +267,23 @@ export default class DetailProduct extends Component{
 
         return(  
             <Container>
-                {/* <HeaderBase page="list_products" title={'Sản phẩm'} navigation={navigation} /> */}
+                {/* <HeaderBase page="list_products" title={'Sản phẩm'} navigation={navigation} /> */} 
                 <ScrollView>
-                    <View style={MainStyle.slideImageProduct}>
-                            <TouchableOpacity style={[MainStyle.btnRa50,MainStyle.backDetailP]} onPress={() => this.gotoBack()}>
-                                <Icon type="FontAwesome" name="angle-left" style={[MainStyle.tHeaderIconMenu,{color: '#FFFFFF',fontSize:35}]} />
-                            </TouchableOpacity> 
-                            <TouchableOpacity style={[MainStyle.btnRa50,MainStyle.addDetailP]} onPress={()=>this.gotoCart()}>
-                                <Icon type="SimpleLineIcons" name="handbag" style={{ color: '#FFFFFF', fontSize: 25 }} />
-                            </TouchableOpacity>
-                        <Swiper >
-                            <View>  
-                                <TouchableOpacity onPress={() => this.showImagesDefault()}>
-                                    <Image style={[MainStyle.itemsSlideDetailProduct]} source={{ uri:this.state.detail.image}} />    
-                                </TouchableOpacity>
-                            </View>
-                            
+                    <View style={[MainStyle.slideImageProduct]}>
+                        <TouchableOpacity style={[MainStyle.btnRa50,MainStyle.backDetailP]} onPress={() => this.gotoBack()}>
+                            <Icon type="FontAwesome" name="angle-left" style={[MainStyle.tHeaderIconMenu,{color: '#FFFFFF',fontSize:35}]} />
+                        </TouchableOpacity> 
+                        <TouchableOpacity style={[MainStyle.btnRa50,MainStyle.addDetailP]} onPress={()=>this.gotoCart()}>
+                            <Icon type="SimpleLineIcons" name="handbag" style={{ color: '#FFFFFF', fontSize: 25 }} />
+                        </TouchableOpacity>
+                        <Swiper autoplay={true} autoplayTimeout={4} >
                             {this.state.arr_image.map((item, index) => {return (
-                                <View>
-                                    <TouchableOpacity key={item.id} onPress={() => this.showImages(index)}>
-                                        <Image style={MainStyle.itemsSlideDetailProduct} source={{ uri:item.image}} />    
-                                    </TouchableOpacity>
-                                </View>
-                                
+                                <TouchableOpacity key={index} onPress={() => this.showImages(index)}>
+                                    <Image style={MainStyle.itemsSlideDetailProduct} source={{ uri:item.image}} />    
+                                </TouchableOpacity> 
                             )})} 
                         </Swiper>
+                        
                     </View>
                     <View style={MainStyle.tDetailProduct}>
                         <Text style={MainStyle.titleProduct}>{this.state.detail.name}</Text>

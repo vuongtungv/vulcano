@@ -20,9 +20,9 @@ export function updateUser(user_id, fullname, phone, email, password, newPasswor
 
 
 // Đăng nhập
-export function submitLogin(username, password){
+export function submitLogin(username, password, token){
     let url;
-    url = global.BASE_URL+`/submit_login.api?username=${username}&password=${password}`;
+    url = global.BASE_URL+`/submit_login.api?username=${username}&password=${password}&token=${token}`;
     console.log(url);
     return fetch(url)
     .then(res => res.json());
@@ -50,6 +50,16 @@ export function getListOrder(user_id, page){
 export function getDetailOrder(order_id){
     let url;
     url = global.BASE_URL+`/get_detail_user_order.api?order_id=${order_id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+
+
+// Danh sách notification
+export function getListNotifications(user_id, token){
+    let url;
+    url = global.BASE_URL+`/get_list_notifications.api?user_id=${user_id}&token=${token}`;
     console.log(url);
     return fetch(url)
     .then(res => res.json());

@@ -22,6 +22,15 @@ import { ProductsInCate } from './../src/api/apiProducts';
 let ScreenWidth = Dimensions.get("window").width;
 let ScreenHeight = Dimensions.get("window").height;
 
+
+
+import { registerForPushNotificationsAsync } from './api/registerForPushNotificationsAsync';
+import { Notifications } from 'expo';
+import Constants from 'expo-constants';
+import saveStorage from './api/saveStorage';
+import getStorage from './api/getStorage';
+
+
 export default class Home extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     header: null
@@ -35,6 +44,8 @@ export default class Home extends React.Component {
       listCate: [],
       listCateBig: '',
       heightSwiper: '',
+      // token:'',
+      // keyboardAvoidingViewKey:'keyboardAvoidingViewKey'
   };  
 
   }
@@ -48,6 +59,18 @@ export default class Home extends React.Component {
     this.getCateIdHome(); // áo sơ mi dày tay, áo khoác, vecton
     this.cateBigHome(); // áo, quần, bộ quần áo
   }
+
+  componentWillUnmount() {
+    this.keyboardHideListener.remove()
+  }
+
+  keyboardHideListener() {
+    this.setState({
+        keyboardAvoidingViewKey:'keyboardAvoidingViewKey' + new Date().getTime()
+    });
+  }
+
+
 
   getSlides = () => {
     // this.setState({ loading: true });
@@ -122,9 +145,9 @@ export default class Home extends React.Component {
     });
   }
 
-  listProductsInCate(id){
+  listProductsInCate(id, name, id_material, id_style){
     var type = 'all';
-    this.props.navigation.navigate('ListProductsInCateScreeen',{ id: id, type: type });
+    this.props.navigation.navigate('ListProductsInCateScreeen',{ id: id, name: name,id_material: id_material, id_style:id_style, type: type });
   }
   gotoProducts(){
     this.props.navigation.navigate('AllProductsScreen');
@@ -157,7 +180,6 @@ export default class Home extends React.Component {
                     <View>
                       <Image key={index} style={[MainStyle.itemsSlideHome,{ width: ScreenWidth, height: ScreenWidth*item.heightImage/item.widthImage}]} source={{uri: item.image}} />
                     </View>
-                    
                   )})}
                 {/* <Image style={MainStyle.itemsSlideHome} source={require("../assets/image_slide.png")} /> */}
               </Swiper> 
@@ -206,7 +228,7 @@ export default class Home extends React.Component {
 
           <View style={[MainStyle.cateSmallHome]}>
             {this.state.listCate.map((item, index) => {return (
-                <TouchableOpacity key={index} style={[MainStyle.itemsCateSmallHome]} onPress={()=>this.listProductsInCate(item.id)}>
+                <TouchableOpacity key={index} style={[MainStyle.itemsCateSmallHome]} onPress={()=>this.listProductsInCate(item.id,item.name,item.id_material, item.id_style)}>
                   <View style={MainStyle.viewSmallHome}>
                     {/* <Image style={MainStyle.imgSmallHome} source={require("../assets/image_cate_small.png")} /> */}
                     <Image style={[MainStyle.imgSmallHome]} source={{uri: item.image}} />
@@ -246,7 +268,7 @@ export default class Home extends React.Component {
                         </View>
                         <View style={MainStyle.bodyBigHome}>
                           <Text style={MainStyle.titleBig}>{item.name} Vulcano</Text>
-                          <TouchableOpacity onPress={()=>this.listProductsInCate(item.id)}><Text style={MainStyle.viewNow}>Xem thêm</Text></TouchableOpacity>
+                          <TouchableOpacity onPress={()=>this.listProductsInCate(item.id,item.name)}><Text style={MainStyle.viewNow}>Xem thêm</Text></TouchableOpacity>
                         </View>
                       </View>
                     )}
