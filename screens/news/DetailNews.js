@@ -103,7 +103,7 @@ export default class DetailNews extends Component{
                             
                             <Image style={{width: '100%'}} source={require('../../assets/img_detail_news.png')}/> */}
                             <HTML 
-                                html={this.state.detail.content} imagesMaxWidth={ScreenWidth} 
+                                html={this.state.detail.content} imagesMaxWidth={ScreenWidth-40} 
                             />
 
                         </View> 

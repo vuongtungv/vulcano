@@ -90,6 +90,12 @@ const styles = StyleSheet.create({
     right: 80,
     zIndex: 999,
   },
+  iconDotsHeader:{
+    position:'absolute',
+    bottom: 20,
+    right: 40,
+    zIndex: 999,
+  },
   iconNotifiHeader:{
     position:'absolute',
     bottom: 20,
@@ -1154,7 +1160,10 @@ const styles = StyleSheet.create({
   },
 
   
-
+  notifiListHome:{
+    height: ScreenHeight-barHeight-headerHeight,
+    paddingBottom: 20,
+  },
 
 
 

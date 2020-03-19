@@ -76,7 +76,8 @@ export default class Home extends Component{
 
 
     gotoLogin(){
-        this.props.navigation.navigate('LoginScreen', {token: this.state.token});
+        token = this.state.token;
+        this.props.navigation.navigate('LoginScreen', {token: token});
     }
     gotoListOrder(){
         this.props.navigation.navigate('ListOrderScreen');

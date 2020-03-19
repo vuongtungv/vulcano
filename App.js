@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, Alert } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import MainStyle from './styles/MainStyle.js';
 import { NavigationActions } from 'react-navigation';
@@ -41,7 +41,7 @@ export default class App extends React.Component {
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
 
     if (Platform.OS === 'android') {
-        Notifications.createChannelAndroidAsync('kidsgo-sound', {
+        Notifications.createChannelAndroidAsync('vulcano-sound', {
             name: 'Vulcano Sound',
             sound: true,
             priority: 'max',

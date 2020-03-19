@@ -57,9 +57,23 @@ export function getDetailOrder(order_id){
 
 
 // Danh sách notification
-export function getListNotifications(user_id, token){
+export function getListNotifications(page,user_id, token){
     let url;
-    url = global.BASE_URL+`/get_list_notifications.api?user_id=${user_id}&token=${token}`;
+    url = global.BASE_URL+`/get_list_notifications.api?page=${page}&user_id=${user_id}&token=${token}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+export function getTotalNotifications(user_id, token){
+    let url;
+    url = global.BASE_URL+`/get_total_notifications.api?user_id=${user_id}&token=${token}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+export function updateIsReadNotifications(user_id, token){
+    let url;
+    url = global.BASE_URL+`/update_notifications.api?user_id=${user_id}&token=${token}`;
     console.log(url);
     return fetch(url)
     .then(res => res.json());

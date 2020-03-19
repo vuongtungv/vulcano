@@ -7,7 +7,8 @@ import { Icon } from "native-base";
   
 let ScreenWidth = Dimensions.get("window").width;
 import {getCateNews} from './../../src/api/apiNews';
-
+import {getTotalNotifications} from './../../src/api/apiUser';
+import getStorage from './../api/getStorage';
 
 
 export default class HeaderBase extends Component {
@@ -15,12 +16,24 @@ export default class HeaderBase extends Component {
         super(props);
         this.state={
             ListCateNewsHeader: false,
+            countNotify: 0,
         }
         global.onRefresh = this.onRefresh.bind(this);
     } 
 
     componentDidMount() {
         this.getCateNews();
+        getStorage('user')
+        .then(user => {  
+            if (user != '') {
+                let arrUser = JSON.parse(user);
+                this.setState({user_id: arrUser.id, token: arrUser.token});
+                this.setState({user_id: arrUser.id, token: arrUser.token});
+                this.getCountNotifi();
+            }else{
+                this.setState({countNotify: 0});
+            }  
+        });
     }
 
     gotoBack(){
@@ -85,6 +98,23 @@ export default class HeaderBase extends Component {
     notifiHome(){
         this.props.navigation.navigate('NotifiHomeScreen');
     }
+    getCountNotifi = () => {
+        // this.setState({ loading: true });
+        getTotalNotifications(this.state.user_id, this.state.token)
+        .then(resJSON => {  
+            const { count, error} = resJSON;
+            if (error == false) {
+                this.setState({
+                  countNotify: count,  
+                });  
+            } else {
+                this.setState({ loading: false, refreshing: false });
+            }
+    
+        }).catch(err => {
+            // this.setState({ loading: false }); 
+        });
+      }
 
     
     onRefresh() {
@@ -94,6 +124,21 @@ export default class HeaderBase extends Component {
         });
     }
 
+
+    show_count_notifi(){
+        if(this.state.countNotify)
+            return (
+                <TouchableOpacity style={MainStyle.iconNotifiHeader} onPress={()=>this.notifiHome()}>
+                    {/* <Icon type="Ionicons" name="ios-notifications-outline" style={{ color: '#000000', fontSize: 25 }} /> */}
+                    <View style={MainStyle.vNotify}>
+                        <Image style={{width: 21, height: 23 }} source={require("../../assets/icon_notify.png")} />
+                        <View style={MainStyle.vnumNotify}>
+                            <Text style={MainStyle.tnumNotify}>{this.state.countNotify}</Text>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+            )
+    }
 
 
 
@@ -109,15 +154,7 @@ export default class HeaderBase extends Component {
                         <TouchableOpacity style={MainStyle.iconSearchHeader} onPress={()=>this.searchHome()}>
                             <Icon type="FontAwesome" name="search" style={{ color: '#000000', fontSize: 22 }} />
                         </TouchableOpacity>
-                        <TouchableOpacity style={MainStyle.iconNotifiHeader} onPress={()=>this.notifiHome()}>
-                            {/* <Icon type="Ionicons" name="ios-notifications-outline" style={{ color: '#000000', fontSize: 25 }} /> */}
-                            <View style={MainStyle.vNotify}>
-                                <Image style={{width: 21, height: 23 }} source={require("../../assets/icon_notify.png")} />
-                                <View style={MainStyle.vnumNotify}>
-                                    <Text style={MainStyle.tnumNotify}>99</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
+                        {this.show_count_notifi()}
                     </View>
                 );
             case 'search':
@@ -181,7 +218,7 @@ export default class HeaderBase extends Component {
                             <View style={MainStyle.titleCenterHeader}> 
                                 <Text style={MainStyle.txtCenterHeader}>{title}</Text>
                             </View>
-                            <TouchableOpacity style={MainStyle.iconSearchHeader} onPress={()=>this.setStateListCateNewsHeader()}>
+                            <TouchableOpacity style={MainStyle.iconDotsHeader} onPress={()=>this.setStateListCateNewsHeader()}>
                                 <Icon type="MaterialCommunityIcons" name="dots-vertical" style={{ color: '#000000', fontSize: 23 }} />
                             </TouchableOpacity>
                         </View>
@@ -199,7 +236,7 @@ export default class HeaderBase extends Component {
                             <View style={MainStyle.titleCenterHeader}> 
                                 <Text style={MainStyle.txtCenterHeader}>{title}</Text>
                             </View>
-                            <TouchableOpacity style={MainStyle.iconSearchHeader} onPress={()=>this.setStateListCateNewsHeader()}>
+                            <TouchableOpacity style={MainStyle.iconDotsHeader} onPress={()=>this.setStateListCateNewsHeader()}>
                                 <Icon type="MaterialCommunityIcons" name="dots-vertical" style={{ color: '#000000', fontSize: 23 }} />
                             </TouchableOpacity>
                         </View>

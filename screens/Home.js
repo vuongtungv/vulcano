@@ -17,6 +17,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import FooterBase from './template/FooterBase';
 import HeaderBase from './template/HeaderBase';
 import {getSlidesHome, getOneBanner, getCateIdHome, cateBigHome} from './../src/api/apiHome';
+import {getTotalNotifications} from './../src/api/apiUser';
 import { ProductsInCate } from './../src/api/apiProducts';
 
 let ScreenWidth = Dimensions.get("window").width;
@@ -39,11 +40,13 @@ export default class Home extends React.Component {
   constructor(props) { 
     super(props);
     this.state = {
+      user_id: '',
       listSlide: [],
       oneBanner: [],
       listCate: [],
       listCateBig: '',
       heightSwiper: '',
+      countNotify: '',
       // token:'',
       // keyboardAvoidingViewKey:'keyboardAvoidingViewKey'
   };  
@@ -56,7 +59,7 @@ export default class Home extends React.Component {
   componentDidMount(){
     this.getSlides();
     this.getOneBanner();
-    this.getCateIdHome(); // áo sơ mi dày tay, áo khoác, vecton
+    this.getCateIdHome(); 
     this.cateBigHome(); // áo, quần, bộ quần áo
   }
 
@@ -72,6 +75,8 @@ export default class Home extends React.Component {
 
 
 
+  
+  
   getSlides = () => {
     // this.setState({ loading: true });
     getSlidesHome()
@@ -91,6 +96,7 @@ export default class Home extends React.Component {
         // this.setState({ loading: false }); 
     });
   }
+
   getOneBanner = () => {
     getOneBanner()
     .then(resJSON => {
@@ -113,7 +119,7 @@ export default class Home extends React.Component {
     .then(resJSON => {
         const { list, error } = resJSON;
         if (error == false) {
-            this.setState({
+            this.setState({  
               listCate: list,  
               error: false || null,  
             });
@@ -164,6 +170,9 @@ export default class Home extends React.Component {
   sellingProducts(){
     this.props.navigation.navigate('SalesProductsScreen');
   }
+
+
+
 
 
 

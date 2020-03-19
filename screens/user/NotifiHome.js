@@ -8,7 +8,7 @@ import { Container, Content, CheckBox, Icon } from "native-base";
 import saveStorage from './../api/saveStorage';
 import getStorage from './../api/getStorage';
 
-import { getListNotifications } from '../../src/api/apiUser';
+import { getListNotifications, updateIsReadNotifications } from '../../src/api/apiUser';
 
 
 export default class NotifiHome extends Component{
@@ -20,14 +20,12 @@ export default class NotifiHome extends Component{
         super(props);
         
         this.state = {
-            user_id: '',
-            fullname: '',
-            email: '',
-            created_time: '',
-            token: '',
+            page: 1,
+            count: '',
+            list: [],
         }
 
-        this.arr = [];
+        this.arr = []; 
     }
  
     componentDidMount() {
@@ -43,13 +41,15 @@ export default class NotifiHome extends Component{
                     created_time: arrUser.created_time,
                     token: arrUser.token,
                 });
-                this.getListNotifications();
+                this.makeRequestCompoment();
+                this.updateRead();
             } 
         });
     }
 
-    getListNotifications(){
-        getListNotifications(this.state.user_id, this.state.token)
+    makeRequestCompoment(){   
+    
+        getListNotifications(this.state.page,this.state.user_id, this.state.token)
         .then(resJSON => {
             const { list,count, error} = resJSON;      
             if (error == false) {
@@ -65,10 +65,49 @@ export default class NotifiHome extends Component{
                 });
             }
         }).catch(err => {
-            // this.setState({ loaded: true });  
+            this.setState({ loading: false });   
         }); 
     }
 
+    handleLoadMore = () => {
+        this.setState({
+            page: this.state.page + 1
+        },
+        () => {
+            this.makeRequestCompoment();
+        });
+        // console.log(this.state.page);
+    };
+    renderFooter = () => {
+        if (!this.state.loading) return null;
+        return (
+            <View
+                style={{
+                    paddingVertical: 20,
+                    borderTopWidth: 1,
+                    borderColor: "#CED0CE"
+                }}
+            >
+                <ActivityIndicator animating size="large" />
+            </View>
+        );
+	};
+
+
+    detailNotifi(screen, id){
+        this.props.navigation.navigate(screen,{ id: id });
+    }
+    updateRead(){
+        updateIsReadNotifications(this.state.user_id, this.state.token)
+        .then(resJSON => {
+            const { error} = resJSON;      
+            if (error == false) {
+               
+            }
+        }).catch(err => {
+            this.setState({ loading: false });   
+        }); 
+    }
 
 
 	
@@ -79,27 +118,44 @@ export default class NotifiHome extends Component{
             <Container>
                 <HeaderBase page="user" title={'Thông báo'} navigation={navigation} />
                 { this.state.user_id ?
-                    <ScrollView style={{}}>
-                        <TouchableOpacity onPress={()=>this.detailProduct()}> 
-                            <View style={MainStyle.infoItemCart}>
-                                <View style={{marginRight: 10, width: 70, height: 70, borderRadius: 40, overflow: 'hidden'}}>
-                                    <Image style={{width: 70, height: 70}} source={require("../../assets/cart_img_product.png")} />
-                                    {/* <Image style={MainStyle.imgCart} source={{uri:item.image }} /> */}
-                                </View>
-                                <View style={[MainStyle.rightInfoItem]}>
-                                    <View>
-                                        <View style={{width: '100%'}}>
-                                            <Text style={[MainStyle.tProductItemCart,{fontFamily: 'RobotoBold'}]}>ÁO SƠ MI DÀI TAY 9360 - XSD6659360</Text>
-                                            <Text style={[MainStyle.tProductItemCart,{textTransform: 'lowercase'}]}> vừa được đăng bán</Text>
+                    <View style={[MainStyle.notifiListHome]}>
+                        <FlatList  
+                            data={this.state.list}   
+                            renderItem={({ item }) => (
+                                <TouchableOpacity key={item.id} onPress={()=>this.detailNotifi(item.screen,item.record_id)}> 
+                                    <View style={MainStyle.infoItemCart}>
+                                        <View style={{marginRight: 10, width: 70, height: 70, borderRadius: 40, overflow: 'hidden', backgroundColor: '#d9d9d9', justifyContent: 'center', alignItems: 'center'}}>
+                                            {/* <Image style={{width: 65, height: 35}}  source={require("../../assets/logo.png")} /> */}
+                                            { 
+                                                item.image !='' ? 
+                                                <Image style={MainStyle.imgCart} source={{uri:item.image }} />
+                                                :
+                                                <Image style={{width: 65, height: 35}}  source={require("../../assets/logo.png")} />
+                                            }
                                         </View>
-                                        <View style={{width: '100%', marginTop: 12}}>
-                                            <Text style={MainStyle.dateTimeNotifi}>15:12, 23/02/2020</Text>
+                                        <View style={[MainStyle.rightInfoItem]}>
+                                            <View>
+                                                <View style={{width: '100%'}}>
+                                                    <Text style={[MainStyle.tProductItemCart,{fontFamily: 'RobotoBold'}]}>{item.title}</Text>
+                                                    <Text style={[MainStyle.tProductItemCart,{textTransform: 'lowercase'}]}> {item.body}</Text>
+                                                </View>
+                                                <View style={{width: '100%', marginTop: 0}}>
+                                                    <Text style={MainStyle.dateTimeNotifi}>{item.created_time}</Text>
+                                                </View>
+                                            </View>
                                         </View>
                                     </View>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                    </ScrollView>
+                                </TouchableOpacity>
+                                )}
+                                keyExtractor={item => item.id}
+                                contentContainerStyle={MainStyle.containerListProducts}
+                                ListFooterComponent={this.renderFooter}     
+                                refreshing={this.state.refreshing}
+                                onEndReached={this.handleLoadMore}
+                                onEndReachedThreshold={0.5}
+                        />   
+                        
+                    </View>
                     :
                     <View><Text>Bạn cần đăng nhập để nhận thông báo</Text></View>
                 }
