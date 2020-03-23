@@ -157,7 +157,7 @@ export default class NotifiHome extends Component{
                         
                     </View>
                     :
-                    <View><Text>Bạn cần đăng nhập để nhận thông báo</Text></View>
+                    <View style={{padding: 20}}><Text>Bạn cần đăng nhập để nhận thông báo</Text></View>
                 }
                 
                 {/* <FooterBase navigation={navigation} page="user" /> */}
