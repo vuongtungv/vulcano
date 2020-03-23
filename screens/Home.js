@@ -67,15 +67,15 @@ export default class Home extends React.Component {
 
 
 
-  componentWillUnmount() {
-    this.keyboardHideListener.remove()
-  }
+  // componentWillUnmount() {
+  //   this.keyboardHideListener.remove()
+  // }
 
-  keyboardHideListener() {
-    this.setState({
-        keyboardAvoidingViewKey:'keyboardAvoidingViewKey' + new Date().getTime()
-    });
-  }
+  // keyboardHideListener() {
+  //   this.setState({
+  //       keyboardAvoidingViewKey:'keyboardAvoidingViewKey' + new Date().getTime()
+  //   });
+  // }
 
   
 

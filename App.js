@@ -66,7 +66,7 @@ export default class App extends React.Component {
 
     if (origin === 'selected') {
         this.navigator && this.navigator.dispatch(
-            NavigationActions.navigate({ routeName: data.screen, params:{id: data.record_id}})
+            NavigationActions.navigate({ routeName: data.screen})
         );
     }
 };

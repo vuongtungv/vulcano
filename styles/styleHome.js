@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     width: 22, 
     height: 22, 
     borderRadius: 11, 
+    overflow: 'hidden',
     justifyContent: 'center', 
     alignItems: 'center',
     position:'absolute',

@@ -26,7 +26,7 @@ export default class HeaderBase extends Component {
         
         this._interval = setInterval(() => {
             this.getCountNotifi();
-          }, 3000);
+          }, 8000);
     }
 
     gotoBack(){
@@ -97,10 +97,9 @@ export default class HeaderBase extends Component {
         .then(user => {  
             if (user != '') {
                 let arrUser = JSON.parse(user);
-                this.setState({user_id: arrUser.id, token: arrUser.token});
-                this.setState({user_id: arrUser.id, token: arrUser.token});
+                // this.setState({user_id: arrUser.id, token: arrUser.token});
 
-                getTotalNotifications(this.state.user_id, this.state.token)
+                getTotalNotifications(arrUser.id, arrUser.token)
                 .then(resJSON => {  
                     const { count, error} = resJSON;
                     if (error == false) {
