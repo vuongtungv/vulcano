@@ -18,22 +18,15 @@ export default class HeaderBase extends Component {
             ListCateNewsHeader: false,
             countNotify: 0,
         }
-        global.onRefresh = this.onRefresh.bind(this);
+        // global.onRefresh = this.onRefresh.bind(this);
     } 
 
     componentDidMount() {
         this.getCateNews();
-        getStorage('user')
-        .then(user => {  
-            if (user != '') {
-                let arrUser = JSON.parse(user);
-                this.setState({user_id: arrUser.id, token: arrUser.token});
-                this.setState({user_id: arrUser.id, token: arrUser.token});
-                this.getCountNotifi();
-            }else{
-                this.setState({countNotify: 0});
-            }  
-        });
+        
+        this._interval = setInterval(() => {
+            this.getCountNotifi();
+          }, 3000);
     }
 
     gotoBack(){
@@ -100,41 +93,53 @@ export default class HeaderBase extends Component {
     }
     getCountNotifi = () => {
         // this.setState({ loading: true });
-        getTotalNotifications(this.state.user_id, this.state.token)
-        .then(resJSON => {  
-            const { count, error} = resJSON;
-            if (error == false) {
-                this.setState({
-                  countNotify: count,  
-                });  
-            } else {
-                this.setState({ loading: false, refreshing: false });
-            }
-    
-        }).catch(err => {
-            // this.setState({ loading: false }); 
-        });
-      }
+        getStorage('user')
+        .then(user => {  
+            if (user != '') {
+                let arrUser = JSON.parse(user);
+                this.setState({user_id: arrUser.id, token: arrUser.token});
+                this.setState({user_id: arrUser.id, token: arrUser.token});
 
-    
-    onRefresh() {
-        this.arr = [];
-        this.setState({
-            listRest: []
+                getTotalNotifications(this.state.user_id, this.state.token)
+                .then(resJSON => {  
+                    const { count, error} = resJSON;
+                    if (error == false) {
+                        this.setState({
+                        countNotify: count,  
+                        });  
+                    } else {
+                        this.setState({ loading: false, refreshing: false });
+                    }
+            
+                }).catch(err => {
+                    // this.setState({ loading: false }); 
+                });
+            }else{
+                this.setState({countNotify: 0});
+            }  
         });
-    }
+        
+      }
 
 
     show_count_notifi(){
-        if(this.state.countNotify)
+        
             return (
                 <TouchableOpacity style={MainStyle.iconNotifiHeader} onPress={()=>this.notifiHome()}>
                     {/* <Icon type="Ionicons" name="ios-notifications-outline" style={{ color: '#000000', fontSize: 25 }} /> */}
                     <View style={MainStyle.vNotify}>
                         <Image style={{width: 21, height: 23 }} source={require("../../assets/icon_notify.png")} />
+                        {this.state.countNotify >0 
+                        ? 
                         <View style={MainStyle.vnumNotify}>
                             <Text style={MainStyle.tnumNotify}>{this.state.countNotify}</Text>
                         </View>
+                        : 
+                        <View style={[MainStyle.vnumNotify,{backgroundColor: 'none'}]}>
+                            <Text style={MainStyle.tnumNotify}></Text>
+                        </View>
+                        }
+                        
                     </View>
                 </TouchableOpacity>
             )

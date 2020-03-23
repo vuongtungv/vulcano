@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.6",
+    "version": "1.0.7",
     "orientation": "portrait",
     "icon": "./assets/0_icon.png",
     "splash": {
@@ -20,13 +20,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
+    "assetBundlePatterns": [ 
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "vn.vulcano.app",
-      "buildNumber": "1.0.6",
+      "buildNumber": "1.0.7",
       "infoPlist": {
         "NSPhotoLibraryAddUsageDescription": "Ứng dụng sử dụng thư viện ảnh để lưu ảnh sản phẩm",
         "NSPhotoLibraryUsageDescription": "Ứng dụng sử dụng thư viện ảnh để lưu ảnh sản phẩm"
@@ -36,7 +36,7 @@
       }
     },
     "android": {
-      "versionCode": 6,
+      "versionCode": 7,
       "package": "vn.vulcano.app",
       "config": {
         "googleMaps": {

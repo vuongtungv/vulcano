@@ -61,7 +61,11 @@ export default class Home extends React.Component {
     this.getOneBanner();
     this.getCateIdHome(); 
     this.cateBigHome(); // áo, quần, bộ quần áo
+
   }
+
+
+
 
   componentWillUnmount() {
     this.keyboardHideListener.remove()
@@ -73,6 +77,7 @@ export default class Home extends React.Component {
     });
   }
 
+  
 
 
   
