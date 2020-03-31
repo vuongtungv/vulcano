@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, Alert,Platform } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import MainStyle from './styles/MainStyle.js';
 import { NavigationActions } from 'react-navigation';

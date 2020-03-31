@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList , Alert, TextInput, KeyboardAvoidingView} from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList , Alert, TextInput, KeyboardAvoidingView,Keyboard, Platform} from 'react-native';
 import { Picker} from "native-base";
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
@@ -8,6 +8,11 @@ import { Container, Content, CheckBox, Icon } from "native-base";
 import { submitLogin } from '../../src/api/apiUser';
 import saveStorage from './../api/saveStorage';
 import getStorage from './../api/getStorage';
+
+import { registerForPushNotificationsAsync } from './../api/registerForPushNotificationsAsync';
+import { Notifications } from 'expo';
+import Constants from 'expo-constants';
+
 
 export default class Login extends Component{
     static navigationOptions = ({ navigation }) => ({
@@ -18,6 +23,7 @@ export default class Login extends Component{
         super(props);
         
         this.state = {
+            token:'',
             username: '',
             password: '',
             showPassword: true,
@@ -27,9 +33,51 @@ export default class Login extends Component{
         this.arr = [];
     }
  
-    componentDidMount() {
-        const { token } = this.props.navigation.state.params;
+    async componentDidMount() {
+        getStorage('user')
+        .then(user => {
+            if (user != '') {
+                let arrUser = JSON.parse(user);
+                console.log(arrUser);
+                this.setState({ 
+                    user_id: arrUser.id,
+                    fullname: arrUser.fullname,
+                    email: arrUser.email,
+                    created_time: arrUser.created_time,
+                });
+            }else{
+                registerForPushNotificationsAsync();
+                this._notificationSubscription = Notifications.addListener(this._handleNotification);
+            }  
+        });
+        try {
+            if (!Constants.isDevice) {
+                var token = '';
+            }else{
+                var token = await Notifications.getExpoPushTokenAsync();
+            }
+            console.log(token);
+            this.setState({token});
+            
+        } catch (e) {
+            console.log('Error');
+        }
+
+        this.keyboardHideListener = Keyboard.addListener(Platform.OS === 'android' ? 'keyboardDidHide': 'keyboardWillHide', this.keyboardHideListener.bind(this));
     }
+
+    componentWillUnmount() {
+        this.keyboardHideListener.remove()
+    }
+    _handleNotification = notification => {
+        // do whatever you want to do with the notification
+        this.setState({ notification: notification });
+    };  
+    keyboardHideListener() {
+        this.setState({
+            keyboardAvoidingViewKey:'keyboardAvoidingViewKey' + new Date().getTime()
+        });
+    } 
 
 
     gotoLogin(){
@@ -58,9 +106,13 @@ export default class Login extends Component{
 
 
     submitLogin(){
+        var token = this.state.token;
         var username = this.state.username;
         var password = this.state.password;
-        const { token } = this.props.navigation.state.params;
+        // const { token } = this.props.navigation.state.params;
+
+        // Alert.alert(token);
+
         if(username == ''){
             Alert.alert('Số điện thoại hoặc email không được trống');
             return;

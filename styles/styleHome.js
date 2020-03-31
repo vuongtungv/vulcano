@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     borderColor: "#000000",
     borderRadius: ScreenWidth / 14,
   },
-  textCateHome:{
+  textCateHome:{ 
     fontSize: 15,
     fontFamily:"RobotoRegular",
     textAlign: 'center'

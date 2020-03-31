@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.7",
+    "version": "1.0.8",
     "orientation": "portrait",
     "icon": "./assets/0_icon.png",
     "splash": {
@@ -36,7 +36,7 @@
       }
     },
     "android": {
-      "versionCode": 7,
+      "versionCode": 8,
       "package": "vn.vulcano.app",
       "config": {
         "googleMaps": {

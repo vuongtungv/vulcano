@@ -24,10 +24,6 @@ let ScreenWidth = Dimensions.get("window").width;
 let ScreenHeight = Dimensions.get("window").height;
 
 
-
-import { registerForPushNotificationsAsync } from './api/registerForPushNotificationsAsync';
-import { Notifications } from 'expo';
-import Constants from 'expo-constants';
 import saveStorage from './api/saveStorage';
 import getStorage from './api/getStorage';
 
@@ -61,21 +57,7 @@ export default class Home extends React.Component {
     this.getOneBanner();
     this.getCateIdHome(); 
     this.cateBigHome(); // áo, quần, bộ quần áo
-
   }
-
-
-
-
-  // componentWillUnmount() {
-  //   this.keyboardHideListener.remove()
-  // }
-
-  // keyboardHideListener() {
-  //   this.setState({
-  //       keyboardAvoidingViewKey:'keyboardAvoidingViewKey' + new Date().getTime()
-  //   });
-  // }
 
   
 
@@ -181,7 +163,7 @@ export default class Home extends React.Component {
 
 
 
-  render() {
+  render() { 
     const { navigation, page, title, heading } = this.props;
 
     return (
@@ -191,7 +173,7 @@ export default class Home extends React.Component {
           <View style={[MainStyle.slideHome,{width: ScreenWidth, height:ScreenWidth*this.state.heightSwiper}]}>
               <Swiper autoplay={true} autoplayTimeout={4}>
                   {this.state.listSlide.map((item, index) => {return (
-                    <View>
+                    <View key={index}>
                       <Image key={index} style={[MainStyle.itemsSlideHome,{ width: ScreenWidth, height: ScreenWidth*item.heightImage/item.widthImage}]} source={{uri: item.image}} />
                     </View>
                   )})}

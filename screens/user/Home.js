@@ -29,7 +29,6 @@ export default class Home extends Component{
             created_time: '',
             notification: {},
             token: '',
-            keyboardAvoidingViewKey:'keyboardAvoidingViewKey'
         }
 
         this.arr = [];
@@ -48,35 +47,36 @@ export default class Home extends Component{
                     created_time: arrUser.created_time,
                 });
             }else{
-                registerForPushNotificationsAsync();
-                this._notificationSubscription = Notifications.addListener(this._handleNotification);
+                // registerForPushNotificationsAsync();
+                // this._notificationSubscription = Notifications.addListener(this._handleNotification);
             }  
         });
-        try {
-            var token = await Notifications.getExpoPushTokenAsync();
-            if (!Constants.isDevice) {
-                var token = '';
-            }else{
-                var token = await Notifications.getExpoPushTokenAsync();
-            }
-            this.setState({token});
-            console.log(this.state.token);
+        // try {
+        //     if (!Constants.isDevice) {
+        //         var token = '';
+        //     }else{
+        //         var token = await Notifications.getExpoPushTokenAsync();
+        //     }
+        //     console.log(token);
+        //     this.setState({token});
             
-        } catch (e) {
-            console.log('Error token');
-        }
+        // } catch (e) {
+        //     console.log('Error');
+        // }
 
-        this.keyboardHideListener = Keyboard.addListener(Platform.OS === 'android' ? 'keyboardDidHide': 'keyboardWillHide', this.keyboardHideListener.bind(this));
+        // this.keyboardHideListener = Keyboard.addListener(Platform.OS === 'android' ? 'keyboardDidHide': 'keyboardWillHide', this.keyboardHideListener.bind(this));
     }
 
-    _handleNotification = notification => {
-        // do whatever you want to do with the notification
-        this.setState({ notification: notification });
-    };
+    // componentWillUnmount() {
+    //     this.keyboardHideListener.remove()
+    // }
+    // _handleNotification = notification => {
+    //     // do whatever you want to do with the notification
+    //     this.setState({ notification: notification });
+    // };  
 
 
-    gotoLogin(){
-        token = this.state.token;
+    gotoLogin(token){
         this.props.navigation.navigate('LoginScreen', {token: token});
     }
     gotoListOrder(){

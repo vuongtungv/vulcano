@@ -91,6 +91,14 @@ export default class HeaderBase extends Component {
     notifiHome(){
         this.props.navigation.navigate('NotifiHomeScreen');
     }
+
+
+    componentWillUnmount(){
+        clearInterval(this._interval);
+    }
+    onRefresh(){
+        this.getCountNotifi();
+    }
     getCountNotifi = () => {
         // this.setState({ loading: true });
         getStorage('user')

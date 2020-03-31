@@ -3,7 +3,8 @@ import { Text, View, TouchableOpacity, ActivityIndicator, Image,FlatList, Scroll
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
-import Swiper from "react-native-swiper";
+import Swiper from 'react-native-swiper';
+
 import { Container, Content, CheckBox, Icon } from "native-base";
 import {getDetailProducts} from './../../src/api/apiProducts';
 import HTML from 'react-native-render-html';
@@ -29,6 +30,7 @@ export default class DetailProduct extends Component{
         super(props);
         
         this.state = {
+            renderArray: [true, false, false, false],
             detail: '',
             amount: '1',
             modalVisible: false,
@@ -99,18 +101,7 @@ export default class DetailProduct extends Component{
         });
         this.setState({ image, modalVisible: true });   
     }
-    
-    // showImagesDefault(){
-    //     const image = this.state.detail.image.replace('/large/', '/original/');
-    //     var w = this.state.detail.widthImageOriginal;
-    //     var h = this.state.detail.heightImageOriginal;
-    //     var imageWidth = width - 40;
-    //         var imageHeight = imageWidth*h/w;
-    //         this.setState({
-    //             imageWidth, imageHeight
-    //         });
-    //     this.setState({ image, modalVisible: true });   
-    // }
+   
     imgModalSave(){
         const uri = this.state.image;
         var filename = uri.substring(uri.lastIndexOf('/')+1);
@@ -258,13 +249,17 @@ export default class DetailProduct extends Component{
         saveStorage('cart', '');
         this.addCart();
     }
+    indexChanged(index) {
+        var tempvar = this.state.renderArray;
+        tempvar[index] = true
+        this.setState({ renderArray: tempvar}); //<<======== problem with this
+      }
 
-
-
+      
 	 
     render() {
         const {navigation} = this.props;
-
+    
         return(  
             <Container>
                 {/* <HeaderBase page="list_products" title={'Sản phẩm'} navigation={navigation} /> */} 
@@ -276,13 +271,14 @@ export default class DetailProduct extends Component{
                         <TouchableOpacity style={[MainStyle.btnRa50,MainStyle.addDetailP]} onPress={()=>this.gotoCart()}>
                             <Icon type="SimpleLineIcons" name="handbag" style={{ color: '#FFFFFF', fontSize: 25 }} />
                         </TouchableOpacity>
-                        <Swiper autoplay={true} autoplayTimeout={4} >
+                        <Swiper>
                             {this.state.arr_image.map((item, index) => {return (
-                                <TouchableOpacity key={index} onPress={() => this.showImages(index)}>
-                                    <Image style={MainStyle.itemsSlideDetailProduct} source={{ uri:item.image}} />    
+                                <TouchableOpacity key={item.id} onPress={() => this.showImages(index)} style={[MainStyle.itemsSlideDetailProduct,{width:width, height: width*480/360}]}>
+                                    <Image key={item.id} style={[MainStyle.itemsSlideDetailProduct,{width:width, height: width*480/360}]} source={{ uri:item.image}} />    
                                 </TouchableOpacity> 
                             )})} 
                         </Swiper>
+                        
                         
                     </View>
                     <View style={MainStyle.tDetailProduct}>
@@ -297,7 +293,7 @@ export default class DetailProduct extends Component{
                         <View style={MainStyle.vStyleProduct}>
                             {/* <Text style={[MainStyle.btnStylePro,MainStyle.btnBorderActive]}>12345</Text> */}
                             {this.state.arr_kieu_dang.map((item, index) => {return (
-                                <TouchableOpacity onPress={()=>this.setChooseStyle(index,item.id,item.name)}>
+                                <TouchableOpacity key={index} onPress={()=>this.setChooseStyle(index,item.id,item.name)}>
                                     <Text key={index} style={[MainStyle.btnSizePro, { borderColor: this.state.default_style == index ? '#ff0700' : '#FFFFFF', borderWidth: 1 }]}>
                                         {item.name}
                                     </Text>
