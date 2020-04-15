@@ -40,6 +40,7 @@ export default class Home extends React.Component {
       listSlide: [],
       oneBanner: [],
       listCate: [],
+      img_top_sales: '',
       listCateBig: '',
       heightSwiper: '',
       countNotify: '',
@@ -104,14 +105,13 @@ export default class Home extends React.Component {
   getCateIdHome= () => {
     getCateIdHome()
     .then(resJSON => {
-        const { list, error } = resJSON;
+        const { list, error,img_top_sales } = resJSON;
         if (error == false) {
             this.setState({  
               listCate: list,  
+              img_top_sales: img_top_sales,
               error: false || null,  
             });
-            
-
         } else {
             this.setState({ loading: false, refreshing: false });
         }
@@ -238,7 +238,14 @@ export default class Home extends React.Component {
             
             <TouchableOpacity style={MainStyle.itemsCateSmallHome} onPress={()=>this.sellingProducts()}>
               <View style={MainStyle.viewSmallHome}>
-                <Image style={MainStyle.imgSmallHome} source={require("../assets/image_cate_small.png")} />
+                { 
+                  this.state.img_top_sales !='' ? 
+                  <Image style={MainStyle.imgSmallHome} source={{uri: this.state.img_top_sales}} />
+                
+                  :
+                  <Image style={MainStyle.imgSmallHome} source={require("../assets/image_cate_small.png")} />
+                }
+                
               </View>
               <View style={MainStyle.bodySmallHome}>
                 <Text style={MainStyle.titleSmall}>Top bán chạy</Text>

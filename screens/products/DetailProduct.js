@@ -16,7 +16,7 @@ import saveStorage from './../api/saveStorage';
 import getStorage from './../api/getStorage';
 
 
-import * as MediaLibrary from 'expo-media-library';
+import * as MediaLibrary from 'expo-media-library'; 
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
 import global from './../api/global';
@@ -48,6 +48,7 @@ export default class DetailProduct extends Component{
             default_name_size: 0,
             id_style: 0,
             id_size: 0,
+            loading: false,
         }
 
         this.arr = [];
@@ -74,6 +75,7 @@ export default class DetailProduct extends Component{
                         id_style: id_style,
                         loaded: true,
                         otherProducts: otherProducts,
+                        loading: true,
                     }); 
                 }
             }).catch(err => {
@@ -249,11 +251,6 @@ export default class DetailProduct extends Component{
         saveStorage('cart', '');
         this.addCart();
     }
-    indexChanged(index) {
-        var tempvar = this.state.renderArray;
-        tempvar[index] = true
-        this.setState({ renderArray: tempvar}); //<<======== problem with this
-      }
 
       
 	 
@@ -271,13 +268,24 @@ export default class DetailProduct extends Component{
                         <TouchableOpacity style={[MainStyle.btnRa50,MainStyle.addDetailP]} onPress={()=>this.gotoCart()}>
                             <Icon type="SimpleLineIcons" name="handbag" style={{ color: '#FFFFFF', fontSize: 25 }} />
                         </TouchableOpacity>
-                        <Swiper>
+                        {this.state.loading && <Swiper 
+                            index = {0}
+                            onIndexChanged = {(index) => this.setState({position: index})} 
+                            loop={true}
+                            bounces={true}>
+                            {this.state.arr_image.map((item, index) => (
+                                <TouchableOpacity key={index} onPress={() => this.showImages(index)} style={[MainStyle.itemsSlideDetailProduct,{width:width, height: width*480/360}]}>
+                                    <Image style={[MainStyle.itemsSlideDetailProduct,{width:width, height: width*480/360}]} source={{ uri:item.image}} />    
+                                </TouchableOpacity> 
+                            ))}
+                        </Swiper>}
+                        {/* <Swiper>
                             {this.state.arr_image.map((item, index) => {return (
-                                <TouchableOpacity key={item.id} onPress={() => this.showImages(index)} style={[MainStyle.itemsSlideDetailProduct,{width:width, height: width*480/360}]}>
-                                    <Image key={item.id} style={[MainStyle.itemsSlideDetailProduct,{width:width, height: width*480/360}]} source={{ uri:item.image}} />    
+                                <TouchableOpacity key={index} onPress={() => this.showImages(index)} style={[MainStyle.itemsSlideDetailProduct,{width:width, height: width*480/360}]}>
+                                    <Image style={[MainStyle.itemsSlideDetailProduct,{width:width, height: width*480/360}]} source={{ uri:item.image}} />    
                                 </TouchableOpacity> 
                             )})} 
-                        </Swiper>
+                        </Swiper> */}
                         
                         
                     </View>
@@ -335,6 +343,11 @@ export default class DetailProduct extends Component{
                             <Text style={[MainStyle.headerSlo,{lineHeight: 30}]}>
                                 Miễn phí vận chuyển cho đơn hàng từ <Text style={[MainStyle.colorPriceProducts,MainStyle.headerSlo,{lineHeight: 30}]}> 400.000 đ</Text>
                             </Text>
+                        </View>
+                        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+                            <HTML 
+                                html={this.state.detail.description} imagesMaxWidth={width-40} 
+                            />
                         </View>
                     </View>
                     <View style={MainStyle.vHeaderOtherNews}>
