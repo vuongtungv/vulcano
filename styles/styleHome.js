@@ -403,7 +403,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: '#000000',
+    backgroundColor: '#000000', 
     justifyContent: 'center',
     alignItems: 'center',
   },

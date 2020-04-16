@@ -20,6 +20,7 @@ export default class Cart extends React.Component {
             list: [],
             total: '',
             count: 0,
+            sale_by_app: 0,
 			page: 1,
 			refreshing: false,
             loading: false,
@@ -64,7 +65,7 @@ export default class Cart extends React.Component {
         this.setState({ loading: true });
         get_product_by_cart(ids)
         .then(resJSON => {
-            const { list, total,count, error } = resJSON;
+            const { list, total,count,sale_by_app, error } = resJSON;
             console.log(list);
             if (error == false) {
                 this.setState({
@@ -72,6 +73,7 @@ export default class Cart extends React.Component {
                     total: total,
                     error: false || null,  
                     count: count,
+                    sale_by_app: sale_by_app,
                 });  
             } else {
                 this.setState({ loading: false, refreshing: false,count: 0 });
@@ -316,7 +318,12 @@ export default class Cart extends React.Component {
                             :
                             <View style={{padding: 20}}><Text style={{fontFamily: "RobotoRegular", fontSize: 15,}}>Không có sản phẩm nào trong giỏ hàng</Text></View>
                         }
-                    
+                        {
+                            this.state.sale_by_app > 0 ?
+                            <View style={{fontFamily: 'RobotoRegular', fontSize: 14, padding: 20, backgroundColor: '#FFFFFF', flexDirection: 'row', flexWrap: 'wrap'}}><Text>Giảm : </Text><Text style={{fontFamily: 'RobotoBold', color: '#ff0700'}}>{this.state.sale_by_app} đ</Text><Text> khi mua hàng trên ứng dụng</Text></View>
+                            :
+                            <View><Text></Text></View>
+                        }
                    
                     </ScrollView>
                 </View>

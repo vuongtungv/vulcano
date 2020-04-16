@@ -119,42 +119,46 @@ export default class NotifiHome extends Component{
                 <HeaderBase page="user" title={'Thông báo'} navigation={navigation} />
                 { this.state.user_id ?
                     <View style={[MainStyle.notifiListHome]}>
-                        <FlatList  
-                            data={this.state.list}   
-                            renderItem={({ item }) => (
-                                <TouchableOpacity key={item.id} onPress={()=>this.detailNotifi(item.screen,item.record_id)}> 
-                                    <View style={MainStyle.infoItemCart}>
-                                        <View style={{marginRight: 10, width: 70, height: 70, borderRadius: 40, overflow: 'hidden', backgroundColor: '#d9d9d9', justifyContent: 'center', alignItems: 'center'}}>
-                                            {/* <Image style={{width: 65, height: 35}}  source={require("../../assets/logo.png")} /> */}
-                                            { 
-                                                item.image !='' ? 
-                                                <Image style={MainStyle.imgCart} source={{uri:item.image }} />
-                                                :
-                                                <Image style={{width: 65, height: 35}}  source={require("../../assets/logo.png")} />
-                                            }
-                                        </View>
-                                        <View style={[MainStyle.rightInfoItem]}>
-                                            <View>
-                                                <View style={{width: '100%'}}>
-                                                    <Text style={[MainStyle.tProductItemCart,{fontFamily: 'RobotoBold'}]}>{item.title}</Text>
-                                                    <Text style={[MainStyle.tProductItemCart,{textTransform: 'lowercase'}]}> {item.body}</Text>
-                                                </View>
-                                                <View style={{width: '100%', marginTop: 0}}>
-                                                    <Text style={MainStyle.dateTimeNotifi}>{item.created_time}</Text>
+                        {
+                            this.state.count > 0 ?
+                            <FlatList  
+                                data={this.state.list}   
+                                renderItem={({ item }) => (
+                                    <TouchableOpacity key={item.id} onPress={()=>this.detailNotifi(item.screen,item.record_id)}> 
+                                        <View style={MainStyle.infoItemCart}>
+                                            <View style={{marginRight: 10, width: 70, height: 70, borderRadius: 40, overflow: 'hidden', backgroundColor: '#d9d9d9', justifyContent: 'center', alignItems: 'center'}}>
+                                                {/* <Image style={{width: 65, height: 35}}  source={require("../../assets/logo.png")} /> */}
+                                                { 
+                                                    item.image !='' ? 
+                                                    <Image style={MainStyle.imgCart} source={{uri:item.image }} />
+                                                    :
+                                                    <Image style={{width: 65, height: 35}}  source={require("../../assets/logo.png")} />
+                                                }
+                                            </View>
+                                            <View style={[MainStyle.rightInfoItem]}>
+                                                <View>
+                                                    <View style={{width: '100%'}}>
+                                                        <Text style={[MainStyle.tProductItemCart,{fontFamily: 'RobotoBold'}]}>{item.title}</Text>
+                                                        <Text style={[MainStyle.tProductItemCart,{textTransform: 'lowercase'}]}> {item.body}</Text>
+                                                    </View>
+                                                    <View style={{width: '100%', marginTop: 0}}>
+                                                        <Text style={MainStyle.dateTimeNotifi}>{item.created_time}</Text>
+                                                    </View>
                                                 </View>
                                             </View>
                                         </View>
-                                    </View>
-                                </TouchableOpacity>
-                                )}
-                                keyExtractor={item => item.id}
-                                contentContainerStyle={MainStyle.containerListProducts}
-                                ListFooterComponent={this.renderFooter}     
-                                refreshing={this.state.refreshing}
-                                onEndReached={this.handleLoadMore}
-                                onEndReachedThreshold={0.5}
-                        />   
-                        
+                                    </TouchableOpacity>
+                                    )}
+                                    keyExtractor={item => item.id}
+                                    contentContainerStyle={MainStyle.containerListProducts}
+                                    ListFooterComponent={this.renderFooter}     
+                                    refreshing={this.state.refreshing}
+                                    onEndReached={this.handleLoadMore}
+                                    onEndReachedThreshold={0.5}
+                            />   
+                            :
+                            <View style={{padding: 20}}><Text>Bạn không có thông báo.</Text></View>
+                        }
                     </View>
                     :
                     <View style={{padding: 20}}><Text>Bạn cần đăng nhập để nhận thông báo</Text></View>

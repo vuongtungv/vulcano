@@ -173,7 +173,12 @@ export default class Home extends React.Component {
           <View style={[MainStyle.slideHome,{width: ScreenWidth, height:ScreenWidth*this.state.heightSwiper}]}>
               <Swiper autoplay={true} autoplayTimeout={4}>
                   {this.state.listSlide.map((item, index) => {return (
-                    <View key={index}>
+                    item.cate_id !='' ?
+                    <TouchableOpacity key={index} onPress={()=>this.listProductsInCate(item.cate_id,item.cate_name,item.id_material,item.id_style)}>
+                      <Image key={index} style={[MainStyle.itemsSlideHome,{ width: ScreenWidth, height: ScreenWidth*item.heightImage/item.widthImage}]} source={{uri: item.image}} />
+                    </TouchableOpacity>
+                    :
+                    <View key={index} >
                       <Image key={index} style={[MainStyle.itemsSlideHome,{ width: ScreenWidth, height: ScreenWidth*item.heightImage/item.widthImage}]} source={{uri: item.image}} />
                     </View>
                   )})}
@@ -215,6 +220,12 @@ export default class Home extends React.Component {
           </View>
 
           {this.state.oneBanner.map((item, index) => {return (
+            item.cate_id !='' ?
+            <TouchableOpacity key={index} onPress={()=>this.listProductsInCate(item.cate_id,item.cate_name,item.id_material,item.id_style)} style={[MainStyle.bannerHome,{width: ScreenWidth, height:ScreenWidth*item.heightImage/item.widthImage }]}>
+              {/* <Image style={MainStyle.itemsBannerHome} source={require("../assets/banner_home.png")} /> */}
+              <Image style={[MainStyle.itemsBannerHome,{width: ScreenWidth, height:ScreenWidth*item.heightImage/item.widthImage }]} source={{uri: item.image}} />
+            </TouchableOpacity>
+            :
             <View key={index} style={[MainStyle.bannerHome,{width: ScreenWidth, height:ScreenWidth*item.heightImage/item.widthImage }]}>
               {/* <Image style={MainStyle.itemsBannerHome} source={require("../assets/banner_home.png")} /> */}
               <Image style={[MainStyle.itemsBannerHome,{width: ScreenWidth, height:ScreenWidth*item.heightImage/item.widthImage }]} source={{uri: item.image}} />
@@ -265,10 +276,10 @@ export default class Home extends React.Component {
                     data={this.state.listCateBig}   
                     renderItem={({ item }) => (
                       <View key={item.id} style={MainStyle.itemBigHome} >
-                        <View style={[MainStyle.imgBigHome,{width: ScreenWidth, height:ScreenWidth*item.heightImage/item.widthImage }]}>
+                        <TouchableOpacity onPress={()=>this.listProductsInCate(item.id,item.name)} style={[MainStyle.imgBigHome,{width: ScreenWidth, height:ScreenWidth*item.heightImage/item.widthImage }]}>
                           {/* <Image style={MainStyle.imgBigHome} source={require("../assets/image_cate_big.png")} /> */}
                           <Image style={[MainStyle.imgBigHome,{width: ScreenWidth, height:ScreenWidth*item.heightImage/item.widthImage }]} source={{ uri: item.image}} />
-                        </View>
+                        </TouchableOpacity>
                         <View style={MainStyle.bodyBigHome}>
                           <Text style={MainStyle.titleBig}>{item.name} Vulcano</Text>
                           <TouchableOpacity onPress={()=>this.listProductsInCate(item.id,item.name)}><Text style={MainStyle.viewNow}>Xem thêm</Text></TouchableOpacity>

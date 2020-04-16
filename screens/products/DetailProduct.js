@@ -10,7 +10,7 @@ import {getDetailProducts} from './../../src/api/apiProducts';
 import HTML from 'react-native-render-html';
 const { width } = Dimensions.get('window');
 const { heigth } = Dimensions.get('window');
-
+import AutoHeightWebView from 'react-native-autoheight-webview';
 
 import saveStorage from './../api/saveStorage';
 import getStorage from './../api/getStorage';
@@ -344,12 +344,23 @@ export default class DetailProduct extends Component{
                                 Miễn phí vận chuyển cho đơn hàng từ <Text style={[MainStyle.colorPriceProducts,MainStyle.headerSlo,{lineHeight: 30}]}> 400.000 đ</Text>
                             </Text>
                         </View>
+                    </View>  
+                    <View style={MainStyle.tDetailProduct}>
                         <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-                            <HTML 
-                                html={this.state.detail.description} imagesMaxWidth={width-40} 
+                            <AutoHeightWebView
+                                customScript={`document.body.style.background = 'transparent';`}
+                                style={{ width: width-40 }}
+                                files={[{
+                                    href: global.BASE_URL+'/templates/default/css/app.css?v=333',
+                                    type: 'text/css',
+                                    rel: 'stylesheet'
+                                }]}
+                                source={{ html: this.state.detail.description }}
+                                zoomable={false}
                             />
                         </View>
                     </View>
+                    
                     <View style={MainStyle.vHeaderOtherNews}>
                         <Text style={MainStyle.txtOtherNews}>Sản phẩm cùng loại</Text>
                         <View style={[MainStyle.brBottomOther,{width: 150}]}></View>
@@ -414,7 +425,18 @@ export default class DetailProduct extends Component{
                     <View style={[MainStyle.modalSizeGuide]}> 
                         <TouchableOpacity onPress={()=>this.setState({modalVisibleSize:false})} style={MainStyle.bgPopupScreen}></TouchableOpacity>
                         <ScrollView style={MainStyle.visibalPop}>
-                            <HTML html={this.state.size_guide} imagesMaxWidth={Dimensions.get('window').width -80} />
+                            <AutoHeightWebView
+                                customScript={`document.body.style.background = 'transparent';`}
+                                style={{ width: width-80 }}
+                                files={[{
+                                    href: global.BASE_URL+'/templates/default/css/app.css?v=333',
+                                    type: 'text/css',
+                                    rel: 'stylesheet'
+                                }]}
+                                source={{ html: this.state.size_guide }}
+                                zoomable={false}
+                            />
+                            {/* <HTML html={this.state.size_guide} imagesMaxWidth={Dimensions.get('window').width -80} /> */}
                             {/* <TouchableOpacity style={MainStyle.tBtnModal} onPress={()=>this.setState({modalVisibleSize:false})}>
                                 <Text style={[MainStyle.txtModal,MainStyle.txtModalW]}>Đóng</Text>
                             </TouchableOpacity> */}

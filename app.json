@@ -9,24 +9,24 @@
       "android",
       "web"
     ],
-    "version": "1.0.8",
+    "version": "1.0.9",
     "orientation": "portrait",
     "icon": "./assets/0_icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+      "backgroundColor": "#dddddd"  
+    },    
     "updates": {
       "fallbackToCacheTimeout": 0
-    },
+    },  
     "assetBundlePatterns": [ 
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "vn.vulcano.app",
-      "buildNumber": "1.0.8",
+      "buildNumber": "1.0.9",
       "infoPlist": {
         "NSPhotoLibraryAddUsageDescription": "Ứng dụng sử dụng thư viện ảnh để lưu ảnh sản phẩm",
         "NSPhotoLibraryUsageDescription": "Ứng dụng sử dụng thư viện ảnh để lưu ảnh sản phẩm"
@@ -36,7 +36,7 @@
       }
     },
     "android": {
-      "versionCode": 8,
+      "versionCode": 9,
       "package": "vn.vulcano.app",
       "config": {
         "googleMaps": {

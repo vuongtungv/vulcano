@@ -4,7 +4,7 @@ import MainStyle from './../../styles/MainStyle';
 import FooterBase from './../template/FooterBase';
 import HeaderBase from './../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
-import HTML from 'react-native-render-html';
+import AutoHeightWebView from 'react-native-autoheight-webview';
 
 import {getDetailNews} from '../../src/api/apiNews';
 import { FlatList } from 'react-native-gesture-handler';
@@ -102,9 +102,20 @@ export default class DetailNews extends Component{
                             </Text>
                             
                             <Image style={{width: '100%'}} source={require('../../assets/img_detail_news.png')}/> */}
-                            <HTML 
-                                html={this.state.detail.content} imagesMaxWidth={ScreenWidth-40} 
+                            <AutoHeightWebView
+                                customScript={`document.body.style.background = 'transparent';`}
+                                style={{ width: ScreenWidth-40 }}
+                                files={[{
+                                    href: global.BASE_URL+'/templates/default/css/app.css?v=333',
+                                    type: 'text/css',
+                                    rel: 'stylesheet'
+                                }]}
+                                source={{ html: this.state.detail.content }}
+                                zoomable={false}
                             />
+                            {/* <HTML 
+                                html={this.state.detail.content} imagesMaxWidth={ScreenWidth-40} 
+                            /> */}
 
                         </View> 
                         <View style={MainStyle.tagsDetailNews}>
