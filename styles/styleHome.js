@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   slideHome: {
     width: ScreenWidth,
     height: '100%',
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
   },
   itemsSlideHome: {
     width: ScreenWidth,
