@@ -253,7 +253,7 @@ export default class Register extends Component{
                                                 />
                                                 <TouchableOpacity style={MainStyle.showPass} onPress={()=>this.showPass()}><Text>{this.state.textShowHidden}</Text></TouchableOpacity>
                                             </View>
-                                            <View style={{paddingTop: 25,paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: '#e0e0e0'}}>
+                                            {/* <View style={{paddingTop: 25,paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: '#e0e0e0'}}>
                                                 <DatePicker 
                                                     mode="date"
                                                     date= {this.state.birthday}
@@ -284,7 +284,7 @@ export default class Register extends Component{
                                             </View>
                                             <View style={{paddingTop: 30, paddingBottom: 10}}>
                                                 {this.renderButtonGender()}
-                                            </View>
+                                            </View> */}
                                             <TouchableOpacity style={[MainStyle.touchSubLogin, {marginBottom: 30, marginTop: 10,}]} onPress={()=>this.submitRegister()}>
                                                 <Text style={MainStyle.txtSubLogin}>Đăng ký</Text>
                                             </TouchableOpacity>
