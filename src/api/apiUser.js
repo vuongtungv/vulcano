@@ -18,6 +18,14 @@ export function updateUser(user_id, fullname, phone, email, password, newPasswor
     .then(res => res.json());
 };
 
+// get hotline
+export function getHotline(){
+    let url;
+    url = global.BASE_URL+`/get_hotline.api`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
 
 // Đăng nhập
 export function submitLogin(username, password, token){

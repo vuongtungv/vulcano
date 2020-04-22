@@ -11,6 +11,8 @@ import { registerForPushNotificationsAsync } from './../api/registerForPushNotif
 import { Notifications } from 'expo';
 import Constants from 'expo-constants';
 
+import { getHotline } from '../../src/api/apiUser';
+
 import saveStorage from './../api/saveStorage';
 import getStorage from './../api/getStorage'
 
@@ -29,12 +31,14 @@ export default class Home extends Component{
             created_time: '',
             notification: {},
             token: '',
+            hotline: '',
         }
 
         this.arr = [];
     }
  
     async componentDidMount() {
+        this.getHotline();
         getStorage('user')
         .then(user => {
             if (user != '') {
@@ -74,6 +78,25 @@ export default class Home extends Component{
     //     // do whatever you want to do with the notification
     //     this.setState({ notification: notification });
     // };  
+
+
+    getHotline = () => {
+        // this.setState({ loading: true });
+        getHotline()
+        .then(resJSON => {
+            const { error, hotline } = resJSON;
+            if (error == false) {
+                this.setState({
+                  hotline: hotline,  
+                  error: false || null,  
+                });  
+            }
+    
+        }).catch(err => {
+            // this.setState({ loading: false }); 
+        });
+      }
+
 
 
     gotoLogin(token){
@@ -140,14 +163,14 @@ export default class Home extends Component{
                             </TouchableOpacity>
                             <View style={MainStyle.userHomeTab}>
                                 <Icon type="FontAwesome" name="phone" style={MainStyle.userIconLeftTab} />
-                                <Text style={MainStyle.userHomeTitleTab}>Hotline: <Text style={{color: '#ce1e1e'}}>0988191996</Text> (tư vấn miễn phí)</Text>
+                                <Text style={MainStyle.userHomeTitleTab}>Hotline: <Text style={{color: '#ce1e1e'}}>{this.state.hotline}</Text> (tư vấn miễn phí)</Text>
                             </View>
                         </View>
                         :
                         <View style = {{borderTopColor: '#f8f8ff', borderTopWidth: 10, paddingLeft: 20, paddingRight: 20}}>
                             <View style={MainStyle.userHomeTab}>
                                 <Icon type="FontAwesome" name="phone" style={MainStyle.userIconLeftTab} />
-                                <Text style={MainStyle.userHomeTitleTab}>Hotline: <Text style={{color: '#ce1e1e'}}>0988191996</Text> (tư vấn miễn phí)</Text>
+                                <Text style={MainStyle.userHomeTitleTab}>Hotline: <Text style={{color: '#ce1e1e'}}>{this.state.hotline}</Text> (tư vấn miễn phí)</Text>
                             </View>
                         </View>
                     }
