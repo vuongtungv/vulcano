@@ -270,6 +270,8 @@ export default class DetailProduct extends Component{
                         </TouchableOpacity>
                         {this.state.loading && <Swiper 
                             index = {0}
+                            autoplay={true} 
+                            autoplayTimeout={4}
                             onIndexChanged = {(index) => this.setState({position: index})} 
                             loop={true}
                             bounces={true}>
