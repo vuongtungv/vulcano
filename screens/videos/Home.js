@@ -1,14 +1,15 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList,WebView } from 'react-native';
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
 import {getAllVideos} from '../../src/api/apiVideos';
-import { Video } from 'expo-av';
+
+
 export default class Home extends Component{
     static navigationOptions = ({ navigation }) => ({
-		header: null,
+		header: null, 
     });
  
     constructor(props) {
@@ -76,7 +77,7 @@ export default class Home extends Component{
 	
     render() {
         const {navigation} = this.props;
-
+    
         return(
             <Container>
                 <HeaderBase page="videos" title={'Vulcano videos'} navigation={navigation} />
@@ -90,7 +91,7 @@ export default class Home extends Component{
                             />
                             <Text style={MainStyle.txtTitleVideos}>{item.title}</Text>
                         </View>
-                    )})}     */}
+                    )})}     */} 
                     <FlatList  
                         data={this.state.listVideos}   
                         renderItem={({ item }) => (
@@ -98,13 +99,14 @@ export default class Home extends Component{
                                 <WebView
                                     style={ MainStyle.styleVideos }
                                     javaScriptEnabled={true}
-                                    source={{uri: item.link}}
+                                    domStorageEnabled={true} 
+                                    source={{ html: item.html_link }}
                                 />
                                 <Text style={MainStyle.txtTitleVideos}>{item.title}</Text>
                             </View>
                         )}
                         keyExtractor={item => item.id}
-                        contentContainerStyle={MainStyle.containerListProducts}
+                        contentContainerStyle={MainStyle.containerListProducts} 
                         ListFooterComponent={this.renderFooter}     
                         refreshing={this.state.refreshing}
                         onEndReached={this.handleLoadMore}
