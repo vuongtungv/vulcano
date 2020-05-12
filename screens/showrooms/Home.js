@@ -8,7 +8,7 @@ import { Container, Content, CheckBox, Icon } from "native-base";
 
 import {getCities, getDistricts, getAllShowrooms} from '../../src/api/apiShowrooms';
 
-import MapView from 'react-native-maps';
+import MapView, { AnimatedRegion, PROVIDER_GOOGLE } from 'react-native-maps';
 
 export default class Home extends Component{
     static navigationOptions = ({ navigation }) => ({
@@ -26,12 +26,14 @@ export default class Home extends Component{
             listAllShowrooms: [],
             count: 1,
             region: {
-                latitude: 21.037834051277333,
-				longitude: 105.8411953210175,
-				latitudeDelta: 0.922,
-				longitudeDelta: 0.421,
+                latitude: '',
+				longitude: '',
+				latitudeDelta: '',
+				longitudeDelta: '',
             },
             markers: [],
+            width_icon_img: 0,
+            height_icon_img: 0,
             // markers: [{
             //     title: 'hello1',
             //     coordinates: {
@@ -55,8 +57,11 @@ export default class Home extends Component{
         this.getCity();
         // this.getDistricts();
         this.getAllShowrooms();
-        console.log(this.state.markers)
+        // console.log(this.state.markers)
+        this.getCurrentLocation();
     }
+
+
 
     getCity= () => {
         this.setState({ loading: true });
@@ -131,7 +136,7 @@ export default class Home extends Component{
         this.setState({ loading: true });
         getAllShowrooms(this.state.city,this.state.district)
         .then(resJSON => {
-            const { list,count, markers, error } = resJSON;
+            const { list,count, markers,icon_img, width_icon_img, height_icon_img, error } = resJSON;
             // console.log(markers);
             if (error == false) {
                 this.setState({
@@ -140,7 +145,10 @@ export default class Home extends Component{
                     refreshing: false,
                     error: false || null,   
                     count: count,
+                    icon_img: icon_img,
                     markers: markers,
+                    width_icon_img: width_icon_img,
+                    height_icon_img: height_icon_img,
                 });  
             } else {
                 this.setState({ loading: false, refreshing: false, count: 0 });
@@ -151,6 +159,27 @@ export default class Home extends Component{
         });
     }
 
+    async getCurrentLocation() {
+        navigator.geolocation.getCurrentPosition(
+            position => {
+            let region = {
+                    latitude: parseFloat(position.coords.latitude),
+                    longitude: parseFloat(position.coords.longitude),
+                    latitudeDelta: 0.922,
+                    longitudeDelta: 0.421
+                };
+                this.setState({
+                    region: region
+                });
+            },
+            error => console.log(error),
+            {
+                enableHighAccuracy: true, 
+                timeout: 20000,
+                maximumAge: 1000
+            }
+        );
+    }
 
 
 	
@@ -163,16 +192,26 @@ export default class Home extends Component{
                     <View style={MainStyle.vMap}>
                         <MapView ref={ref => { this.map = ref; }}
                             style={{ flex: 1 }}
+                            provider={PROVIDER_GOOGLE}
                             zoomEnabled = {true}
                             initialRegion={this.state.region}
+                    
+                        
+                            showsUserLocation={true}
+                        
+
                             >
                             { this.state.count >0 ?
                                  this.state.markers.map(marker => (
                                     <MapView.Marker 
-                                    image={require('../../assets/logo_vul.png')}
-                                    coordinate={marker.coordinates}
-                                    title={marker.title}
-                                    />
+                                        // image={require('../../assets/logo_vul.png')}
+                                        coordinate={marker.coordinates}
+                                        title={marker.title}>
+                                            <View style={{width: this.state.width_icon_img, height: this.state.height_icon_img}}>
+                                                <Image source={{uri: this.state.icon_img}} style={{width: this.state.width_icon_img, height: this.state.height_icon_img}} />
+                                            </View>
+                                        
+                                    </MapView.Marker>
                                 ))
                                 : 
                                 <MapView.Marker 

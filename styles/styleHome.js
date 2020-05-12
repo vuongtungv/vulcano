@@ -3,6 +3,7 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 let ScreenWidth = Dimensions.get("window").width;
 let ScreenHeight = Dimensions.get("window").height;
 import Constants from 'expo-constants';
+import { hide } from 'expo/build/launch/SplashScreen';
 const barHeight = Constants.statusBarHeight;
 
 const headerHeight = 60;
@@ -383,7 +384,7 @@ const styles = StyleSheet.create({
   },
   itemsSlideDetailProduct:{
     width: ScreenWidth,
-    height: ScreenWidth*1.2,
+    height: ScreenHeight - barHeight - 75 - 125,  
   },
   backDetailP:{
     position: 'absolute',
@@ -510,10 +511,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000'
   },
   modalBgWhite:{
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF'  
   },
   tModalBody:{
-    height: ScreenHeight - barHeight - 30 - 125,
+    height: ScreenHeight - barHeight - 75 - 125,
+    zIndex: 9999,
+    position: 'absolute',
+    overflow: 'hidden', 
+    // backgroundColor: 'red',
+    top: '50%', 
+    marginTop: -((ScreenHeight - barHeight - 75 - 125)/2),
+    left: 20, 
+    right: 0, 
+    bottom: 0, 
+    textAlign: 'center',
+    justifyContent: 'center', 
+    alignItems: 'center'
   },
   bgPopupScreen:{
     height: ScreenHeight,
@@ -947,7 +960,7 @@ const styles = StyleSheet.create({
   },
   vMap:{
     width: ScreenWidth,
-    height: ScreenWidth*1.5/3,
+    height: ScreenWidth*1.5/2,
     // backgroundColor: 'green',
   },
   bSelectShowrooms:{
@@ -966,7 +979,7 @@ const styles = StyleSheet.create({
     borderColor: '#c2bcb2',
     borderRadius: 5,
     width: ScreenWidth-40,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   sSelectBox:{
     width: ScreenWidth-40,
