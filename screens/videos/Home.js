@@ -5,7 +5,7 @@ import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
 import {getAllVideos} from '../../src/api/apiVideos';
-
+import Video from 'react-native-video';
 
 export default class Home extends Component{
     static navigationOptions = ({ navigation }) => ({
@@ -95,15 +95,15 @@ export default class Home extends Component{
                     <FlatList  
                         data={this.state.listVideos}   
                         renderItem={({ item }) => (
-                            <View key={item.id} style={MainStyle.itemVideos}>
-                                <WebView
-                                    style={ MainStyle.styleVideos }
-                                    javaScriptEnabled={true}
-                                    domStorageEnabled={true} 
-                                    source={{ html: item.html_link }}
-                                />
-                                <Text style={MainStyle.txtTitleVideos}>{item.title}</Text>
-                            </View>
+                            <Video source={{uri: "background"}}   // Can be a URL or a local file.
+       ref={(ref) => {
+         this.player = ref
+       }}                                      // Store reference
+       onBuffer={this.onBuffer}                // Callback when remote video is buffering
+       onError={this.videoError}               // Callback when video cannot be loaded
+       />
+                            
+
                         )}
                         keyExtractor={item => item.id}
                         contentContainerStyle={MainStyle.containerListProducts} 
