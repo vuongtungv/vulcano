@@ -37,6 +37,7 @@ export default class DetailProduct extends Component{
             modalVisibleSize: false,
             imageWidth: width - 30,
             imageHeight: 0,
+            web_view_img : '',
             arr_kieu_dang: [],
             arr_size: [],
             arr_image: [],
@@ -98,8 +99,10 @@ export default class DetailProduct extends Component{
             var imageWidth = width - 40;
             var imageHeight = imageWidth*h/w;
             this.setState({
-                imageWidth, imageHeight
+                imageWidth, imageHeight,
+                web_view_img: this.state.arr_image[index].web_view_img,
             });
+            // console.log(this.state.web_view_img);
         });
         this.setState({ image, modalVisible: true });   
     }
@@ -256,7 +259,7 @@ export default class DetailProduct extends Component{
 	 
     render() {
         const {navigation} = this.props;
-    
+      
         return(  
             <Container>
                 {/* <HeaderBase page="list_products" title={'Sản phẩm'} navigation={navigation} /> */} 
@@ -272,11 +275,13 @@ export default class DetailProduct extends Component{
                             index = {0}
                             onIndexChanged = {(index) => this.setState({position: index})} 
                             loop={true}
+                            autoplay={false}
                             bounces={true}>
                             {this.state.arr_image.map((item, index) => (
                                 <TouchableOpacity key={index} onPress={() => this.showImages(index)} style={[MainStyle.itemsSlideDetailProduct,{width:width, height: width*480/360}]}>
                                     <Image style={[MainStyle.itemsSlideDetailProduct,{width:width, height: width*480/360}]} source={{ uri:item.image}} />    
                                 </TouchableOpacity> 
+                                
                             ))}
                         </Swiper>}
                         {/* <Swiper>
@@ -381,13 +386,15 @@ export default class DetailProduct extends Component{
                     
                 </ScrollView>
                 <View style={MainStyle.quickTaskBottom}>
-                        <TouchableOpacity style={MainStyle.quickTouch} onPress={()=>this.addCart()}>
-                            <Text style={[MainStyle.quickTouchText]}>Thêm vào giỏ hàng</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[MainStyle.quickTouch,{backgroundColor: '#000000'}]} onPress={()=>this.buyNow()}>
-                            <Text style={[MainStyle.quickTouchText]}>Mua ngay</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity style={MainStyle.quickTouch} onPress={()=>this.addCart()}>
+                        <Text style={[MainStyle.quickTouchText]}>Thêm vào giỏ hàng</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[MainStyle.quickTouch,{backgroundColor: '#000000'}]} onPress={()=>this.buyNow()}>
+                        <Text style={[MainStyle.quickTouchText]}>Mua ngay</Text>
+                    </TouchableOpacity>
+                </View>
+
+
                 <Modal 
                     presentationStyle="overFullScreen"
                     animationType="slide"
@@ -395,21 +402,29 @@ export default class DetailProduct extends Component{
                     visible={this.state.modalVisible}
                     onRequestClose={() => {}}>
                     <View style={[MainStyle.tContainerImgModal,MainStyle.modalBgBlack]}>
-                        <View style={[MainStyle.tModalBody, { width: width - 40,marginLeft: 20,marginBottom: 25,alignItems: 'center'}]}> 
-                            <ScrollView>
-                                <Image style={{width: this.state.imageWidth, height: this.state.imageHeight, alignItems: 'center',}} source={{ uri: this.state.image }} />
-                            </ScrollView>
-                        </View>
-                        <View style={{ justifyContent: 'space-between', flexDirection: "row", width: width-40, marginLeft: 20,}}>
-                            <TouchableOpacity style={MainStyle.tBtnModalSave}
-                                onPress={()=>this.imgModalSave()}>
-                                <Text style={[MainStyle.txtModal,MainStyle.txtModalB]}>Lưu</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={MainStyle.tBtnModal}
-                                onPress={()=>this.setState({modalVisible:false})}>
-                                <Text style={[MainStyle.txtModal,MainStyle.txtModalW]}>Đóng</Text>
-                            </TouchableOpacity>
-                        </View>
+                        <TouchableOpacity onPress={()=>this.setState({modalVisible:false})} style={MainStyle.bgPopupScreen}></TouchableOpacity>
+                        <View style={[MainStyle.tModalBody, { width: width - 40}]}>
+                            <AutoHeightWebView
+                                customScript={`document.body.style.background = 'transparent';`}
+                                // style={[MainStyle.itemsSlideDetailProduct]}
+                                files={[{
+                                    href: global.BASE_URL+'/templates/default/css/app.css?v=333',
+                                    type: 'text/css',
+                                    rel: 'stylesheet'   
+                                }]}   
+                                source={{ html: this.state.web_view_img }}
+                                zoomable={false}    
+                            />    
+                        </View> 
+                        <TouchableOpacity style={[MainStyle.tBtnModalSave, {position: 'absolute', zIndex: 9999, left: 20, bottom: 10}]}
+                            onPress={()=>this.imgModalSave()}>
+                            <Text style={[MainStyle.txtModal,MainStyle.txtModalB]}>Lưu</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[MainStyle.tBtnModal, {position: 'absolute', zIndex: 9999, right: 20, bottom: 10}]}
+                            onPress={()=>this.setState({modalVisible:false})}>
+                            <Text style={[MainStyle.txtModal,MainStyle.txtModalW]}>Đóng</Text>
+                        </TouchableOpacity>
+                    
                         
                     </View>
                 </Modal> 
