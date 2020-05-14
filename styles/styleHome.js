@@ -514,13 +514,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF'  
   },
   tModalBody:{
-    height: ScreenHeight - barHeight - 75 - 125,
+    height: ScreenHeight - barHeight - 200,
     zIndex: 9999,
     position: 'absolute',
     overflow: 'hidden', 
     // backgroundColor: 'red',
     top: '50%', 
-    marginTop: -((ScreenHeight - barHeight - 75 - 125)/2),
+    marginTop: -((ScreenHeight - barHeight - 200)/2),
     left: 20, 
     right: 0, 
     bottom: 0, 
@@ -943,7 +943,7 @@ const styles = StyleSheet.create({
   },
   styleVideos:{
     width: ScreenWidth-40,
-    height: (ScreenWidth-40)*2/3,
+    height: (ScreenWidth-40)/2,
   },
   txtTitleVideos:{
     marginBottom: 15,

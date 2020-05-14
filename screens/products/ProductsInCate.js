@@ -22,6 +22,7 @@ export default class ProductsInCate extends Component{
             type : '',
             page: 1,
             list: [],
+            id_default: '',
             isOrderPrice: true, // tăng dần
             products_sort: 0,
             modalFilter: false,
@@ -101,7 +102,7 @@ export default class ProductsInCate extends Component{
         this.arr = [];
         this.setState({ loading: true });
         const { id,name,id_material, id_style, type } = this.props.navigation.state.params;
-    
+        this.setState({ id_default: id });
     
         products_sort = this.state.products_sort;
 
@@ -288,9 +289,15 @@ export default class ProductsInCate extends Component{
                                     <TouchableOpacity onPress={()=>this.setFamous()}>
                                         <Text style={MainStyle.txtFilter}>Phổ biến</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{marginLeft: 35}} onPress={()=>this.setSales()}>
-                                        <Text style={MainStyle.txtFilter}>Sale</Text>
-                                    </TouchableOpacity>
+                                    {
+                                        this.state.id_default !=57 ?
+                                        <TouchableOpacity style={{marginLeft: 35}} onPress={()=>this.setSales()}>
+                                            <Text style={MainStyle.txtFilter}>Sale</Text>
+                                        </TouchableOpacity>
+                                        :
+                                        null
+                                    }
+                                    
                                 </View>
                             } 
                             

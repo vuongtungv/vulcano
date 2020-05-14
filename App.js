@@ -92,7 +92,7 @@ export default class App extends React.Component {
     else 
       return (
         <View style={{ flex: 1 }}>
-          <Image style={[MainStyle.tSplashs]} source={require('./assets/splash.png')}/>
+          <Image source={require('./assets/splash.png')}/>
         </View>
       )   
   } 

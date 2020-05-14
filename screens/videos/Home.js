@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList,WebView } from 'react-native';
+import { Dimensions, Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList, WebView } from 'react-native';
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
-import { Container, Content, CheckBox, Icon } from "native-base";
+import { Container, Content, CheckBox, Icon, Item } from "native-base";
 import {getAllVideos} from '../../src/api/apiVideos';
-import Video from 'react-native-video';
+
+
+let ScreenWidth = Dimensions.get("window").width;
+
 
 export default class Home extends Component{
     static navigationOptions = ({ navigation }) => ({
@@ -18,7 +21,7 @@ export default class Home extends Component{
         this.state = {
             listVideos:[],
             page: 1,
-        }
+        } 
 
         this.arr = [];
     }
@@ -95,15 +98,15 @@ export default class Home extends Component{
                     <FlatList  
                         data={this.state.listVideos}   
                         renderItem={({ item }) => (
-                            <Video source={{uri: "background"}}   // Can be a URL or a local file.
-       ref={(ref) => {
-         this.player = ref
-       }}                                      // Store reference
-       onBuffer={this.onBuffer}                // Callback when remote video is buffering
-       onError={this.videoError}               // Callback when video cannot be loaded
-       />
-                            
-
+                            <View key={item.id} style={MainStyle.itemVideos}>
+                                <WebView
+                                        style={ MainStyle.styleVideos }
+                                        javaScriptEnabled={true}
+                                        domStorageEnabled={true}
+                                        source={{ uri: item.link }}
+                                    />
+                                <Text style={MainStyle.txtTitleVideos}>{item.title}</Text>
+                            </View>          
                         )}
                         keyExtractor={item => item.id}
                         contentContainerStyle={MainStyle.containerListProducts} 
