@@ -951,7 +951,7 @@ const styles = StyleSheet.create({
   },
   vMap:{
     width: ScreenWidth,
-    height: ScreenWidth*1.5/2,
+    height: ScreenHeight*1.5/3,
     // backgroundColor: 'green',
   },
   bSelectShowrooms:{
