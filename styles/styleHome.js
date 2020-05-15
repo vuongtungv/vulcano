@@ -514,19 +514,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF'  
   },
   tModalBody:{
-    height: ScreenHeight - barHeight - 200,
+    // width: ScreenWidth-40,
     zIndex: 9999,
     position: 'absolute',
     overflow: 'hidden', 
-    // backgroundColor: 'red',
-    top: '50%', 
-    marginTop: -((ScreenHeight - barHeight - 200)/2),
-    left: 20, 
-    right: 0, 
-    bottom: 0, 
-    textAlign: 'center',
-    justifyContent: 'center', 
-    alignItems: 'center'
   },
   bgPopupScreen:{
     height: ScreenHeight,

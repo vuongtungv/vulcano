@@ -403,9 +403,9 @@ export default class DetailProduct extends Component{
                     transparent={true}
                     visible={this.state.modalVisible}
                     onRequestClose={() => {}}>
-                    <View style={[MainStyle.tContainerImgModal,MainStyle.modalBgBlack]}>
+                    <View style={[MainStyle.tContainerImgModal,MainStyle.modalBgBlack,{alignItems: 'center', justifyContent: 'center'}]}>
                         <TouchableOpacity onPress={()=>this.setState({modalVisible:false})} style={MainStyle.bgPopupScreen}></TouchableOpacity>
-                        <View style={[MainStyle.tModalBody, { width: width - 40}]}>
+                        <View style={[MainStyle.tModalBody, { height: this.state.imageHeight}]}>
                             <AutoHeightWebView
                                 customScript={`document.body.style.background = 'transparent';`}
                                 // style={[MainStyle.itemsSlideDetailProduct]}
