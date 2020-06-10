@@ -6,6 +6,7 @@ import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon, Item } from "native-base";
 import {getAllVideos} from '../../src/api/apiVideos';
 
+import Video from 'react-native-video';
 
 let ScreenWidth = Dimensions.get("window").width;
 
@@ -42,6 +43,7 @@ export default class Home extends Component{
                     refreshing: false,
                     error: false || null,   
                 });  
+                console.log(this.state.listVideos);
             } else {
                 this.setState({ loading: false, refreshing: false });
             }
@@ -99,11 +101,20 @@ export default class Home extends Component{
                         data={this.state.listVideos}   
                         renderItem={({ item }) => (
                             <View key={item.id} style={MainStyle.itemVideos}>
-                                <WebView
+                                {/* <WebView
                                         style={ MainStyle.styleVideos }
                                         javaScriptEnabled={true}
                                         domStorageEnabled={true}
                                         source={{ uri: item.link }}
+                                    /> */}
+                                    <Video source={{uri: item.video_mp4}}   // Can be a URL or a localfile.
+                                        ref={(ref) => {
+                                            this.player = ref
+                                        }}                                      // Store reference
+                                        onBuffer={this.onBuffer}                // Callback when remote video is buffering
+                                        onEnd={this.onEnd}                      // Callback when playback finishes
+                                        onError={this.videoError}               // Callback when video cannot be loaded
+                                        style={MainStyle.backgroundVideo} 
                                     />
                                 <Text style={MainStyle.txtTitleVideos}>{item.title}</Text>
                             </View>          
