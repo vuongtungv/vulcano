@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Dimensions, Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList, WebView } from 'react-native';
+import { Dimensions, Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList, WebView, SafeAreaView  } from 'react-native';
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon, Item } from "native-base";
 import {getAllVideos} from '../../src/api/apiVideos';
 
-import Video from 'react-native-video';
+import YoutubePlayer from "react-native-youtube-iframe";
 
 let ScreenWidth = Dimensions.get("window").width;
 
@@ -107,15 +107,9 @@ export default class Home extends Component{
                                         domStorageEnabled={true}
                                         source={{ uri: item.link }}
                                     /> */}
-                                    <Video source={{uri: item.video_mp4}}   // Can be a URL or a localfile.
-                                        ref={(ref) => {
-                                            this.player = ref
-                                        }}                                      // Store reference
-                                        onBuffer={this.onBuffer}                // Callback when remote video is buffering
-                                        onEnd={this.onEnd}                      // Callback when playback finishes
-                                        onError={this.videoError}               // Callback when video cannot be loaded
-                                        style={MainStyle.backgroundVideo} 
-                                    />
+                                    {/* <SafeAreaView style={{ flex: 1 }}> */}
+                                        <YoutubePlayer height={(ScreenWidth-40)*9/16} width={ScreenWidth-40} videoId={item.youtube_key} />
+                                    {/* </SafeAreaView> */}
                                 <Text style={MainStyle.txtTitleVideos}>{item.title}</Text>
                             </View>          
                         )}
