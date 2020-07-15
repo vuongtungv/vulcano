@@ -12,16 +12,16 @@ const footerHeight = 68;
 
 
 const styles = StyleSheet.create({
-  tSplashs:{
+  tSplashs: {
     width: ScreenWidth,
-    height: ScreenHeight,  
+    height: ScreenHeight,
   },
-  fontRegular:{
+  fontRegular: {
     fontFamily: "RobotoRegular",
   },
 
   // style footer
-  tFooter:{
+  tFooter: {
     backgroundColor: "#ffffff",
     paddingTop: 8,
     // borderTopColor: '#bbbbbb',
@@ -42,13 +42,13 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
 
-  tFItem:{
+  tFItem: {
     flex: 1,
     textAlign: "center",
     alignItems: 'center',
   },
 
-  tFItemBoundIcon:{
+  tFItemBoundIcon: {
     paddingTop: 3,
     paddingBottom: 3,
     justifyContent: 'center',
@@ -56,24 +56,24 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
     alignItems: "center",
   },
-  tFItemText:{
+  tFItemText: {
     fontSize: 12,
     fontFamily: "RobotoBold",
-    marginTop: 5,   
+    marginTop: 5,
   },
-  tContainerDefault:{
+  tContainerDefault: {
     zIndex: 10,
     position: 'relative',
     marginTop: 60 + 150,
   },
-  marginBottomFooter:{
+  marginBottomFooter: {
     marginBottom: footerHeight,
-  },  
+  },
 
   // Heaerder Base
-  barHearder:{
+  barHearder: {
     height: headerHeight + barHeight,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
     paddingTop: barHeight,
     borderBottomColor: '#b2b2b2',
@@ -81,66 +81,66 @@ const styles = StyleSheet.create({
     position: 'relative',
     zIndex: 0,
   },
-  logoHeader:{
+  logoHeader: {
     width: 99,
-    height: 40, 
+    height: 40,
   },
-  iconSearchHeader:{
-    position:'absolute',
+  iconSearchHeader: {
+    position: 'absolute',
     bottom: 20,
     right: 80,
     zIndex: 999,
   },
-  iconDotsHeader:{
-    position:'absolute',
+  iconDotsHeader: {
+    position: 'absolute',
     bottom: 20,
     right: 40,
     zIndex: 999,
   },
-  iconNotifiHeader:{
-    position:'absolute',
+  iconNotifiHeader: {
+    position: 'absolute',
     bottom: 20,
     right: 40,
     zIndex: 999,
     // backgroundColor: 'green'
   },
-  vNotify:{
+  vNotify: {
     position: 'relative',
   },
-  vnumNotify:{
-    backgroundColor: '#ff0000', 
-    width: 22, 
-    height: 22, 
-    borderRadius: 11, 
+  vnumNotify: {
+    backgroundColor: '#ff0000',
+    width: 22,
+    height: 22,
+    borderRadius: 11,
     overflow: 'hidden',
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
-    position:'absolute',
+    position: 'absolute',
     top: -10,
     right: -10,
   },
-  tnumNotify:{
-    fontFamily: 'RobotoRegular', 
-    fontSize: 12, 
+  tnumNotify: {
+    fontFamily: 'RobotoRegular',
+    fontSize: 12,
     color: '#FFFFFF',
   },
 
-  txtCenterHeader:{
+  txtCenterHeader: {
     fontFamily: "RobotoBold",
     fontSize: 18
   },
-  backHeader:{
-    position:'absolute',
+  backHeader: {
+    position: 'absolute',
     bottom: 13,
     left: 20,
     width: 30,
     overflow: 'hidden',
   },
-  
-  
-  
-  padding20:{
-    width: ScreenWidth-40,
+
+
+
+  padding20: {
+    width: ScreenWidth - 40,
     paddingLeft: 20,
   },
 
@@ -168,102 +168,102 @@ const styles = StyleSheet.create({
   iconCenter: {
     alignItems: "center",
     justifyContent: "center",
-    width: ScreenWidth / 7,
-    height: ScreenWidth / 7,
+    width: ScreenWidth / 8.5,
+    height: ScreenWidth / 8.5,
     borderWidth: 2,
     borderStyle: "solid",
     borderColor: "#000000",
     borderRadius: ScreenWidth / 14,
   },
-  textCateHome:{ 
+  textCateHome: {
     fontSize: 15,
-    fontFamily:"RobotoRegular",
+    fontFamily: "RobotoRegular",
     textAlign: 'center'
   },
-  bannerHome:{
-    width:ScreenWidth,
-    height:ScreenWidth/3,
+  bannerHome: {
+    width: ScreenWidth,
+    height: ScreenWidth / 3,
   },
-  itemsBannerHome:{
-    width:ScreenWidth,
-    height:ScreenWidth/3,
+  itemsBannerHome: {
+    width: ScreenWidth,
+    height: ScreenWidth / 3,
   },
 
 
 
   // danh sách sản phẩm small
-  cateSmallHome:{  
+  cateSmallHome: {
     width: ScreenWidth,
     marginTop: 10,
-    flexDirection: 'row', 
+    flexDirection: 'row',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
   },
-  itemsCateSmallHome:{
-    width: (ScreenWidth-10)/2,
+  itemsCateSmallHome: {
+    width: (ScreenWidth - 10) / 2,
     marginTop: 10,
-  
+
   },
-  imgSmallHome:{
-    width: (ScreenWidth-10)/2,
-    height:(ScreenWidth-10)/2, 
+  imgSmallHome: {
+    width: (ScreenWidth - 10) / 2,
+    height: (ScreenWidth - 10) / 2,
   },
-  bodySmallHome:{
-    backgroundColor:'#000000',
-    paddingTop:10,
+  bodySmallHome: {
+    backgroundColor: '#000000',
+    paddingTop: 10,
     alignItems: 'center',
     marginTop: -1,
     paddingBottom: 10,
   },
-  titleSmall:{
+  titleSmall: {
     fontFamily: 'RobotoBold',
-    color:'#FFFFFF',
-    fontSize:20,
+    color: '#FFFFFF',
+    fontSize: 20,
     marginBottom: 0,
-    textTransform:"uppercase",
+    textTransform: "uppercase",
   },
-  viewAll:{
-    color:'#FFFFFF',
+  viewAll: {
+    color: '#FFFFFF',
     fontFamily: 'RobotoLight',
     marginBottom: 0,
   },
-  lineBlack:{
+  lineBlack: {
     marginBottom: 30,
     marginTop: 10,
     width: ScreenWidth,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  itemsLine:{
-    width: (ScreenWidth-10)/2,
+  itemsLine: {
+    width: (ScreenWidth - 10) / 2,
     height: 2,
     backgroundColor: "#000000"
   },
-  cateBigHome:{
+  cateBigHome: {
     width: ScreenWidth,
     // marginLeft: 20,
   },
-  imgBigHome:{
+  imgBigHome: {
     width: ScreenWidth,
     height: ScreenWidth,
   },
-  bodyBigHome:{
+  bodyBigHome: {
     alignItems: 'center',
   },
-  titleBig:{
+  titleBig: {
     color: "#000000",
     fontFamily: 'RobotoBold',
     fontSize: 28,
     textTransform: 'uppercase',
     margin: 15
   },
-  viewNow:{
+  viewNow: {
     fontSize: 15,
     fontFamily: 'RobotoLight',
     color: "#FFFFFF",
     backgroundColor: "#000000",
-    paddingTop:10,
-    paddingBottom:10,
+    paddingTop: 10,
+    paddingBottom: 10,
     paddingLeft: 15,
     paddingRight: 15,
     textTransform: "uppercase",
@@ -272,20 +272,20 @@ const styles = StyleSheet.create({
 
 
   // danh mục sản phẩn
-  pageCategories:{
+  pageCategories: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#f8f8ff', 
+    backgroundColor: '#f8f8ff',
   },
-  tabListCategories:{
+  tabListCategories: {
     width: '25%',
     minHeight: ScreenHeight,
   },
-  listCategories:{
+  listCategories: {
     width: '73%',
     marginBottom: 148,
   },
-  itemsTabCategories:{
+  itemsTabCategories: {
     backgroundColor: '#FFFFFF',
     paddingLeft: 15,
     paddingRight: 15,
@@ -293,21 +293,21 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
     marginBottom: 1,
   },
-  textTabCategories:{
-    fontFamily:"RobotoRegular",
+  textTabCategories: {
+    fontFamily: "RobotoRegular",
     fontSize: 18,
-  },   
-  activeItemsTabCategories:{
+  },
+  activeItemsTabCategories: {
     backgroundColor: '#f8f8ff',
   },
-  itemsCate:{
+  itemsCate: {
     paddingTop: 20,
     paddingBottom: 20,
     paddingLeft: 15,
     paddingRight: 15,
-    flexDirection: 'row',  
+    flexDirection: 'row',
   },
-  imgCate:{
+  imgCate: {
     width: 80,
     height: 85,
     marginRight: 15,
@@ -315,20 +315,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  wImgCate:{
+  wImgCate: {
     width: 80,
     height: 85,
   },
-  vNameCate:{
+  vNameCate: {
     width: '100%',
     justifyContent: "center",
     alignItems: "flex-start",
   },
-  nameCate:{
-    fontFamily:"RobotoRegular",
-    fontSize: 16, 
+  nameCate: {
+    fontFamily: "RobotoRegular",
+    fontSize: 16,
   },
-  filterProducts:{
+  filterProducts: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingLeft: 20,
@@ -337,56 +337,56 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     // backgroundColor: 'red',
   },
-  filterLeft:{
+  filterLeft: {
     flexDirection: 'row',
-    justifyContent: 'flex-start', 
+    justifyContent: 'flex-start',
     // backgroundColor: 'blue', 
-    width: (ScreenWidth-40)/2,
+    width: (ScreenWidth - 40) / 2,
   },
-  filterRight:{
-    flexDirection: 'row',  
+  filterRight: {
+    flexDirection: 'row',
     justifyContent: 'flex-end',
-    width: (ScreenWidth-40)/2,
+    width: (ScreenWidth - 40) / 2,
     // backgroundColor: 'red',
   },
-  txtFilter:{
+  txtFilter: {
     fontFamily: 'RobotoLight',
     fontSize: 15,
     color: '#000000',
     lineHeight: 25,
   },
-  itemProducts:{
+  itemProducts: {
     marginBottom: 40,
-    width: ScreenWidth-40,
+    width: ScreenWidth - 40,
     // backgroundColor: 'red',
-    marginLeft: 20,  
+    marginLeft: 20,
   },
-  vImgItemPro:{
-    width: ScreenWidth-40,
+  vImgItemPro: {
+    width: ScreenWidth - 40,
   },
-  nameItemProducts:{
+  nameItemProducts: {
     fontFamily: 'RobotoRegular',
     marginBottom: 10,
     fontSize: 16,
     marginTop: 10,
     textTransform: 'uppercase',
-  },  
-  priceItemProducts:{
-    fontFamily: 'RobotoRegular',
-    fontSize: 15, 
   },
-  slideImageProduct:{
+  priceItemProducts: {
+    fontFamily: 'RobotoRegular',
+    fontSize: 15,
+  },
+  slideImageProduct: {
     width: ScreenWidth,
-    height: ScreenWidth*1.2,
+    height: ScreenWidth * 1.2,
     marginTop: barHeight,
     position: 'relative',
     zIndex: -1,
   },
-  itemsSlideDetailProduct:{
+  itemsSlideDetailProduct: {
     width: ScreenWidth,
-    height: ScreenHeight - barHeight - 75 - 125,  
+    height: ScreenHeight - barHeight - 75 - 125,
   },
-  backDetailP:{
+  backDetailP: {
     position: 'absolute',
     zIndex: 99,
     left: 20,
@@ -394,59 +394,59 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  addDetailP:{  
+  addDetailP: {
     position: 'absolute',
     zIndex: 99,
-    left: ScreenWidth-40-20,
+    left: ScreenWidth - 40 - 20,
     top: 10,
   },
-  btnRa50:{
+  btnRa50: {
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: '#000000', 
+    backgroundColor: '#000000',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  tDetailProduct:{
-    width: ScreenWidth-40,
+  tDetailProduct: {
+    width: ScreenWidth - 40,
     marginLeft: 20,
     paddingBottom: 25,
     paddingTop: 25,
     borderBottomWidth: 1,
     borderBottomColor: '#f4f3f8',
   },
-  titleProduct:{
+  titleProduct: {
     fontSize: 20,
     textTransform: 'uppercase',
     fontFamily: 'RobotoRegular',
   },
-  titleHDetailProduct:{
+  titleHDetailProduct: {
     color: '#777777',
     fontFamily: 'RobotoRegular',
   },
-  colorPriceProducts:{
+  colorPriceProducts: {
     color: '#ff0700',
   },
-  txtBlack:{
+  txtBlack: {
     color: '#000000',
     fontSize: 16,
   },
-  vStyleProduct:{
+  vStyleProduct: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginLeft: -20,
     // backgroundColor: 'red',
   },
-  btnSizePro:{
+  btnSizePro: {
     backgroundColor: '#eeeeee',
     color: '#000000',
     fontFamily: 'RobotoRegular',
-    width: (ScreenWidth-100)/4,
+    width: (ScreenWidth - 100) / 4,
     textAlign: 'center',
     // lineHeight: (ScreenWidth-100)/8,
     // height: (ScreenWidth-100)/8, 
-    marginLeft: 20, 
+    marginLeft: 20,
     marginBottom: 20,
     paddingTop: 10,
     paddingBottom: 10,
@@ -454,29 +454,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  
-  btnBorderActive:{
+
+  btnBorderActive: {
     borderWidth: 1,
     borderColor: '#ff0700',
   },
-  headerSlo:{
+  headerSlo: {
     marginBottom: 10,
   },
-  txtHD:{
-    color:"#000000",
+  txtHD: {
+    color: "#000000",
     borderBottomColor: '#000000',
     borderBottomWidth: 1,
     width: 160,
   },
-  vNumberProduct:{
+  vNumberProduct: {
     flexDirection: 'row',
   },
-  touchNumbers:{
-    flexDirection:'row',
+  touchNumbers: {
+    flexDirection: 'row',
 
   },
-  minusNumbers:{
-    width: 30,  
+  minusNumbers: {
+    width: 30,
     height: 30,
     lineHeight: 30,
     borderColor: '#dddddd',
@@ -485,59 +485,59 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  quickTaskBottom:{
+  quickTaskBottom: {
     flexDirection: 'row',
   },
-  quickTouch:{
-    backgroundColor: '#7f7f7f', 
+  quickTouch: {
+    backgroundColor: '#7f7f7f',
     width: '50%',
     height: footerHeight,
   },
-  quickTouchText:{
+  quickTouchText: {
     color: '#FFFFFF',
     fontFamily: 'RobotoBold',
     lineHeight: footerHeight,
     textAlign: 'center',
     fontSize: 17,
   },
-  tContainerImgModal:{
+  tContainerImgModal: {
     width: ScreenWidth,
     height: ScreenHeight,
     height: '100%',
     paddingTop: barHeight + 30,
     paddingBottom: 25,
   },
-  modalBgBlack:{
+  modalBgBlack: {
     backgroundColor: '#000000'
   },
-  modalBgWhite:{
-    backgroundColor: '#FFFFFF'  
+  modalBgWhite: {
+    backgroundColor: '#FFFFFF'
   },
-  tModalBody:{
+  tModalBody: {
     // width: ScreenWidth-40,
     zIndex: 9999,
     position: 'absolute',
-    overflow: 'hidden', 
+    overflow: 'hidden',
   },
-  bgPopupScreen:{
+  bgPopupScreen: {
     height: ScreenHeight,
     width: ScreenWidth,
     backgroundColor: 'rgba(0,0,0,0.5)',
     position: 'relative',
     zIndex: 0,
   },
-  visibalPop:{
+  visibalPop: {
     height: ScreenWidth,
     backgroundColor: '#FFFFFF',
     position: 'absolute',
-    width: ScreenWidth-40,
+    width: ScreenWidth - 40,
     padding: 20,
     left: 20,
     bottom: 50,
     borderRadius: 10,
     zIndex: 9999,
   },
-  tBtnModalSave:{
+  tBtnModalSave: {
     width: 100,
     height: 50,
     backgroundColor: '#FFFFFF',
@@ -545,7 +545,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color: '#000000',
   },
-  tBtnModal:{
+  tBtnModal: {
     width: 100,
     height: 50,
     backgroundColor: '#808080',
@@ -553,34 +553,34 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color: '#FFFFFF',
   },
-  tModalContent:{
+  tModalContent: {
     paddingLeft: 20,
   },
-  txtModal:{
+  txtModal: {
     fontFamily: 'RobotoRegular',
     fontSize: 17,
   },
-  txtModalB:{
+  txtModalB: {
     color: '#000000',
   },
-  txtModalW:{
+  txtModalW: {
     color: '#FFFFFF',
   },
-  pageCart:{
-    backgroundColor:'#eeeeee',
+  pageCart: {
+    backgroundColor: '#eeeeee',
     height: ScreenHeight,
     width: ScreenWidth,
     position: 'relative',
     zIndex: 0,
-    paddingBottom: footerHeight+85,
+    paddingBottom: footerHeight + 85,
   },
-  itemCart:{
+  itemCart: {
     backgroundColor: '#FFFFFF',
     borderBottomColor: '#c7c7c9',
     borderBottomWidth: 1,
   },
-  infoItemCart:{
-    paddingTop:10,
+  infoItemCart: {
+    paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 20,
     paddingRight: 20,
@@ -588,53 +588,53 @@ const styles = StyleSheet.create({
     borderBottomWidth: 3,
     flexDirection: 'row',
   },
-  imgItemCart:{
-    marginRight:10, 
-    width: (ScreenWidth -40)/5,
-    height: (ScreenWidth-40)/5*(100/67),
+  imgItemCart: {
+    marginRight: 10,
+    width: (ScreenWidth - 40) / 5,
+    height: (ScreenWidth - 40) / 5 * (100 / 67),
   },
-  imgCart:{
-    width: (ScreenWidth -40)/5,
-    height: (ScreenWidth-40)/5*(100/67),
-  },  
-  rightInfoItem:{
+  imgCart: {
+    width: (ScreenWidth - 40) / 5,
+    height: (ScreenWidth - 40) / 5 * (100 / 67),
+  },
+  rightInfoItem: {
     // backgroundColor: 'green',
-    width: (ScreenWidth-40)*4/5 -10,
+    width: (ScreenWidth - 40) * 4 / 5 - 10,
   },
-  lineTopItemCart:{
+  lineTopItemCart: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  tProductItemCart:{
+  tProductItemCart: {
     fontFamily: 'RobotoRegular',
     fontSize: 16,
     textTransform: 'uppercase',
   },
-  fPriceItemCart:{
+  fPriceItemCart: {
     color: '#ff0700',
     fontSize: 16,
     fontFamily: 'RobotoRegular',
   },
-  txtBCart:{
+  txtBCart: {
     fontFamily: 'RobotoRegular',
-    fontSize: 15,  
+    fontSize: 15,
   },
-  taskCart:{
+  taskCart: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     padding: 20,
   },
-  editItemCart:{
-    flexDirection:'row',
+  editItemCart: {
+    flexDirection: 'row',
     marginLeft: 30
   },
-  textTaskCart:{
-      fontSize: 15,
-      fontFamily: 'RobotoRegular',
-      color: '#777777',
-      paddingLeft: 5,
+  textTaskCart: {
+    fontSize: 15,
+    fontFamily: 'RobotoRegular',
+    color: '#777777',
+    paddingLeft: 5,
   },
-  vBootTotalCt:{
+  vBootTotalCt: {
     height: footerHeight,
     width: ScreenWidth,
     backgroundColor: "#FFFFFF",
@@ -643,37 +643,37 @@ const styles = StyleSheet.create({
     bottom: 0,
     zIndex: 9999,
   },
-  totalPriceCart:{
-    width: ScreenWidth-150,
+  totalPriceCart: {
+    width: ScreenWidth - 150,
     paddingLeft: 20,
   },
-  payCart:{
+  payCart: {
     backgroundColor: '#000000',
     width: 150,
     alignItems: 'center',
   },
-  txtPayN:{
+  txtPayN: {
     lineHeight: footerHeight,
     fontFamily: "RobotoRegular",
   },
-  inforCustom:{
+  inforCustom: {
     paddingTop: 20,
   },
-  inforNotePay:{
+  inforNotePay: {
     fontFamily: "RobotoRegular",
     fontSize: 14,
     paddingTop: 10,
     paddingBottom: 10,
   },
-  lineInputPayment:{
+  lineInputPayment: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingLeft: 20,
     paddingRight: 20,
     marginBottom: 15,
   },
-  inputInforPay:{
-    width: (ScreenWidth-40)*80/100,
+  inputInforPay: {
+    width: (ScreenWidth - 40) * 80 / 100,
     height: 40,
     borderColor: '#c2bcb2',
     borderWidth: 1,
@@ -683,97 +683,97 @@ const styles = StyleSheet.create({
     fontFamily: 'RobotoRegular',
     fontSize: 15,
   },
-  TextGenderLine:{
-    width: (ScreenWidth-40)*80/100,
+  TextGenderLine: {
+    width: (ScreenWidth - 40) * 80 / 100,
     height: 40,
     color: '#000000',
     paddingTop: 10,
     flexDirection: 'row',
   },
-  wid30:{
+  wid30: {
     flexDirection: 'row',
   },
-  titleInput:{
+  titleInput: {
     height: 40,
     lineHeight: 40,
   },
-  submitPayment:{
+  submitPayment: {
     backgroundColor: '#000000',
     width: ScreenWidth,
     height: footerHeight,
     alignItems: 'center',
   },
-  pTextMethodPayment:{
+  pTextMethodPayment: {
     fontSize: 15,
   },
-  popFilter:{
+  popFilter: {
     backgroundColor: '#f3f2f8',
     height: ScreenHeight,
-    width: ScreenWidth*85/100,
+    width: ScreenWidth * 85 / 100,
     position: 'absolute',
     right: 0,
     zIndex: 99,
   },
-  heightScrollFilter:{
+  heightScrollFilter: {
     height: ScreenHeight - barHeight - 70,
     // backgroundColor: 'red',
 
   },
-  titleFilter:{
+  titleFilter: {
     fontFamily: "RobotoBold",
     fontSize: 17,
     marginLeft: 10,
     marginTop: 10,
   },
-  listSelectItemFilter:{
+  listSelectItemFilter: {
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  itemFilter:{
+  itemFilter: {
     backgroundColor: '#FFFFFF',
     margin: 10,
-    width: (ScreenWidth*85/100 - 60 ) / 3,
+    width: (ScreenWidth * 85 / 100 - 60) / 3,
     alignItems: 'center',
     justifyContent: 'center',
     height: 50,
     padding: 5,
   },
-  txtNameFilter:{
+  txtNameFilter: {
     fontFamily: 'RobotoRegular',
     fontSize: 14,
   },
-  btnFilter:{
+  btnFilter: {
     // position: 'absolute',
     bottom: 0,
-    width: ScreenWidth*85/100 - 20,
+    width: ScreenWidth * 85 / 100 - 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginLeft: 10,
     marginTop: 10,
   },
-  widthBtnFil:{
+  widthBtnFil: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: ( ScreenWidth*85/100 - 30 ) / 2,
+    width: (ScreenWidth * 85 / 100 - 30) / 2,
     height: 50,
   },
-  subFilter:{
-    color:'#FFFFFF',
+  subFilter: {
+    color: '#FFFFFF',
     fontFamily: 'RobotoRegular',
     fontSize: 16,
   },
-  bgSales:{
+  bgSales: {
     backgroundColor: '#ff0700',
     borderRadius: 5,
-    color: '#FFFFFF', 
-    fontFamily: "RobotoRegular", 
+    color: '#FFFFFF',
+    fontFamily: "RobotoRegular",
     fontSize: 15,
     paddingTop: 5,
-    paddingBottom: 5, 
+    paddingBottom: 5,
     paddingLeft: 10,
     paddingRight: 10,
   },
-  
+
 
 
 
@@ -782,90 +782,90 @@ const styles = StyleSheet.create({
 
 
   // tin tức
-  pageNews:{
+  pageNews: {
     paddingLeft: 20,
     paddingRight: 20,
-    marginBottom:footerHeight+20,
+    marginBottom: footerHeight + 20,
     position: 'relative',
     zIndex: -1,
   },
-  itemNews:{
+  itemNews: {
     marginTop: 20,
     paddingBottom: 20,
-    borderBottomColor: '#f2f2f2',  
+    borderBottomColor: '#f2f2f2',
     borderBottomWidth: 1,
   },
-  vImgNews:{
-    width:(ScreenWidth-40),
-    height: (ScreenWidth-40)/2,
+  vImgNews: {
+    width: (ScreenWidth - 40),
+    height: (ScreenWidth - 40) / 2,
   },
-  imgNews:{
-    width:(ScreenWidth-40),
-    height: (ScreenWidth-40)/2,
+  imgNews: {
+    width: (ScreenWidth - 40),
+    height: (ScreenWidth - 40) / 2,
   },
-  bodyNews:{
+  bodyNews: {
     marginTop: 20,
   },
-  titleNews:{
+  titleNews: {
     fontFamily: "RobotoBold",
     fontSize: 18,
     textTransform: 'uppercase',
   },
-  vDateNews:{
+  vDateNews: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    marginBottom:10,
+    marginBottom: 10,
     marginTop: 10,
   },
-  nDateNameNews:{
+  nDateNameNews: {
     marginRight: 10,
     color: '#777777',
     fontSize: 12,
   },
-  txtBriefNews:{
+  txtBriefNews: {
     fontFamily: 'RobotoRegular',
     fontSize: 14,
     textAlign: 'justify',
   },
-  txtBriefDetailNews:{
+  txtBriefDetailNews: {
     fontSize: 16,
     fontFamily: 'RobotoBold',
     textAlign: 'justify',
   },
-  txtDescriptNews:{
+  txtDescriptNews: {
     fontFamily: 'RobotoRegular',
     fontSize: 15,
     textAlign: 'justify',
   },
-  pageDetailNews:{
+  pageDetailNews: {
     paddingBottom: 68,
     position: 'relative',
     zIndex: -1,
   },
-  bodyDetailNews:{
-   paddingLeft: 20,
-   paddingRight: 20, 
+  bodyDetailNews: {
+    paddingLeft: 20,
+    paddingRight: 20,
   },
-  tagsDetailNews:{
+  tagsDetailNews: {
     flexDirection: 'row',
     // flexWrap: 'wrap',
     // backgroundColor: 'red',
     marginTop: 20,
     marginBottom: 20,
   },
-  txtTagsDetailNews:{
+  txtTagsDetailNews: {
     fontSize: 18,
     fontFamily: 'RobotoBold',
   },
-  txtTagsN:{
+  txtTagsN: {
     color: '#555555',
     fontSize: 15,
   },
-  otherNews:{
+  otherNews: {
     borderTopWidth: 2,
     borderTopColor: '#eeeeee',
   },
-  vHeaderOtherNews:{
+  vHeaderOtherNews: {
     borderBottomColor: '#eeeeee',
     borderBottomWidth: 3,
     position: 'relative',
@@ -874,11 +874,11 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingBottom: 15,
   },
-  txtOtherNews:{
+  txtOtherNews: {
     fontSize: 18,
     fontFamily: "RobotoBold",
   },
-  brBottomOther:{
+  brBottomOther: {
     borderBottomWidth: 3,
     borderBottomColor: '#000000',
     position: 'absolute',
@@ -886,18 +886,18 @@ const styles = StyleSheet.create({
     bottom: -3,
     left: 20,
   },
-  listCateNews:{
+  listCateNews: {
     position: 'absolute',
-    width: ScreenWidth-40,
+    width: ScreenWidth - 40,
     marginLeft: 20,
-    backgroundColor: "#FFFFFF", 
-    top: barHeight + headerHeight -1,
+    backgroundColor: "#FFFFFF",
+    top: barHeight + headerHeight - 1,
     zIndex: 1000,
     borderWidth: 1,
     borderColor: '#d9d9d9',
     padding: 20,
   },
-  itemHeaderCateNews:{
+  itemHeaderCateNews: {
     borderTopColor: '#f2f2f2',
     borderTopWidth: 1,
     paddingTop: 10,
@@ -905,16 +905,16 @@ const styles = StyleSheet.create({
     position: 'relative',
     zIndex: 9999999,
   },
-  txtCateHeaderNews:{
+  txtCateHeaderNews: {
     fontFamily: "RobotoRegular",
     fontSize: 16,
   },
-  borderCateNews:{  
+  borderCateNews: {
     borderBottomColor: '#f2f2f2',
     borderBottomWidth: 1,
   },
   // style tam giác
-  trianleTop:{
+  trianleTop: {
     position: 'absolute',
     top: -9,
     right: 23,
@@ -926,17 +926,17 @@ const styles = StyleSheet.create({
 
 
   // Videos 
-  itemVideos:{
+  itemVideos: {
     marginBottom: 30,
     borderBottomColor: '#f2f2f2',
     borderBottomWidth: 1,
     alignItems: 'center',
   },
-  styleVideos:{
-    width: ScreenWidth-40,
-    height: (ScreenWidth-40)/2,
+  styleVideos: {
+    width: ScreenWidth - 40,
+    height: (ScreenWidth - 40) / 2,
   },
-  txtTitleVideos:{
+  txtTitleVideos: {
     marginBottom: 15,
     marginTop: 15,
     fontFamily: "RobotoBold",
@@ -946,49 +946,49 @@ const styles = StyleSheet.create({
 
 
   // showrooms
-  pageShowrooms:{
+  pageShowrooms: {
     marginBottom: footerHeight,
   },
-  vMap:{
+  vMap: {
     width: ScreenWidth,
-    height: ScreenHeight*1.5/3,
+    height: ScreenHeight * 1.5 / 3,
     // backgroundColor: 'green',
   },
-  bSelectShowrooms:{
+  bSelectShowrooms: {
     padding: 20,
     paddingBottom: 0,
     borderBottomColor: '#eeeeee',
     borderBottomWidth: 1,
   },
-  txtShowrooms:{
+  txtShowrooms: {
     fontFamily: "RobotoBold",
     fontSize: 15,
     marginBottom: 10,
   },
-  borSelectSR:{
+  borSelectSR: {
     borderWidth: 1,
     borderColor: '#c2bcb2',
     borderRadius: 5,
-    width: ScreenWidth-40,
+    width: ScreenWidth - 40,
     marginBottom: 10,
   },
-  sSelectBox:{
-    width: ScreenWidth-40,
+  sSelectBox: {
+    width: ScreenWidth - 40,
     height: 40,
   },
-  itemShowrooms:{
+  itemShowrooms: {
     borderBottomWidth: 1,
     borderBottomColor: '#eeeeee',
     padding: 20,
   },
-  txtNameShowrooms:{
+  txtNameShowrooms: {
     fontSize: 16,
     fontFamily: "RobotoBold",
     color: '#007bff',
     textTransform: 'uppercase',
     marginBottom: 10,
   },
-  txtAddShowrooms:{
+  txtAddShowrooms: {
     fontSize: 14,
     fontFamily: "RobotoRegular",
     color: '#555555',
@@ -997,24 +997,24 @@ const styles = StyleSheet.create({
 
 
   // search
-  boxSearch:{
+  boxSearch: {
     backgroundColor: '#c9c8ce',
     padding: 20,
   },
-  vInpSearch:{
+  vInpSearch: {
     backgroundColor: "#FFFFFF",
     borderRadius: 5,
-    width: ScreenWidth-40,
+    width: ScreenWidth - 40,
     position: 'relative',
     paddingLeft: 40,
 
   },
-  iconTouchSearch:{
+  iconTouchSearch: {
     position: 'absolute',
     top: 5,
     left: 10,
   },
-  inputSearch:{
+  inputSearch: {
     height: 40,
     color: '#777777',
   },
@@ -1022,83 +1022,83 @@ const styles = StyleSheet.create({
 
 
   // user
-  userImage:{
+  userImage: {
     backgroundColor: '#000000',
     borderRadius: 40,
-    width: 80, 
+    width: 80,
     height: 80,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 20,
   },
-  userHomeTab:{
+  userHomeTab: {
     flexDirection: 'row',
     borderBottomColor: '#eeeeee',
     borderBottomWidth: 1,
     position: 'relative',
   },
-  userHomeTitleTab:{
+  userHomeTitleTab: {
     fontFamily: "RobotoRegular",
     fontSize: 15,
     lineHeight: 65,
     marginLeft: 30,
   },
-  userIconLeftTab:{
-    color: '#777777', 
-    fontSize: 25, 
+  userIconLeftTab: {
+    color: '#777777',
+    fontSize: 25,
     lineHeight: 65,
   },
-  userIconRightTab:{
-    color: '#777777', 
-    fontSize: 25, 
+  userIconRightTab: {
+    color: '#777777',
+    fontSize: 25,
     lineHeight: 65,
     position: 'absolute',
     right: 0,
     top: 0,
   },
-  userLoginBanner:{
+  userLoginBanner: {
     width: ScreenWidth,
-    height: ScreenWidth/2.25,
+    height: ScreenWidth / 2.25,
     position: 'relative',
     marginTop: barHeight,
   },
-  userImgLoginB:{
+  userImgLoginB: {
     width: ScreenWidth,
-    height: ScreenWidth/2.25
+    height: ScreenWidth / 2.25
   },
-  userImgCenterB:{
+  userImgCenterB: {
     position: "absolute",
-    top: (ScreenWidth/2.25)/2-40,
-    left: ScreenWidth/2-40,
+    top: (ScreenWidth / 2.25) / 2 - 40,
+    left: ScreenWidth / 2 - 40,
   },
-  userTabLoginRegisterScreen:{
+  userTabLoginRegisterScreen: {
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderBottomColor: '#c8c8c8',
   },
-  titleLoginRegis:{
-    width: ScreenWidth/2,
+  titleLoginRegis: {
+    width: ScreenWidth / 2,
     lineHeight: 35,
     alignItems: 'center',
   },
-  titleLoginRegisActive:{
+  titleLoginRegisActive: {
     borderBottomColor: '#000000',
     borderBottomWidth: 5,
   },
-  txtTabLoginRegister:{
-    fontFamily: "RobotoBold", 
-    fontSize: 18, 
+  txtTabLoginRegister: {
+    fontFamily: "RobotoBold",
+    fontSize: 18,
     color: '#777777',
     lineHeight: 55
   },
-  txtTabLoginRegisterActive:{
+  txtTabLoginRegisterActive: {
     color: '#000000',
   },
-  formLogin:{
+  formLogin: {
     paddingLeft: 20,
     paddingRight: 20,
   },
-  styleInputLogin:{
+  styleInputLogin: {
     fontFamily: 'RobotoRegular',
     fontSize: 16,
     color: '#999999',
@@ -1107,30 +1107,30 @@ const styles = StyleSheet.create({
     borderBottomColor: '#e0e0e0',
     borderBottomWidth: 1,
   },
-  vInputPass:{
+  vInputPass: {
     position: 'relative',
   },
-  showPass:{
+  showPass: {
     fontFamily: 'RobotoRegular',
     fontSize: 15,
     position: 'absolute',
     right: 0,
     bottom: 15,
   },
-  touchSubLogin:{
+  touchSubLogin: {
     backgroundColor: '#000000',
     width: '100%',
     alignItems: 'center',
     marginTop: 30,
   },
-  txtSubLogin:{
+  txtSubLogin: {
     color: '#FFFFFF',
     fontFamily: 'RobotoRegular',
     fontSize: 18,
     lineHeight: 60,
     textTransform: 'uppercase',
   },
-  userOrderItem:{
+  userOrderItem: {
     paddingLeft: 20,
     paddingRight: 20,
     paddingTop: 10,
@@ -1138,38 +1138,58 @@ const styles = StyleSheet.create({
     borderBottomColor: '#f8f8ff',
     borderBottomWidth: 10,
   },
-  nameOrderItem:{
+  nameOrderItem: {
     fontFamily: "RobotoBold",
     fontSize: 16,
     color: '#000000',
     lineHeight: 25,
   },
-  briefOrderItem:{
+  briefOrderItem: {
     fontFamily: "RobotoRegular",
     fontSize: 14,
     color: '#777777',
     lineHeight: 23,
   },
-  userLogout:{
+  userLogout: {
     position: 'absolute',
     bottom: footerHeight + 20,
     backgroundColor: '#eeeeee',
-    width: ScreenWidth-40,
+    width: ScreenWidth - 40,
     marginLeft: 20,
     alignItems: 'center',
   },
-  dateTimeNotifi:{
+  dateTimeNotifi: {
     fontFamily: 'RobotoRegular',
     color: '#777777',
     fontSize: 14,
   },
 
-  
-  notifiListHome:{
-    height: ScreenHeight-barHeight-headerHeight,
+
+  notifiListHome: {
+    height: ScreenHeight - barHeight - headerHeight,
     paddingBottom: 20,
   },
 
+  iconCateHome: {
+    width: 21 / 375 * ScreenWidth,
+    height: 30 / 812 * ScreenHeight,
+  },
+  iconCateHome1: {
+    width: 30 / 812 * ScreenHeight,
+    height: 30 / 812 * ScreenHeight,
+  },
+  iconCateHome2: {
+    width: 22 / 375 * ScreenWidth,
+    height: 34 / 812 * ScreenHeight,
+  },
+  iconCateHome3: {
+    width: 30 / 375 * ScreenWidth,
+    height: 23 / 812 * ScreenHeight,
+  },
+  iconCateHome4: {
+    width: 30 / 812 * ScreenHeight,
+    height: 30 / 812 * ScreenHeight,
+  }
 
 
 
@@ -1178,6 +1198,7 @@ const styles = StyleSheet.create({
 
 
 
-  
-});    
+
+
+});
 export default styles;

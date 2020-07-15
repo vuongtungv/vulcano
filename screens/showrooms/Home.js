@@ -1,282 +1,227 @@
-import React, { Component} from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList , Alert} from 'react-native';
-import { Picker} from "native-base";
+import React, { Component } from 'react';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, FlatList, Alert, Dimensions } from 'react-native';
+import { Picker } from "native-base";
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
 
-import {getCities, getDistricts, getAllShowrooms} from '../../src/api/apiShowrooms';
+import { getCities, getDistricts, getAllShowrooms } from '../../src/api/apiShowrooms';
 
 import MapView, { AnimatedRegion, PROVIDER_GOOGLE } from 'react-native-maps';
 
-export default class Home extends Component{
+export default class Home extends Component {
     static navigationOptions = ({ navigation }) => ({
-		header: null,
+        header: null,
     });
- 
+
     constructor(props) {
         super(props);
-        
+
         this.state = {
-            city:'0',
+            city: '0',
             district: '0',
-            listCities:[],
+            listCities: [],
             listDistricts: [],
             listAllShowrooms: [],
             count: 1,
-            region: {
-                latitude: 21.027763,
-				longitude: 105.834160,
-				latitudeDelta: 0.922,
-                longitudeDelta: 0.421,
-            },
+            latitude: 21.027763,
+            longitude: 105.834160,
+            latitudeDelta: 0.922,
+            longitudeDelta: 0.421,
             markers: [],
             width_icon_img: 0,
             height_icon_img: 0,
-            // markers: [{
-            //     title: 'hello1',
-            //     coordinates: {
-            //       latitude: 21.037834051277333,
-            //       longitude: 105.8411953210175
-            //     },
-            //   },
-            //   {
-            //     title: 'hello2',
-            //     coordinates: {
-            //       latitude: 21.123964463899238,
-            //       longitude: 105.97087409078244
-            //     },  
-            // }]
         }
+
+
+        getCities()
+            .then(resJSON => {
+                const { list, error } = resJSON;
+                if (error == false) {
+                    this.setState({
+                        listCities: list,
+                    });
+                }
+            });
+
 
         this.arr = [];
     }
- 
+
     componentDidMount() {
-        this.getCity();
         // this.getDistricts();
-        this.getAllShowrooms();
+        this.getShowroomsAllCity(this.state.city, this.state.district);
         // console.log(this.state.markers)
-        this.getCurrentLocation();
     }
 
 
+    setCityChange = (city) => {
+        // here is our callback that will be fired after state change.
+        // Alert.alert(this.state.city);
+        this.getShowroomsAllCity(city, this.state.district);
 
-    getCity= () => {
-        this.setState({ loading: true });
-        getCities()
-        .then(resJSON => {
-            const { list, error } = resJSON;
-            if (error == false) {
-                this.setState({
-                    listCities: list,  
-                    loading: false,
-                    refreshing: false,
-                    error: false || null,   
-                });  
-            } else {
-                this.setState({ loading: false, refreshing: false });
-            }
-     
-        }).catch(err => {
-        
+        this.setState({ city });
+
+        getDistricts(city)
+            .then(resJSON => {
+                const { list, error } = resJSON;
+                if (error == false) {
+                    this.setState({
+                        listDistricts: list,
+                    });
+                }
+            });
+    }
+    setDistrictChange = (value) => {
+        this.setState({
+            district: value
+        });
+        this.getShowroomsAllCity(this.state.city, value);
+    }
+
+    getShowroomsAllCity = (item1, item2) => {
+
+        getAllShowrooms(item1, item2)
+            .then(resJSON => {
+                const { list, count, markers, icon_img, width_icon_img, height_icon_img, error } = resJSON;
+                // console.log(markers);
+                if (error == false) {
+                    this.setState({
+                        listAllShowrooms: list,
+                        error: false || null,
+                        count: count,
+                        icon_img: icon_img,
+                        markers: markers,
+                        width_icon_img: width_icon_img,
+                        height_icon_img: height_icon_img,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0922 + (width / height),
+                    });
+
+                    var MarKERS = [];
+
+                    list.map((value) => {
+                        MarKERS.push({
+                            latitude: value.latitude,
+                            longitude: value.longitude,
+                        });
+                    }),
+
+                        this.fitAllMarkers(MarKERS);
+                }
+                else {
+                    this.setState({ count: 0 });
+                }
+
+            });
+    }
+
+    fitAllMarkers(data) {
+        const DEFAULT_PADDING = { top: 50, right: 50, bottom: 50, left: 50 };
+        this.map.fitToCoordinates(data, {
+            edgePadding: DEFAULT_PADDING,
+            animated: true,
         });
     }
 
-    
-    setCityChange=(value, index)=>{
-        this.setState(
-          {
-            "city": value
-          },
-          () => {
-            // here is our callback that will be fired after state change.
-            // Alert.alert(this.state.city);
-            this.getDistricts();
-            this.getAllShowrooms();
-          }
-        );
-      }
-      setDistrictChange=(value, index)=>{
-        this.setState(
-          {
-            "district": value
-          },
-          () => {
-            // here is our callback that will be fired after state change.
-            // Alert.alert(this.state.city);
-            // this.getDistricts();
-            this.getAllShowrooms();
-          }
-        );
-      }
-    getDistricts= () => {
-        this.setState({ loading: true });
-        getDistricts(this.state.city)
-        .then(resJSON => {
-            const { list, error } = resJSON;
-            if (error == false) {
-                this.setState({
-                    listDistricts: list,  
-                    loading: false,
-                    refreshing: false,
-                    error: false || null,   
-                });  
-            } else {
-                this.setState({ loading: false, refreshing: false });
-            }
-        
-        }).catch(err => {
-        
-        });
-    }
-
-    getAllShowrooms= () => {
-        this.setState({ loading: true });
-        getAllShowrooms(this.state.city,this.state.district)
-        .then(resJSON => {
-            const { list,count, markers,icon_img, width_icon_img, height_icon_img, error } = resJSON;
-            // console.log(markers);
-            if (error == false) {
-                this.setState({
-                    listAllShowrooms: list,  
-                    loading: false,
-                    refreshing: false,
-                    error: false || null,   
-                    count: count,
-                    icon_img: icon_img,
-                    markers: markers,
-                    width_icon_img: width_icon_img,
-                    height_icon_img: height_icon_img,
-                });  
-            } else {
-                this.setState({ loading: false, refreshing: false, count: 0 });
-            }
-        
-        }).catch(err => {
-        
-        });
-    }
-
-    async getCurrentLocation() {
-        navigator.geolocation.getCurrentPosition(
-            position => {
-            let region = {
-                    latitude: parseFloat(position.coords.latitude),
-                    longitude: parseFloat(position.coords.longitude),
-                    latitudeDelta: 0.922,
-                    longitudeDelta: 0.421
-                };
-                this.setState({
-                    region: region
-                });
-            },
-            error => console.log(error),
-            {
-                enableHighAccuracy: true, 
-                timeout: 20000,
-                maximumAge: 1000
-            }
-        );
-    }
 
 
-	
     render() {
-        const {navigation} = this.props;
-        return( 
+        const { navigation } = this.props;
+        return (
             <Container>
                 <HeaderBase page="showrooms" title={'Hệ thống cửa hàng Vulcano'} navigation={navigation} />
                 <ScrollView style={[MainStyle.pageShowrooms]}>
                     <View style={MainStyle.vMap}>
-                        <MapView ref={ref => { this.map = ref; }}
+                        <MapView
+                            ref={ref => { this.map = ref; }}
                             style={{ flex: 1 }}
                             provider={PROVIDER_GOOGLE}
-                            zoomEnabled = {true}
-                            initialRegion={this.state.region}
-                    
-                        
-                            showsUserLocation={true}
-                        
+                            initialRegion={{
+                                latitude: this.state.latitude,
+                                longitude: this.state.longitude,
+                                latitudeDelta: this.state.latitudeDelta,
+                                longitudeDelta: this.state.longitudeDelta,
 
-                            >
-                            { this.state.count >0 ?
-                                 this.state.markers.map(marker => (
-                                    <MapView.Marker 
+                            }}
+
+                        >
+                            {this.state.count > 0 ?
+                                this.state.markers.map((marker, i) => (
+                                    <MapView.Marker
                                         // image={require('../../assets/logo_vul.png')}
                                         coordinate={marker.coordinates}
+                                        key={i}
                                         title={marker.title}>
-                                            <View style={{width: this.state.width_icon_img, height: this.state.height_icon_img}}>
-                                                <Image source={{uri: this.state.icon_img}} style={{width: this.state.width_icon_img, height: this.state.height_icon_img}} />
-                                            </View>
-                                        
+                                        <View style={{ width: this.state.width_icon_img, height: this.state.height_icon_img }}>
+                                            <Image source={{ uri: this.state.icon_img }} style={{ width: this.state.width_icon_img, height: this.state.height_icon_img }} />
+                                        </View>
+
                                     </MapView.Marker>
                                 ))
-                                : 
-                                <MapView.Marker 
-                                    
-                                /> 
+                                :
+                                <MapView.Marker
+
+                                />
                             }
                         </MapView>
                     </View>
-                    
+
                     <View style={MainStyle.bSelectShowrooms}>
                         <Text style={MainStyle.txtShowrooms}>Tìm kiếm theo địa chỉ</Text>
                         <View style={MainStyle.borSelectSR}>
                             <Picker
                                 selectedValue={this.state.city}
                                 style={MainStyle.sSelectBox}
-                                // onValueChange={(itemValue, itemIndex) =>
-                                //     // this.setState({city: itemValue})
-                                //     this.setCityChange()
-                                // }
-                                onValueChange={(value)=>this.setCityChange(value)}
+                                onValueChange={(city) => this.setCityChange(city)}
                             >
                                 <Picker.Item label="-- Chọn Tỉnh/TP --" value="0" />
-                                {this.state.listCities.map((item, index) => {return (
-                                    <Picker.Item key={item.id} label={item.name} value={item.id} />
-                                )})} 
+                                {this.state.listCities.map((item) => {
+                                    return (
+                                        <Picker.Item key={item.id} label={item.name} value={item.id} />
+                                    )
+                                })}
                             </Picker>
                         </View>
                         <View style={MainStyle.borSelectSR}>
                             <Picker
                                 selectedValue={this.state.district}
                                 style={MainStyle.sSelectBox}
-                                
-                                // onValueChange={(itemValue, itemIndex) =>
-                                //     this.setState({district: itemValue})
-                                // }
-                                onValueChange={(value)=>this.setDistrictChange(value)}
+                                onValueChange={(value) => this.setDistrictChange(value)}
                             >
                                 <Picker.Item label="-- Chọn Quận/Huyện --" value="0" />
-                                {this.state.listDistricts.map((item, index) => {return (
-                                    <Picker.Item key={item.id} label={item.name} value={item.id} />
-                                )})}   
+                                {this.state.listDistricts.map((item) => {
+                                    return (
+                                        <Picker.Item key={item.id} label={item.name} value={item.id} />
+                                    )
+                                })}
                             </Picker>
                         </View>
                     </View>
                     <View style={MainStyle.vListShowrooms}>
-                        { this.state.count > 0 ?
-                            this.state.listAllShowrooms.map((item, index) => {return (
-                                <View key={item.id} style={MainStyle.itemShowrooms}>
-                                    <Text style={MainStyle.txtNameShowrooms}>{item.name}</Text>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Icon type="EvilIcons" name="location" style={{color: '#555555', fontSize: 26 }} />
-                                        <Text style={MainStyle.txtAddShowrooms}>{item.address}</Text>
+                        {this.state.count > 0 ?
+                            this.state.listAllShowrooms.map((item, index) => {
+                                return (
+                                    <View key={item.id} style={MainStyle.itemShowrooms}>
+                                        <Text style={MainStyle.txtNameShowrooms}>{item.name}</Text>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <Icon type="EvilIcons" name="location" style={{ color: '#555555', fontSize: 26 }} />
+                                            <Text style={MainStyle.txtAddShowrooms}>{item.address}</Text>
+                                        </View>
                                     </View>
-                                </View>
-                            )})
+                                )
+                            })
                             :
                             <View><Text></Text></View>
                         }
-                         
-                        
-                    </View>  
+
+
+                    </View>
                 </ScrollView>
                 <FooterBase navigation={navigation} page="showrooms" />
             </Container>
         );
     }
 }
- 
+const { height, width } = Dimensions.get('window');

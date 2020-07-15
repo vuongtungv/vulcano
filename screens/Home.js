@@ -195,25 +195,25 @@ export default class Home extends React.Component {
               </TouchableOpacity>
               <TouchableOpacity style={MainStyle.itemCateHome} onPress ={()=> this.SalesProducts()}>
                 <View style={MainStyle.iconCenter}>
-                  <Image style={MainStyle.iconCateHome} source={require("../assets/icon_sale.png")} />
+                  <Image style={MainStyle.iconCateHome1} source={require("../assets/icon_sale.png")} />
                 </View>
                 <Text style={MainStyle.textCateHome}>Giảm giá</Text>
               </TouchableOpacity>
               <TouchableOpacity style={MainStyle.itemCateHome} onPress={()=>this.gotoShowrooms()}> 
                 <View style={MainStyle.iconCenter}>
-                  <Image style={MainStyle.iconCateHome} source={require("../assets/icon_showrooms.png")} />
+                  <Image style={MainStyle.iconCateHome2} source={require("../assets/icon_showrooms.png")} />
                 </View>
                 <Text style={MainStyle.textCateHome}>Cửa hàng</Text>
               </TouchableOpacity>
               <TouchableOpacity style={MainStyle.itemCateHome} onPress={()=>this.gotoVideos()}>
                 <View style={MainStyle.iconCenter}>
-                  <Image style={MainStyle.iconCateHome} source={require("../assets/icon_youtube.png")} />
+                  <Image style={MainStyle.iconCateHome3} source={require("../assets/icon_youtube.png")} />
                 </View>
                 <Text style={MainStyle.textCateHome}>Video</Text>
               </TouchableOpacity>
               <TouchableOpacity style={MainStyle.itemCateHome} onPress={()=>this.gotoNews()}>
                 <View style={MainStyle.iconCenter}>
-                  <Image style={MainStyle.iconCateHome} source={require("../assets/icon_news.png")} />
+                  <Image style={MainStyle.iconCateHome4} source={require("../assets/icon_news.png")} />
                 </View>
                 <Text style={MainStyle.textCateHome}>Tin tức</Text>
               </TouchableOpacity>
