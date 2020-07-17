@@ -24,7 +24,6 @@ export default class Home extends Component {
             listCities: [],
             listDistricts: [],
             listAllShowrooms: [],
-            count: 1,
             latitude: 21.027763,
             longitude: 105.834160,
             latitudeDelta: 0.922,
@@ -84,13 +83,12 @@ export default class Home extends Component {
 
         getAllShowrooms(item1, item2)
             .then(resJSON => {
-                const { list, count, markers, icon_img, width_icon_img, height_icon_img, error } = resJSON;
+                const { list, markers, icon_img, width_icon_img, height_icon_img, error } = resJSON;
                 // console.log(markers);
                 if (error == false) {
                     this.setState({
                         listAllShowrooms: list,
                         error: false || null,
-                        count: count,
                         icon_img: icon_img,
                         markers: markers,
                         width_icon_img: width_icon_img,
@@ -111,7 +109,10 @@ export default class Home extends Component {
                         this.fitAllMarkers(MarKERS);
                 }
                 else {
-                    this.setState({ count: 0 });
+                    this.setState({
+                        listAllShowrooms: [],
+                        markers: [],
+                    });
                 }
 
             });
@@ -147,7 +148,7 @@ export default class Home extends Component {
                             }}
 
                         >
-                            {this.state.count > 0 ?
+                            {
                                 this.state.markers.map((marker, i) => (
                                     <MapView.Marker
                                         // image={require('../../assets/logo_vul.png')}
@@ -160,10 +161,7 @@ export default class Home extends Component {
 
                                     </MapView.Marker>
                                 ))
-                                :
-                                <MapView.Marker
 
-                                />
                             }
                         </MapView>
                     </View>
@@ -200,8 +198,8 @@ export default class Home extends Component {
                         </View>
                     </View>
                     <View style={MainStyle.vListShowrooms}>
-                        {this.state.count > 0 ?
-                            this.state.listAllShowrooms.map((item, index) => {
+                        {
+                            this.state.listAllShowrooms.map((item) => {
                                 return (
                                     <View key={item.id} style={MainStyle.itemShowrooms}>
                                         <Text style={MainStyle.txtNameShowrooms}>{item.name}</Text>
@@ -212,8 +210,7 @@ export default class Home extends Component {
                                     </View>
                                 )
                             })
-                            :
-                            <View><Text></Text></View>
+
                         }
 
 
