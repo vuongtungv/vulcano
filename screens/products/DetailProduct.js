@@ -275,7 +275,7 @@ export default class DetailProduct extends Component{
                             index = {0}
                             autoplay={true} 
                             autoplayTimeout={4}
-                            onIndexChanged = {(index) => this.setState({position: index})} 
+                            onIndexChanged = {(index) => this.setState({index})} 
                             loop={true}
                             autoplay={false}
                             bounces={true}>
