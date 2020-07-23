@@ -157,13 +157,13 @@ const styles = StyleSheet.create({
 
   cateHome: {
     width: ScreenWidth,
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingTop: 30,
-    paddingBottom: 25,
+    paddingLeft: 20 / 812 * ScreenHeight,
+    paddingRight: 20 / 812 * ScreenHeight,
+    paddingTop: 30 / 812 * ScreenHeight,
+    paddingBottom: 25 / 812 * ScreenHeight,
     backgroundColor: "#FFFFFF",
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   iconCenter: {
     alignItems: "center",
@@ -1171,24 +1171,12 @@ const styles = StyleSheet.create({
   },
 
   iconCateHome: {
-    width: 21 / 375 * ScreenWidth,
-    height: 30 / 812 * ScreenHeight,
+    width: 40 / 812 * ScreenHeight,
+    height: 40 / 812 * ScreenHeight,
   },
-  iconCateHome1: {
-    width: 30 / 812 * ScreenHeight,
-    height: 30 / 812 * ScreenHeight,
-  },
-  iconCateHome2: {
-    width: 22 / 375 * ScreenWidth,
-    height: 34 / 812 * ScreenHeight,
-  },
-  iconCateHome3: {
-    width: 30 / 375 * ScreenWidth,
-    height: 23 / 812 * ScreenHeight,
-  },
-  iconCateHome4: {
-    width: 30 / 812 * ScreenHeight,
-    height: 30 / 812 * ScreenHeight,
+  itemCateHome: {
+    alignItems: 'center',
+    justifyContent: "center",
   }
 
 
